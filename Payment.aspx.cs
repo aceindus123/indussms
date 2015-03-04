@@ -79,36 +79,56 @@ public partial class Payment : System.Web.UI.Page
 
     protected void btnPay_Click(object sender, EventArgs e)
     {
-        string name = txtName.Text;
-        string email = txtemail.Text;
-        string phone = txtphno.Text;
+        if (ddlcountry.SelectedItem.Text != "Select country")
+        {
+            if (ddlstate.SelectedItem.Text != "Select State")
+            {
+                if (ddlcity.SelectedItem.Text != "Select City")
+                {
+                    string name = txtName.Text;
+                    string email = txtemail.Text;
+                    string phone = txtphno.Text;
 
-        //txtamount.Text = Convert.ToString(Request.QueryString["plancost"]);
+                    //txtamount.Text = Convert.ToString(Request.QueryString["plancost"]);
 
-        string itemInfo = txtPurpose.Text;
-        string amount = txtamount.Text;
-        string currency = ddlCurrency.Text;
-        string country = ddlcountry.SelectedItem.Text;
-        string state = ddlstate.SelectedItem.Text;
-        string city = ddlcity.SelectedItem.Text;
-        
-        PayWithPayPal(amount, itemInfo, name, phone, email, currency, country, state, city);
+                    string itemInfo = txtPurpose.Text;
+                    string amount = txtamount.Text;
+                    string currency = ddlCurrency.Text;
+                    string country = ddlcountry.SelectedItem.Text;
+                    string state = ddlstate.SelectedItem.Text;
+                    string city = ddlcity.SelectedItem.Text;
 
-        txtName.Text = "";
-        txtemail.Text = "";
-        txtphno.Text = "";
-        txtamount.Text = "";
-        ddlCurrency.Text = "";
-        ddlcity.SelectedIndex = 0;
-        ddlstate.SelectedIndex = 0;
-        ddlcountry.SelectedIndex = 0;
+                    PayWithPayPal(amount, itemInfo, name, phone, email, currency, country, state, city);
+
+                    txtName.Text = "";
+                    txtemail.Text = "";
+                    txtphno.Text = "";
+                    txtamount.Text = "";
+                    ddlCurrency.Text = "";
+                    ddlcity.SelectedIndex = 0;
+                    ddlstate.SelectedIndex = 0;
+                    ddlcountry.SelectedIndex = 0;
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(),"alert box","alert('Please Select City');",true);
+                }
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(),"alert box","alert('Please Select State');",true);
+            }
+        }
+        else
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(),"alert box","alert('Please Select Country');",true);
+        }
     }
 
 
     protected void PayWithPayPal(string amount, string itemInfo, string name, 
         string phone, string email, string currency, string pcountry, string pstate, string pcity)
     {
-
         //localhost.Service service1 = new localhost.Service();
         paypalservice service1 = new paypalservice();
         service1.Amount = amount;
