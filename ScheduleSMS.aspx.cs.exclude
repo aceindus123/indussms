@@ -1,0 +1,283 @@
+﻿using System;
+using System.Data;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+using EO.Web.Internal;
+using System.Configuration;
+
+
+public partial class ScheduleSMS : System.Web.UI.Page
+{
+    private string _schdate = string.Empty;
+    public string schtimezone = "";
+    private string schtime = "";
+    private string schdate = "";
+    private string pdate = string.Empty;
+    SMSCAPI cs = new SMSCAPI();
+
+    
+     string uname;
+     Registration reg = new Registration();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        uname = Convert.ToString(Session["User"]);
+
+        if (Session["User"] != null)
+        {
+            if (!IsPostBack)
+            {
+                rdnumber.Checked = true;
+                rdlist.Checked = false;
+                list.Visible = false;
+                list1.Visible = false;
+            }
+        }
+        else
+        {
+            Response.Redirect("SMSLogin.aspx");
+        }
+        
+    }
+
+    protected void rdlist_CheckedChanged(object sender, EventArgs e)
+    {
+        rdnumber.Checked = false;
+        list.Visible = true;
+        list1.Visible = true;
+        txtnumbers.Enabled = false;
+
+
+        number.Visible = false;
+        number1.Visible = false;
+
+         DataSet ds56=  reg.datalist(uname);
+         if (ds56.Tables[0].Rows.Count > 0)
+         {
+             ddlist.DataSource = ds56;
+             ddlist.DataValueField = "lname";
+             ddlist.DataTextField = "lname";
+             ddlist.DataBind();
+             ddlist.Items.Insert(0, "Select List");
+         }
+    }
+
+    protected void rdnumber_CheckedChanged(object sender, EventArgs e)
+    {
+        rdnumber.Checked = true;
+        rdlist.Checked = false;
+        list.Visible = false;
+        list1.Visible = false;
+
+        number.Visible = true;
+        number1.Visible = true;
+    }
+
+    protected void btncancel_Click(object sender, EventArgs e)
+    {
+        txtname.Text = "";
+        txtmobile.Text = "";
+        txtmsg.Text = "";
+        ddlist.SelectedIndex = -1;
+        Response.Redirect("ScheduleSMS.aspx");
+    }
+
+    protected void btnschedule_Click(object sender, EventArgs e)
+    {
+        string uname = Convert.ToString(Session["user"]);
+        string sname = reg.editdata1(uname);
+        string time = txttime.Text;
+        string time1 = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt");
+        string subject = txtmsg.Text;
+        string accuser = Convert.ToString(ConfigurationManager.AppSettings["SmsUsername"]);
+        string accpassword = Convert.ToString(ConfigurationManager.AppSettings["SmsPassword"]);
+        string name = "";
+        string number = "";
+        if (rdnumber.Checked == true)
+        {
+            name = txtname.Text;
+            number = txtmobile.Text;
+        }
+        else
+        {
+            name = ddlist.SelectedItem.Text;
+            number = txtnumbers.Text;
+        }
+
+        int n = reg.insertschreport(sname, uname, name, number, subject, time1, time);
+
+        string result = cs.SendSMS2(uname, sname, name, number, subject, accpassword, accuser, time);
+
+        int n1 = reg.updateschreport(result, uname, time);
+
+
+        string script = "alert('Message Scheduled Successfully')";
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+
+        txttime.Text = "";
+        txtname.Text = "";
+        txtmobile.Text = "";
+        txtmsg.Text = "";
+        ddlist.SelectedIndex = -1;
+        txtnumbers.Text = "";
+    }
+        
+    protected void imgcancel_Click(object sender, ImageClickEventArgs e)
+    {
+        txttime.Text = "";
+        ModalPopupExtender3.Hide();
+
+    }
+
+    protected void imgcal_Click(object sender, ImageClickEventArgs e)
+    {
+
+     //   ddltimezone.Visible = true;
+        System.Collections.ObjectModel.ReadOnlyCollection<TimeZoneInfo> tzi;
+        tzi = TimeZoneInfo.GetSystemTimeZones();
+        foreach (TimeZoneInfo timeZone in tzi)
+        {
+         //   ddltimezone.Items.Add(new ListItem(timeZone.DisplayName, timeZone.Id));
+        }
+        pnllist.Visible = true;
+
+        ddlHours.Items.Clear();
+        ddlMins.Items.Clear();
+
+        for (int i = 0; i <= 23; i++)
+        {
+
+            ddlHours.Items.Add(i.ToString());
+
+        }
+        for (int i = 0; i <= 59; i++)
+        {
+            ddlMins.Items.Add(i.ToString());
+        }
+
+        if (Convert.ToString(Page.RouteData.Values["index"]) == "" || Convert.ToString(Page.RouteData.Values["index"]) == null)
+        {
+        }
+        else
+        {
+
+            string tzone = schtimezone;
+            if (tzone != "")
+            {
+                TimeZoneInfo tzsel = TimeZoneInfo.FindSystemTimeZoneById(tzone);
+                string strTZone = Convert.ToString(tzsel);
+                if (strTZone != "")
+                {
+                //    ddltimezone.ClearSelection();
+                  //  ddltimezone.Items.FindByText(strTZone).Selected = true;
+                }
+            }
+            string editschdate = schdate;
+            if (editschdate != "")
+            {
+                DateTime dt = Convert.ToDateTime(editschdate);
+                string strHrsLen = dt.Hour.ToString();
+                string strminsLen = dt.Minute.ToString();
+                string strDate = editschdate.Substring(0, 10).Trim();
+
+                txtschduleemail.Text = strDate;
+                if (strHrsLen != "")
+                {
+                    ddlHours.Items.FindByText(strHrsLen).Selected = true;
+                }
+                if (strminsLen != "")
+                {
+                    ddlMins.Items.FindByText(strminsLen).Selected = true;
+                }
+            }
+        }
+
+        ModalPopupExtender3.Show();
+    }
+
+    protected void imgscheduleok_Click(object sender, ImageClickEventArgs e)
+    {
+        pdate = Convert.ToString(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss tt"));
+        string schtime1 = txtschduleemail.Text + " " + ddlHours.SelectedItem.Text.ToString() + ":" + ddlMins.SelectedItem.Text.ToString();
+        
+     
+            if (Convert.ToInt32(ddlHours.SelectedItem.Text.ToString()) < 12)
+            {
+                ddlMins.SelectedItem.Text = ddlMins.SelectedItem.Text.ToString() + ":00 AM";
+                schtime1 = txtschduleemail.Text + " " + ddlHours.SelectedItem.Text.ToString() + ":" + ddlMins.SelectedItem.Text.ToString();
+            }
+            else
+            {
+                ddlMins.SelectedItem.Text = ddlMins.SelectedItem.Text.ToString() + ":00 PM";
+                schtime1 = txtschduleemail.Text + " " + ddlHours.SelectedItem.Text.ToString() + ":" + ddlMins.SelectedItem.Text.ToString();
+            }
+          //  schtimezone = ddltimezone.SelectedValue.ToString();
+           
+            if (Convert.ToString(schtime1) != Convert.ToString(pdate))
+            {
+                Session["schutctime"] = schtime1;
+                //  Session["schselzone"] = schtimezone;
+                txttime.Text = schtime1;
+                txttime.Enabled = false;
+                txttime.Visible = true;
+                pnllist.Visible = false;
+                ModalPopupExtender3.Hide();
+            }
+
+            else
+            {
+                string strScript = "alert('Scheduled date must be greater than or equal to current date');";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", strScript, true);
+                pnllist.Visible = true;
+                ModalPopupExtender3.Show();
+            }
+    }
+    protected void ddlist_SelectedIndexChanged(object sender, EventArgs e)
+    
+    {
+        string lstname= ddlist.SelectedItem.Text;
+        if (lstname != "Select List")
+        {
+            string user11 = Convert.ToString(Session["User"]);
+            DataSet ds;
+            string s1 = "";
+            ds = cs.AddSubscribers1(lstname, user11);
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    string s = ds.Tables[0].Rows[i]["number"].ToString();
+                    s1 += s + ",";
+                }
+                s1 = s1.Remove(s1.Length - 1);
+                txtnumbers.Text = s1;
+            }
+        }
+        else
+        {
+            string script = "alert('Please select List')";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+        }
+    }
+    protected void Checktime(object sender, EventArgs e)
+    {
+       // ddlHours.Attributes.Add("onchange", "return Checktime();");
+
+
+        int hour =  DateTime.Now.Hour;
+        int hour1 = Convert.ToInt16(ddlHours.SelectedItem.Text);
+        if (hour1 > hour)
+        {
+            ModalPopupExtender3.Show();
+        }
+        else
+        {
+            string script = "alert('Please select Future Iime')";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+            ddlHours.SelectedIndex = -1;
+            ModalPopupExtender3.Show();
+        }
+    }
+}

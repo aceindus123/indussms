@@ -1,0 +1,336 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SMSMasterPage.master" AutoEventWireup="true" CodeFile="ScheduleSMS.aspx.cs" Inherits="ScheduleSMS" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+<%@ Register Assembly="EO.Web" Namespace="EO.Web" TagPrefix="eo" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="MaxLength.min.js"></script>
+    <script src="css/MaxLength.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            //Normal Configuration
+            $("[id*=txtmsg]").MaxLength({ MaxLength: 160 });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+
+      function CompareDate(sender, args) {
+
+          var fromdate = sender._selectedDate;
+          var dd = fromdate.getDate();
+          var mm = fromdate.getMonth() + 1; //January is 0!
+          var yyyy = fromdate.getFullYear();
+          if (dd < 10) {
+              dd = '0' + dd;
+          }
+          if (mm < 10) {
+              mm = '0' + mm;
+          }
+
+          var fromdate1 = new Date();
+          fromdate1 = dd + '/' + mm + '/' + yyyy;
+
+              //  alert(fromdate1);
+
+          var todate = new Date();
+          var dd1 = todate.getDate();
+          var mm1 = todate.getMonth() + 1; //January is 0!
+          var yyyy1 = todate.getFullYear();
+          if (dd1 < 10) {
+              dd1 = '0' + dd1;
+          }
+          if (mm1 < 10) {
+              mm1 = '0' + mm1;
+          }
+          var todate1 = new Date();
+          todate1 = dd1 + '/' + mm1 + '/' + yyyy1;
+          //alert(todate1);
+          var oneDay = 24 * 60 * 60 * 1000;
+
+          if ((fromdate1 != "") && (todate1 != "")) {
+
+              //                var fdt1 = fromdate1.g;
+              //                var tdt1 = todate1.getTime();
+
+              if (fromdate1 < todate1) {
+                  alert("You cannot schedule a day earlier than today!");
+                  sender._selectedDate = new Date();
+                  // set the date back to the current date
+                  sender._textbox.set_Value(sender._selectedDate.format(sender._format));
+              }
+
+          }
+      }
+
+
+
+
+      function checkDate(sender, args) {
+
+          if (sender._selectedDate < new Date()) {
+              var date1 = sender._selectedDate.format(sender._format);
+              var d = new Date(sender._format);
+              alert(date1);
+              alert(d);
+              alert(sender._selectedDate);
+              alert("You can schedule  a day earlier than today!");
+
+              sender._selectedDate = new Date();
+              sender._textbox.set_Value(sender._selectedDate.format(sender._format))
+          }
+
+      }
+
+      function Checktime(sender, args) {
+
+          if (sender._selectedDate < new Date()) {
+              var date1 = sender._selectedDate.format(sender._format);
+              var d = new Date(sender._format);
+              alert(date1);
+                }
+
+      }
+
+      function SetHiddenVariable() {
+          var d = new Date();
+          var year = d.getFullYear();
+          var month = d.getMonth() + 1;
+          var date = d.getDate();
+          var hours = d.getHours();
+          var minutes = d.getMinutes();
+          var seconds = d.getSeconds();
+          var tt = d.format("tt");
+   
+          var hid1 = month + "/" + date + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+          //var hid1=date + "/" + month + "/" + year + " " + dt;
+          document.getElementById("<%= inpHide.ClientID %>").value = hid1;
+
+     }
+      FTB_FreeTextBox.prototype.CancelEvent = function (ev) {
+          try {
+              ev.preventDefault();
+              ev.stopPropagation();
+          }
+          catch (e) {
+              if (FTB_Browser.isIE) {
+                  ev.cancelBubble = true;
+                  ev.returnValue = false;
+              }
+          }
+      };
+
+</script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+<div class="container"   >
+<input id="inpHide" type="hidden" runat="server" /> 
+<ajax:ToolkitScriptManager ID="lbl" runat="server"></ajax:ToolkitScriptManager>
+    <table width="100%" cellspacing="10px"  >
+     <tr>
+        <td align="center" width="100%"  class="titlecampain1" valign="middle" colspan="4">
+           <h2> Schedule SMS</h2>
+        </td>
+     </tr>
+
+      <tr>
+           <td  align="center" class="schdule">
+              <asp:Label ID="Label1" runat="server" Text=" Select Number or  List"  ForeColor="Black"></asp:Label>               
+           </td>
+             <td>:</td>
+           <td>
+              <asp:RadioButton ID="rdnumber" runat="server" Width="100px" Text="Number"  
+                   ForeColor="Black" AutoPostBack="true" 
+                   oncheckedchanged="rdnumber_CheckedChanged"></asp:RadioButton>
+               <asp:RadioButton ID="rdlist" runat="server" Width="100px" Text="List"  AutoPostBack="true" 
+                   ForeColor="Black" oncheckedchanged="rdlist_CheckedChanged" Height="21px"></asp:RadioButton>
+           </td>
+         </tr>
+
+         <tr id="number" runat="server">
+           <td  align="center" class="schdule">
+              <asp:Label ID="lblname" runat="server" Text="Reciver Name"  ForeColor="Black"></asp:Label>               
+           </td>
+             <td>:</td>
+           <td>
+               <asp:TextBox ID="txtname" runat="server" Width="300px" ></asp:TextBox>
+               <asp:RequiredFieldValidator ID="RequiredFieldValidator1"       runat="server" ControlToValidate="txtname" ForeColor="Red"
+                        ErrorMessage="*"      ValidationGroup="missed" SetFocusOnError="True">  </asp:RequiredFieldValidator>
+
+           </td>
+         </tr>
+
+         <tr id="number1" runat="server">
+           <td  align="center" class="schdule">
+              <asp:Label ID="lblmobile" runat="server" Text="Reciver Mobile Number"  ForeColor="Black"></asp:Label>               
+           </td>
+             <td>:</td>
+           <td>
+              <asp:TextBox ID="txtmobile" runat="server" Width="300px" ></asp:TextBox>
+              <asp:RequiredFieldValidator ID="mobileno1"  runat="server" ControlToValidate="txtmobile" ForeColor="Red"
+                        ErrorMessage="*"      ValidationGroup="missed" SetFocusOnError="True">      </asp:RequiredFieldValidator>
+              <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ForeColor="Red" runat="server" ControlToValidate="txtmobile"   ValidationGroup="missed"
+              ErrorMessage="Please Enter Valid Mobile Number" ValidationExpression="[7-9]{1}[0-9]{9}"></asp:RegularExpressionValidator>
+           </td>
+         </tr>
+
+         <tr id="list" runat="server">
+           <td  align="center" class="schdule">
+              <asp:Label ID="lbllist" runat="server" Text=" Select  List"  ForeColor="Black"></asp:Label>               
+           </td>
+             <td>:</td>
+           <td>
+               <asp:DropDownList ID="ddlist" runat="server" Width="300px"   AutoPostBack="true"
+                   onselectedindexchanged="ddlist_SelectedIndexChanged" >
+              <asp:ListItem>Select List</asp:ListItem>
+              </asp:DropDownList>
+           </td>
+         </tr>
+         <tr id="list1" runat="server">
+           <td  align="center" class="schdule">
+              <asp:Label ID="Label3" runat="server" Text="Selected Numbers"  ForeColor="Black"></asp:Label>               
+           </td>
+             <td>:</td>
+           <td>
+               <asp:TextBox ID="txtnumbers" runat="server" TextMode="MultiLine"  Width="300px" Height="50px"></asp:TextBox>
+           </td>
+         </tr>
+
+         <tr >
+           <td  align="center" class="schdule">
+              <asp:Label ID="lbltime" runat="server" Text="Schedule Time"  ForeColor="Black"></asp:Label>               
+           </td>
+             <td>:</td>
+           <td>
+               <asp:TextBox ID="txttime" runat="server" Width="300px" ></asp:TextBox>
+<asp:RequiredFieldValidator ID="RequiredFieldValidator4"  runat="server" ControlToValidate="txttime" ForeColor="Red"
+                        ErrorMessage="*"      ValidationGroup="missed" SetFocusOnError="True">      </asp:RequiredFieldValidator>
+              <asp:ImageButton ID="imgcal" runat="server" 
+                   ImageUrl="images/1419954059_calendar.png" Width="25px" Height="25px" 
+                   onclick="imgcal_Click"  />
+           </td>
+         </tr>
+
+         <tr>
+           <td valign="top"  align="center" class="schdule">
+              <asp:Label ID="lblmessage" runat="server" Text="Subject " ForeColor="Black"></asp:Label>               
+           </td>
+           <td valign="top"  align="center">:</td>
+           <td >
+               <asp:TextBox ID="txtmsg" runat="server" Width="300px" Height="100px" TextMode="MultiLine" ></asp:TextBox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator2"  runat="server" ControlToValidate="txtmsg" ForeColor="Red"
+                        ErrorMessage="*"      ValidationGroup="missed" SetFocusOnError="True">      </asp:RequiredFieldValidator>
+           </td>
+         </tr>
+         <tr>
+         <td>&nbsp;</td>
+           <td >
+                &nbsp;            
+           </td>
+          
+           <td >
+            <asp:Button ID="btnschedule" runat="server" Text="Schedule" ForeColor="Black"  
+                   ValidationGroup="missed" onclick="btnschedule_Click" > </asp:Button>
+               <asp:Button ID="btncancel" runat="server"  Text="Cancel"  
+                    onclick="btncancel_Click" ></asp:Button>
+           </td>
+         </tr>
+
+   </table>
+
+  <input id="btnedit" runat="server" type="button" style="display: none" />
+        <ajax:ModalPopupExtender ID="ModalPopupExtender3" runat="server" TargetControlID="btnedit"
+            BackgroundCssClass="modalBackground1"  DropShadow="false" 
+            PopupControlID="pnllist"  >
+        </ajax:ModalPopupExtender>
+       
+        
+        <asp:Panel ID="pnllist" runat="server" BackColor="White" Height="330px" Width="750px"  >
+          <table bgcolor="White" align="center" width="740px" style="height: 330px" >
+             <tr>
+                <td align="center" colspan="2"  align="center">
+                    <asp:Label ID="lblemail" runat="server" Text="Schedule your SMS Time" Font-Size="Medium" ForeColor="#006699" Font-Bold="True" Font-Italic="True" Font-Names="Arial" Font-Overline="False"></asp:Label>
+                </td>
+            </tr>
+             <tr>
+               <td colspan="2" >
+                 <hr />
+               </td>
+           </tr>
+          <tr>
+             <td style="width:42%; padding-right:10px;" align="right">
+               Select Date :
+             </td>
+             <td>
+              <asp:TextBox ID="txtschduleemail" runat="server" Text="Select Date" ToolTip="Select Date" ></asp:TextBox>
+               <ajax:CalendarExtender ID="CalendarExtender1" runat="server" PopupPosition="BottomLeft"  Format="dd/MM/yyyy"
+                     TargetControlID="txtschduleemail" OnClientDateSelectionChanged="CompareDate" >
+               </ajax:CalendarExtender> 
+               <asp:RequiredFieldValidator ID="rfvtxtschduleemail" runat="server" ErrorMessage="Please select date for schedule SMS" 
+               InitialValue="Select Date" ControlToValidate="txtschduleemail" Display="Dynamic" ValidationGroup="vgsch">*</asp:RequiredFieldValidator>
+               <%-- <asp:CompareValidator ID="cvtxtSchedule" runat="server" Type="Date"  Operator="DataTypeCheck" ControlToValidate="txtschduleemail" 
+                                 ErrorMessage="Date format in (dd/MM/yyyy)"   ValidationGroup="vgsch"></asp:CompareValidator>--%>
+    </td>
+    </tr>
+    
+    <tr>
+    <td style="padding-right:10px;" align="right">
+        Select Time :
+    </td>
+    <td>
+    <asp:DropDownList runat="server" ID="ddlHours"  OnSelectedIndexChanged="Checktime"  ToolTip="Hours" AutoPostBack="true" >
+    
+                    </asp:DropDownList> :  
+                     <asp:DropDownList runat="server" ID="ddlMins" ToolTip="Minutes">
+                    
+                      </asp:DropDownList> &nbsp;<asp:Label ID="Label2" runat="server" Text="HH:mm(24 Hours format)"></asp:Label>
+   
+    </td>
+    </tr>
+  <%--  <tr>
+    <td style="padding-right:10px;" align="right">
+        Select Time zone :
+    </td>
+    <td>
+    <asp:DropDownList runat="server" ID="ddltimezone" >
+                 <asp:ListItem Text="Select a TimeZone" />     
+               </asp:DropDownList>
+                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Please select Time Zone" 
+      InitialValue="Select a TimeZone" ControlToValidate="ddltimezone" Display="Dynamic" ValidationGroup="vgsch">*</asp:RequiredFieldValidator> 
+ 
+    </td>
+    </tr>--%>
+    
+    <tr>
+    <td colspan="2" align="center">
+    <asp:ImageButton ID="imgscheduleok" runat ="server"  ValidationGroup="vgsch"
+            ImageUrl="images/submit.png"  Width="57px" Height="23px" 
+            AlternateText="Schedule" ToolTip="Schedule" onclick="imgscheduleok_Click" />
+        &nbsp;&nbsp;
+    <asp:ImageButton ID="imgcancel" runat ="server" 
+            ImageUrl="images/cancel.png" Width="57px" Height="23px"  AlternateText ="Cancel"
+            onclick="imgcancel_Click" />
+  
+    </td>
+    </tr>
+    
+    <tr>
+    <td colspan="2">
+        &nbsp;
+    </td>
+    </tr>
+    <tr>
+    <td colspan="2">
+        &nbsp;
+    </td>
+    </tr>
+    </table>     
+    </asp:Panel>
+
+
+   </div>
+</asp:Content>
+

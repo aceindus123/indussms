@@ -1,0 +1,260 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using Indussms.DataAccessLayer;
+using System.Configuration;
+using System.Data;
+
+public partial class ElectionCampain : System.Web.UI.Page
+{
+    string Base_dir = AppDomain.CurrentDomain.BaseDirectory;
+    Registration reg = new Registration();
+
+    protected void Page_Load(object sender, EventArgs e)
+     {
+         if (!IsPostBack)
+         {
+             rdmultiple.Visible = true;
+             rdsingle.Visible = true;
+             rdlist.Visible = true;
+             selectlist.Visible = false;
+             selectlist1.Visible = true;
+             divlist.Visible = false;
+             divcautions.Visible = false;
+             gview.Visible = false;
+         }
+       
+
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+         string result="";
+         string id = "MONTES";
+         string N = "N";
+         string Y = "Y";
+        SMSCAPI objSms = new SMSCAPI();
+        try
+        {
+            if ((txtmobileelection.Text != String.Empty && txtmobilesubject.Text != String.Empty) || (TextBox1.Text != String.Empty && txtmobilesubject.Text != String.Empty))
+            {
+                if ((txtmobileelection.Text != String.Empty && txtmobilesubject.Text != String.Empty))
+                {
+                    string number = txtmobileelection.Text;
+                    string message = txtmobilesubject.Text;
+                    result = objSms.SendSMS(Convert.ToString(ConfigurationManager.AppSettings["SmsUsername"]), Convert.ToString(ConfigurationManager.AppSettings["SmsPassword"]), number, message, N, Y, id);
+
+
+
+                }
+                else
+                {
+
+                    string number1 = TextBox1.Text;
+                    number1 = number1.Remove(number1.Length - 1);
+
+                    string message = txtmobilesubject.Text;
+                    result = objSms.SendSMS(Convert.ToString(ConfigurationManager.AppSettings["SmsUsername"]), Convert.ToString(ConfigurationManager.AppSettings["SmsPassword"]), number1, message,N, Y, id);
+                }
+
+
+                rdmultiple.Checked = false;
+                rdsingle.Checked = false;
+                rdlist.Checked = false;
+                rdmultiple.Visible = true;
+                rdsingle.Visible = true;
+                rdlist.Visible = true;
+                selectlist.Visible = false;
+                SINGLESMS.Visible = false;
+                selectlist1.Visible = false;
+                divlist.Visible = false;
+                divcautions.Visible = false;
+                gview.Visible = false;
+
+
+                string script = "alert('Message Send Successfully')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+                TextBox1.Text = "";
+                txtmobilesubject.Text = "";
+                txtmobileelection.Text = String.Empty;
+                txtmobilesubject.Text = String.Empty;
+            }
+            else
+            {
+
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    protected void rdsingle_CheckedChanged(object sender, EventArgs e)
+    {
+        SINGLESMS.Visible = true;
+        rdmultiple.Visible = true;
+        rdlist.Visible = true;
+        rdsingle.Visible = true;
+
+        selectlist.Visible = false;
+        selectlist1.Visible = true;
+        divlist.Visible = false;
+        divcautions.Visible = false;
+        gview.Visible = false;
+
+    }
+
+    protected void rdmultiple_CheckedChanged(object sender, EventArgs e)
+    {
+        SINGLESMS.Visible = true;
+        rdmultiple.Visible = true;
+        rdlist.Visible = true;
+        rdsingle.Visible = true;
+        selectlist.Visible = true;
+        selectlist1.Visible = false;
+
+        SINGLESMS.Visible = true;
+        divlist.Visible = false;
+        divcautions.Visible = true;
+
+        gview.Visible = true;
+        string user1 = Convert.ToString(Session["User"]);
+        if (user1 != "")
+        {
+            DataSet ds = reg.Binddata(user1);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                gv1.DataSource = ds;
+                gv1.DataBind();
+            }
+            else
+            {
+                string script = "alert('No Lists Found')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+
+            }
+        }
+        else
+        {
+            Session.Clear();
+            Response.Redirect("Default.aspx");
+        }
+    }
+
+    protected void rdlist_CheckedChanged(object sender, EventArgs e)
+    {
+        SINGLESMS.Visible = false;
+        rdlist.Visible = true;
+        rdsingle.Visible = true;
+        rdmultiple.Visible = true;
+        divlist.Visible = true;
+        gview.Visible = false;
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ElectionCampain.aspx");
+    }
+
+    protected void btnupload_Click(object sender, EventArgs e)
+    {
+        if (uploadlist.HasFile)
+        {
+            string strFileName = Server.HtmlEncode(uploadlist.FileName);
+            string strExtension = Path.GetExtension(strFileName);
+
+            string strUploadFileName = "ExcelReports/" + strFileName;//date + strExtension               
+            string path = Base_dir + strUploadFileName;
+            uploadlist.SaveAs(path);
+            string listname = txtlist.Text;
+            string user1= Convert.ToString(Session["User"]);
+
+            int n= reg.insertnumbers(strFileName,strExtension,strUploadFileName,path,user1,listname);
+            rdmultiple.Checked = false;
+            if (n == 0)
+            {
+                string script = "alert('Enter Column name mobile')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+            }
+            else if (n == 1)
+            {
+                string script = "alert('column name must be mobile')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+            }
+            else if (n == 5)
+            {
+                string script = "alert('Please Upload Maximum 20 Numbers Only')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+
+            }
+            else if (n == 6)
+            {
+                string script = "alert('Enter numbers in Excel sheet with Column name mobile')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+
+            }
+            else if (n == 4)
+            {
+                string script = "alert('Valid Numbers Upload Successfully')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+
+            }
+           
+        }
+        else
+        {
+            string script = "alert('Browse file first')";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+        }
+    }
+
+    protected void dtlistname_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        LinkButton lnkanme = (LinkButton)e.Item.FindControl("lnklist");
+        string lstname = lnkanme.Text;
+        string user1 = Convert.ToString(Session["User"]);
+        DataSet ds = new DataSet();
+        string s1="";
+        if (user1 != "")
+        {
+            ds = reg.AddSubscribers(lstname, user1);
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    string s = ds.Tables[0].Rows[i]["number"].ToString();
+                    s1 += s + ",";
+                }
+                TextBox1.Text = s1;
+                rdmultiple.Checked = true;
+                selectlist.Visible = true;
+                selectlist1.Visible = false;
+                divlist.Visible = false;
+                divcautions.Visible = true;
+                gview.Visible = true;
+       
+             
+            }
+            else
+            {
+                string script = "alert('No Numbers Found')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+
+            }
+        }
+        else
+        {
+            Session.Clear();
+            Response.Redirect("Default.aspx");
+        }
+    }
+   
+}

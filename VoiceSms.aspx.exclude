@@ -1,0 +1,104 @@
+﻿<%@ Page Title=": : SMS Voice SMS : : " Language="C#" MasterPageFile="~/SMSMasterPage.master" AutoEventWireup="true" CodeFile="VoiceSms.aspx.cs" Inherits="VoiceSms" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+ <script type="text/javascript">
+     var TotalChkBx;
+     var Counter;
+
+     window.onload = function () {
+         //Get total no. of CheckBoxes in side the GridView.
+         TotalChkBx = parseInt('<%= this.GRidVoiceSms.Rows.Count %>');
+
+         //Get total no. of checked CheckBoxes in side the GridView.
+         Counter = 0;
+     }
+
+     function HeaderClick(CheckBox) {
+         //Get target base & child control.
+         var TargetBaseControl =
+                   document.getElementById('<%= this.GRidVoiceSms.ClientID %>');
+         var TargetChildControl = "chk";
+
+         //Get all the control of the type INPUT in the base control.
+         var Inputs = TargetBaseControl.getElementsByTagName("input");
+
+         //Checked/Unchecked all the checkBoxes in side the GridView.
+         for (var n = 0; n < Inputs.length; ++n)
+             if (Inputs[n].type == 'checkbox' &&
+                            Inputs[n].id.indexOf(TargetChildControl, 0) >= 0)
+                 Inputs[n].checked = CheckBox.checked;
+
+         //Reset Counter
+         Counter = CheckBox.checked ? TotalChkBx : 0;
+     }
+
+     function ChildClick(CheckBox, HCheckBox) {
+         //get target control.
+         var HeaderCheckBox = document.getElementById(HCheckBox);
+
+         //Modifiy Counter; 
+         if (CheckBox.checked && Counter < TotalChkBx)
+             Counter++;
+         else if (Counter > 0)
+             Counter--;
+
+         //Change state of the header CheckBox.
+         if (Counter < TotalChkBx)
+             HeaderCheckBox.checked = false;
+         else if (Counter == TotalChkBx)
+             HeaderCheckBox.checked = true;
+     }
+</script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+ <table width="100%" >
+     <tr>
+        <td align="center" width="100%"  class="titlecampain1" valign="middle" colspan="2">
+           <h2> Voice SMS</h2>
+        </td>
+     </tr>
+   </table> 
+<div align="center">
+    <strong><asp:Label ID="lblselect" runat="server" Text="Select File : " ForeColor="Black" />&nbsp; </strong><asp:FileUpload ID="FileUpload1" runat="server" />
+&nbsp;&nbsp;&nbsp;<asp:Button ID="btnupload" runat="server" Text="Upload" CssClass="buttonStyle1" Height="30px" Width="80px"/></div>
+<br />
+<div align="center">
+<asp:GridView ID="GRidVoiceSms" runat="server" AutoGenerateColumns="false" 
+        AllowPaging="True" Width="50%" PageSize="10"
+        onpageindexchanging="GridView1_PageIndexChanging" 
+        onrowcreated="GridView1_RowCreated" Height="204px">
+    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+            <PagerStyle ForeColor="White" HorizontalAlign="Center" BackColor="#284775" />
+            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+    <Columns>
+    <asp:TemplateField HeaderText="Select">
+                         <ItemTemplate>
+                            <asp:CheckBox ID="chk" runat="server" />
+                         </ItemTemplate>
+                         <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="10%" />
+                         <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="10%" />
+                         <HeaderTemplate>
+                            <asp:CheckBox ID="chkall" 
+                                 onclick="javascript:HeaderClick(this);" runat="server" />
+                         </HeaderTemplate>
+                      </asp:TemplateField>
+    <asp:TemplateField >
+    <HeaderTemplate>Title</HeaderTemplate>
+    <ItemTemplate><strong>&nbsp;<asp:Label ID="lblsms" runat="server" Text='<%#Bind("SmsName") %>' ForeColor="Black"></asp:Label></strong></ItemTemplate>
+    </asp:TemplateField>
+    <asp:TemplateField >
+    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle"  />
+    <HeaderTemplate>
+    </HeaderTemplate>
+    <ItemTemplate >
+     
+     <asp:Button ID="btnpreview" runat="server" Text="Preview" CssClass="buttonStyle1" Height="30px" Width="70px"/>
+     <asp:Button ID="btndelete" runat="server" Height="30px" Text="Delete" Width="70px" CssClass="buttonStyle1"/>
+     </ItemTemplate>
+    </asp:TemplateField>
+    </Columns>
+    </asp:GridView>
+    </div>
+    <br />
+</asp:Content>
+

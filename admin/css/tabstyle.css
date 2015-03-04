@@ -1,0 +1,52 @@
+@import url('reset.css');
+
+
+/* Navigation */
+
+nav {
+	margin-bottom: 10px;
+	position: relative;
+}
+
+nav ul {
+	overflow: hidden;
+	padding-bottom: 10px;
+	border-bottom: 3px solid #F00;
+}
+
+nav li {
+	float: left;
+	margin-right: 35px;
+}
+
+nav li a {
+	color: #666;
+	font-weight: bold;
+}
+
+nav li a:hover,
+nav li a:focus,
+nav li a.current {
+	color: #000;
+}
+
+nav #indicator {
+	position: absolute;
+	left: 15px;
+	bottom: 3px;
+	width: 8px;
+	height: 5px;
+	background-image: url('../images/notch.png');
+}
+
+
+
+
+
+/* Content */
+
+#content section {
+	display: table;
+	width:100%;
+}
+

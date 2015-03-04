@@ -1,0 +1,232 @@
+/*
+Template Name: Increase HTML
+Template URI: http://increase-html.cmsmasters.net/
+Author: CMSMasters
+Author URI: http://cmsmasters.net/
+Description: The Increase Responsive HTML5 Site Template.
+Version: 1.0
+License: 
+License URI:
+Tags: light, dark, white, one-column, two-columns, left-sidebar, right-sidebar, custom-colors, post-formats, responsive, html5, css3
+*/
+.main_text {
+	margin:0;
+	padding:20px 0;
+	text-align:center;
+	font-size:28px;
+	line-height:36px;
+}
+
+.fullwidth {
+	/*background:#C00;*/ position:relative; clear:both;
+  
+}
+
+.maxwidth {
+	display:block;
+
+}
+
+img.fullwidth {
+	-ms-interpolation-mode:bicubic;
+	image-rendering:optimizeQuality;
+}
+
+#slide_top {
+    position:fixed;
+    right:20px;
+    bottom:2px;
+    z-index:999;
+    display:none;
+	padding:2px;
+    width:35px;
+    height:35px;
+	background:url(images/arrow_top.png) no-repeat scroll 50% 50% transparent;
+    text-indent:-9999px;
+	opacity:.5;
+	filter:alpha(opacity=50);
+	-webkit-border-radius:50%;
+	-moz-border-radius:50%;
+	-ms-border-radius:50%;
+	-o-border-radius:50%;
+	border-radius:50%;
+	-webkit-transition:opacity .2s ease-in-out 0s, display .2s ease-in-out 0s;
+	-moz-transition:opacity .2s ease-in-out 0s, display .2s ease-in-out 0s;
+	-ms-transition:opacity .2s ease-in-out 0s, display .2s ease-in-out 0s;
+	-o-transition:opacity .2s ease-in-out 0s, display .2s ease-in-out 0s;
+	transition:opacity .2s ease-in-out 0s, display .2s ease-in-out 0s;
+}
+
+#slide_top:hover {
+	opacity:1;
+	filter:alpha(opacity=100);
+}
+
+a span.image_rollover {
+	position:absolute;
+	top:0;
+	left:0;
+	display:block;
+	width:100%;
+	height:100%;
+	background:transparent url(file:///D|/sharada/pnksoftec.com/images/hover_content.png) 50% -100px no-repeat;
+	opacity:.3;
+	filter:alpha(opacity=30);
+	-webkit-transition:background-color .3s ease-in-out, background-position .3s ease-in-out;
+	-moz-transition:background-color .3s ease-in-out, background-position .3s ease-in-out;
+	-ms-transition:background-color .3s ease-in-out, background-position .3s ease-in-out;
+	-o-transition:background-color .3s ease-in-out, background-position .3s ease-in-out;
+	transition:background-color .3s ease-in-out, background-position .3s ease-in-out;
+}
+
+.post_type_shortcode.four_blocks article + article + article + article {
+	padding-right:0;
+	padding-left:0;
+}*/
+
+.project .cmsms_media .cmsms_media_box .image_border {padding:4px;}
+
+.project.four_blocks .cmsms_media .cmsms_media_box {width:22%;}
+
+.project.three_blocks .cmsms_media .cmsms_media_box {width:30.6%;}
+
+.project.two_blocks .cmsms_media .cmsms_media_box {width:48%;}
+
+.portfolio_container.four_blocks .cmsms_media .cmsms_media_box {width:21%;}
+
+.portfolio_container.three_blocks .cmsms_media .cmsms_media_box {width:29%;}
+
+.portfolio_container.two_blocks .cmsms_media .cmsms_media_box {width:46%;}
+
+.portfolio_container.four_blocks .portfolio {width:21%;}
+
+.post_type_shortcode.four_blocks article { width:178px;  /* background:#090;*/}
+
+.portfolio_container.three_blocks .portfolio {width:29.3%;}
+
+.portfolio_container.two_blocks .portfolio {width:45%;}
+
+.portfolio_container.one_block .portfolio {
+	margin-bottom:10px;
+	width:100%;
+}
+
+/*.portfolio_container .portfolio .post_category {margin-bottom:14px;}
+*/
+.portfolio_container.short .portfolio .post_category {margin-bottom:0;}
+
+.portfolio_container.one_block .portfolio figure.fullwidth {
+	min-width:63%;
+	max-width:63%;
+}
+
+.portfolio_container.one_block .portfolio .port_text {
+/*	float:left;
+	padding-left:2%;
+*/	min-width:33%;
+	max-width:33%;
+}
+
+.portfolio_inner {
+	 height:143px;/* background:#000; */
+	position:relative;
+	overflow:hidden; margin-top:3px;
+}
+
+.portfolio_inner > a {
+overflow:hidden;
+	position:absolute;
+	display:block;
+	z-index:1;
+}
+
+.portfolio_inner .project_rollover .entry-header .entry-title a, 
+.portfolio_inner .project_rollover .entry-header .cmsms_category li a {
+	position:relative;
+	z-index:10;
+	opacity:1; padding-top:-10px;
+/*	filter:alpha(opacity=100); 
+*/	-webkit-transition:opacity 0.3s ease-in-out 0s;
+	-moz-transition:opacity 0.3s ease-in-out 0s;
+	-ms-transition:opacity 0.3s ease-in-out 0s;
+	-o-transition:opacity 0.3s ease-in-out 0s;
+	transition:opacity 0.3s ease-in-out 0s;
+}
+
+.portfolio_inner .project_rollover .entry-header .entry-title a:hover, 
+.portfolio_inner .project_rollover .entry-header .cmsms_category li a:hover {
+	/*opacity:.7;*/
+/*	filter:alpha(opacity=70);
+*/}
+
+.portfolio_inner figure {
+	width:100%;
+	height:0;
+/*	padding:0 0 100%;*/
+	margin:0;
+}
+
+.portfolio_container.two_blocks .portfolio_inner figure {
+	width:100%;
+	height:0;
+/*	padding:0 0 66%;
+*/	margin:0;
+}
+
+.portfolio_container.one_block .portfolio_inner figure {
+	width:100%;
+	height:0;
+/*	padding:0 0 56%;
+*/	margin:0;
+}
+
+.portfolio_inner .project_rollover {
+    position:absolute;
+    left:0;
+	bottom:0;
+	display:block;
+	padding:11px 20px 9px 17px;
+	width:100%;
+	height:25%;
+	max-height:25%
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	-webkit-transition:height 0.3s ease-in-out 0s;
+	-moz-transition:height 0.3s ease-in-out 0s;
+	-ms-transition:height 0.3s ease-in-out 0s;
+	-o-transition:height 0.3s ease-in-out 0s;
+	transition:height 0.3s ease-in-out 0s;  /* background:#dce1dc;*/
+}
+
+.portfolio_inner .project_rollover:before {
+	position:absolute;
+	z-index:11;
+	content:"";
+	bottom:0;
+	left:0;
+	width:100%;
+	height:5px;
+	background:inherit;
+	-webkit-transition:height 0.3s ease-in-out 0s;
+	-moz-transition:height 0.3s ease-in-out 0s;
+	-ms-transition:height 0.3s ease-in-out 0s;
+	-o-transition:height 0.3s ease-in-out 0s;
+	transition:height 0.3s ease-in-out 0s;
+}
+
+.portfolio_container.one_block .portfolio_inner .project_rollover:before {
+	position:absolute;
+	content:"";
+	bottom:0;
+	left:0;
+	width:100%;
+	height:22px;
+	background:inherit;
+	-webkit-transition:height 0.3s ease-in-out 0s;
+	-moz-transition:height 0.3s ease-in-out 0s;
+	-ms-transition:height 0.3s ease-in-out 0s;
+	-o-transition:height 0.3s ease-in-out 0s;
+	transition:height 0.3s ease-in-out 0s;
+}
+

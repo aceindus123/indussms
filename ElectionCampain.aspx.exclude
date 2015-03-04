@@ -1,0 +1,191 @@
+﻿<%@ Page Title=": : SMS Election Campain : :" Language="C#" MasterPageFile="~/SMSMasterPage.master"  AutoEventWireup="true" CodeFile="ElectionCampain.aspx.cs" Inherits="ElectionCampain" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<script type="text/javascript">
+function validateLimit(obj, divID, maxchar) {
+ 
+        objDiv = get_object(divID);
+ 
+        if (this.id) obj = this;
+ 
+        var remaningChar = maxchar - trimEnter(obj.value).length;
+ 
+        if (objDiv.id) {
+            objDiv.innerHTML = remaningChar + " characters left";
+        }
+        if (remaningChar <= 0) {
+            obj.value = obj.value.substring(maxchar, 0);
+            if (objDiv.id) {
+                objDiv.innerHTML = "0 characters left";
+            }
+            return false;
+        }
+        else
+        { return true; }
+    }
+ 
+    function get_object(id) {
+        var object = null;
+        if (document.layers) {
+            object = document.layers[id];
+        } else if (document.all) {
+            object = document.all[id];
+        } else if (document.getElementById) {
+            object = document.getElementById(id);
+        }
+        return object;
+    }
+    function trimEnter(dataStr) {
+        return dataStr.replace(/(\r\n|\r|\n)/g, "");
+    }
+    </script>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="MaxLength.min.js"></script>
+    <script src="css/MaxLength.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            //Normal Configuration
+            $("[id*=txtmobilesubject]").MaxLength({ MaxLength: 160 });
+
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+<div class="container"   >
+  <table width="100%" >
+     <tr>
+        <td align="center" width="100%"  class="titlecampain1" valign="middle" colspan="2">
+           <h2> Election Campain</h2>
+        </td>
+     </tr>
+   </table> 
+
+   <table  align="center" width="100%">
+      <tr>
+         <td align="center"  width="70%">
+          <asp:RadioButton ID="rdsingle" runat="server" Text="For Single Number " AutoPostBack="true"  GroupName="rd1" Checked="true"   
+            oncheckedchanged="rdsingle_CheckedChanged" />
+           <asp:RadioButton ID="rdmultiple" runat="server" Text="For Multiple Numbers "  AutoPostBack="true" GroupName="rd1"  Checked="false"   CssClass="radiobuttons1"
+               oncheckedchanged="rdmultiple_CheckedChanged"   />
+                <asp:RadioButton ID="rdlist" runat="server" Text="Create List "  
+                 AutoPostBack="true" GroupName="rd1"  Checked="false" oncheckedchanged="rdlist_CheckedChanged"   CssClass="radiobuttons1"
+                 />
+        </td>
+      </tr>
+   </table>
+   <br />
+
+  <table  align="center" width="100%" id="SINGLESMS"  runat="server">
+     <tr class="titlecampain" id="selectlist1" runat="server" >
+       <td align="right" > 
+       <asp:Label ID="Label1" runat="server" Font-Names="Segoe UI" Text=" Enter Mobile Number * :   " ForeColor="Black" ></asp:Label>
+       </td>
+    
+       <td>
+         <asp:TextBox ID="txtmobileelection" runat="server" Width="250" MaxLength="10" ></asp:TextBox>
+          <asp:RequiredFieldValidator ID="mobileno" runat="server" ControlToValidate="txtmobileelection" ForeColor="Red"
+                 ErrorMessage="*"  ValidationGroup="val1" SetFocusOnError="True"></asp:RequiredFieldValidator>
+           <asp:RegularExpressionValidator ID="mNoValidator" runat="server" ControlToValidate="txtmobileelection" ForeColor="Red"
+                        ErrorMessage="Mobile Number must be 10 digits"  ValidationGroup="val1" SetFocusOnError="True"
+                Display="dynamic" ValidationExpression="^[0-9]{10}$" > </asp:RegularExpressionValidator>
+       </td>
+     </tr>
+     <tr class="titlecampain" id="selectlist" runat="server">
+        <td align="right" valign="top"> 
+       <asp:Label ID="Label2" runat="server" Font-Names="Segoe UI" Text=" Select List Name * :   "  ForeColor="Black"></asp:Label>
+       </td>
+       <td>
+         <asp:TextBox ID="TextBox1" runat="server" Width="350" Height="50px" MaxLength="10" Enabled="false" TextMode="MultiLine" ></asp:TextBox>
+    
+          
+       </td>
+     </tr>
+
+     <tr class="titlecampain">
+       <td align="right"  valign="top"> 
+       <asp:Label ID="lblsubject" runat="server" Font-Names="Segoe UI" Text="Subject * :   " ForeColor="Black"></asp:Label>
+       </td>
+       <td>
+         <asp:TextBox ID="txtmobilesubject" runat="server" TextMode="MultiLine" Width="350" Height="100px" ></asp:TextBox>
+
+         
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1"  
+                    runat="server" ControlToValidate="txtmobilesubject" ForeColor="Red"
+                        ErrorMessage="*" 
+                        ValidationGroup="val1" SetFocusOnError="True">
+                        </asp:RequiredFieldValidator>
+       </td>
+     </tr>
+     <tr>
+        <td>
+           &nbsp;
+       </td>
+        <td>
+          <asp:Button ID="Button1" runat="server" Text="Send" onclick="Button1_Click" ValidationGroup="val1" />
+          <asp:Button ID="Button2" runat="server" Text="Back" onclick="Button2_Click" />
+       </td>
+     </tr>
+     <tr>
+        <td align="center" colspan="2">
+          <asp:Label ID="lblmsg"  runat="server" ></asp:Label>
+        </td>
+     </tr>
+     </table>
+
+     <br />
+     <div id="divlist" runat="server" align="center" style="color:#565656;" >
+     Enter List Name :   <asp:TextBox ID="txtlist" runat="server"  Width="150" Height="18px" ></asp:TextBox>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator2"  
+                    runat="server" ControlToValidate="txtlist" ForeColor="Red"
+                        ErrorMessage="*" 
+                        ValidationGroup="val5" SetFocusOnError="True">
+                        </asp:RequiredFieldValidator><br /><br />
+         Upload Your Mobile Numbers List: <asp:FileUpload ID="uploadlist" runat="server"  />
+         <asp:Button ID="btnupload" runat="server" Text="Upload"  ValidationGroup="val5"
+             onclick="btnupload_Click" />
+     </div>
+     <br />
+     <div id="divcautions" runat="server" style="color:#565656;">
+          <h3><u>Cautions</u></h3>
+          1. For Multiple numbers upload MS Excel list(.xls file)<br />
+          2. Upload maximum 20 numbers at a time <br />
+          3. Column Name must be mobile. ex : mobile <br />
+          4. You Must Select List  throwgh send message to multiple numbers
+          <br />
+          <br />
+     </div>
+
+     <div align="center" id="gview" runat="server" visible="false">
+     <h3> List Names</h3><br />
+
+          <asp:DataList ID="gv1" runat="server" RepeatColumns="4"
+         RepeatDirection="Horizontal" CellPadding="4" ForeColor="#333333" 
+         onitemcommand="dtlistname_ItemCommand" Width="504px">
+         <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+
+         <AlternatingItemStyle BackColor="White" />
+         <ItemStyle BackColor="#EFF3FB" />
+         <SelectedItemStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+         <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+         <ItemTemplate>&nbsp; 
+         <asp:LinkButton ID="lnklist" runat="server" CommandArgument ='<%#Eval("listname")%>'  Text= '<%#Eval("listname")%>' >  </asp:LinkButton> 
+
+         </ItemTemplate>
+          </asp:DataList>
+          <br />
+  <%--  <asp:GridView ID="gv1" runat="server" AutoGenerateColumns="false">
+       <Columns>
+          <asp:TemplateField HeaderText="Name">
+             <ItemTemplate >
+               <asp:LinkButton ID="lnklist" runat="server" Text='<%# Eval("listname") %>'></asp:LinkButton>
+            </ItemTemplate>
+          </asp:TemplateField>
+       </Columns>
+    </asp:GridView>--%>
+     </div>
+
+</div>
+</asp:Content>
+
