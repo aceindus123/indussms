@@ -116,22 +116,20 @@
             <div class="one">
                 <h3>
                     <img src="images/message.png" width="31" height="32" />
-                    Wedding/Event SMS
+                    Events SMS
                 </h3>
                 <p>
-                    Wedding/Event SMS Where the wedding day is all about celebration and enjoyment of
-                    every virtue a thing which
+                     Whether the event is a wedding or an election campaign, you can easily send sms to your network with Events SMS option
                 </p>
                 <div class="read">
                     <a href="SMSLogin.aspx">Read more</a></div>
             </div>
             <div class="one">
                 <h3>
-                    <img src="images/election-campaign.png" />
-                    Election Campaign</h3>
+                    <img src="images/watch.png" width="31" height="32"  />
+                    Schedule SMS</h3>
                 <p>
-                    Reach your voters directly through SMS. Provide Information regarding Political
-                    campaigns.
+                    Schedule an SMS so that it is sent at a future date with this application. Choose the date and then enter the phone number and a message.<br />
                 </p>
                 <div class="read">
                     <a href="SMSLogin.aspx">Read more</a></div>

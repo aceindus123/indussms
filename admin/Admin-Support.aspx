@@ -24,6 +24,16 @@
          font-weight:bold; 
         }
     </style>
+    <style type="text/css">
+        .lnk
+        {
+          text-decoration:none;
+        }
+        .lnk:hover
+        {
+            text-decoration:underline;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -34,7 +44,7 @@
     <br />
     <head:header ID="head1" runat="server" />
     <br />
-     <br /><br /><br /><br />
+     <br />
         <table>
            <tr>
               <td align="center" id="View" runat="server" >
@@ -63,7 +73,7 @@
                                 AutoGenerateColumns="False"  BorderColor="#CCCCCC" BorderStyle="Solid"
                 BorderWidth="3px" CellPadding="3" Font-Bold="False" Font-Italic="False"  
                                 Font-Overline="False" Font-Size="10pt" Font-Strikeout="False" 
-                                 OnPageIndexChanging="PageIndexChanging"
+                                 OnPageIndexChanging="PageIndexChanging" 
                 Font-Underline="False"   BackColor="White" AllowPaging="True"  
                                 PagerStyle-Mode="NumericPages"  PagerStyle-BackColor="White"   PageSize="10" 
                                ShowHeaderWhenEmpty="true"
@@ -72,15 +82,30 @@
                     <PagerStyle  ForeColor="#003399" HorizontalAlign="Center" Height="25px" Width="100%" CssClass="letterspace" BackColor="#bfbfbf"/>
                    <HeaderStyle Font-Bold="True"  ForeColor="#003399" Height="30px" BackColor="#bfbfbf" Font-Size="14px" Font-Names="Arial" /> 
                                   <Columns>
-                          <asp:BoundField DataField="iid" ItemStyle-ForeColor="Gray"  ItemStyle-BorderColor="#CCCCCC" ItemStyle-HorizontalAlign="Center"  HeaderText="Sid" ControlStyle-Width="10%"/>            
-                    <asp:BoundField DataField="suject" ItemStyle-ForeColor="Gray"  ItemStyle-BorderColor="#CCCCCC" ItemStyle-HorizontalAlign="Center"  HeaderText="Subject" ControlStyle-Width="10%"/>            
+                                  <asp:TemplateField HeaderText="SlNo." ItemStyle-HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                   <asp:Label id="lb" runat="server" Text='<%#Container.DataItemIndex+1 %>' ForeColor="Gray"></asp:Label></ItemTemplate>
+                                  </asp:TemplateField>
+                                     
+                          <%--<asp:BoundField DataField="iid" ItemStyle-ForeColor="Gray"  ItemStyle-BorderColor="#CCCCCC" ItemStyle-HorizontalAlign="Center"  HeaderText="Sid" ControlStyle-Width="10%"/>            --%>
+                    <asp:BoundField DataField="suject" ItemStyle-ForeColor="Gray"  ItemStyle-BorderColor="#CCCCCC" ItemStyle-HorizontalAlign="Center"  HeaderText="Subject" ControlStyle-Width="15%" />            
 
                         <asp:BoundField DataField="phonenumber"  ItemStyle-ForeColor="Gray"  ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC"  HeaderText="Phone Number"  ControlStyle-Width="30%" />
-                        <asp:BoundField DataField="username"  ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC"  HeaderText="User Name" ControlStyle-Width="10%"/>
-                        <asp:BoundField DataField="status"   ItemStyle-ForeColor="Gray"  ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#CCCCCC" HeaderText="Status" ControlStyle-Width="10%"/>
-                        <asp:BoundField DataField="content"    ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC" HeaderText="Content" ControlStyle-Width="30%"/>
-                        <asp:BoundField DataField="replay" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC" HeaderText="Replay" ControlStyle-Width="30%" />
-                        <asp:TemplateField HeaderText="Responce" ><ItemTemplate > <asp:LinkButton ID="linknumber" runat="server" Font-Underline="false" Text="Replay" 
+                        <asp:BoundField DataField="username"  ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC"  HeaderText="User Name" ControlStyle-Width="15%"/>
+                        <asp:TemplateField HeaderText="Status" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="15%" >
+                        <ItemTemplate>
+                        <asp:LinkButton ID="lnkackactive" runat="server" Text='<%#Eval("status") %>' CommandArgument='<%#Eval("iid") %>' OnCommand="status"  CssClass="lnk" ></asp:LinkButton>
+                        </ItemTemplate>
+                        
+                        </asp:TemplateField>
+                        <%--<asp:BoundField DataField="status"   ItemStyle-ForeColor="Gray"  ItemStyle-HorizontalAlign="Center"  ItemStyle-BorderColor="#CCCCCC" HeaderText="Status" ControlStyle-Width="10%"/>--%>
+                        <asp:BoundField DataField="content"    ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" HeaderText="Content"  ItemStyle-Width="15%" HtmlEncode="false"/>
+                        <asp:TemplateField ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center"  HeaderText="Reply" ItemStyle-Width="20%">
+                        <ItemTemplate>
+                        <div style="overflow-y:auto;overflow-x:auto;word-break:break-all ">
+                            <asp:Label ID="lblreply" runat="server" Text='<%#Eval("replay") %>' Width="200px"></asp:Label>
+                        <%--<asp:BoundField DataField="replay" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC" HeaderText="Replay" ControlStyle-Width="30%" />--%></div></ItemTemplate></asp:TemplateField>
+                        <asp:TemplateField HeaderText="Responce" ItemStyle-HorizontalAlign="Center" ><ItemTemplate > <asp:LinkButton ID="linknumber" runat="server" Text="Replay" CssClass="lnk" 
                                   CommandArgument='<%#Eval("iid") %>' OnCommand="ListName"></asp:LinkButton>
 
                         </ItemTemplate></asp:TemplateField>
@@ -109,6 +134,11 @@
                                     GridLines="Horizontal" Width="900px" DataKeyNames="Eid" 
                                     onrowdatabound="gvException_RowDataBound" > 
                                <Columns>
+                               <asp:TemplateField HeaderText="SlNo">
+                               <ItemTemplate>
+                                   <asp:Label ID="Label4" runat="server" Text='<%#Container.DataItemIndex+1 %>'></asp:Label>
+                               </ItemTemplate>
+                               </asp:TemplateField>
                               <asp:BoundField DataField="Excep_desc" HeaderText="Error Message" /> 
                               <asp:BoundField DataField="Excep_Postdate" HeaderText="Date" /> 
                               <asp:BoundField DataField="Excep_page" HeaderText="Page" />

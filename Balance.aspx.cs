@@ -38,22 +38,53 @@ public partial class Balance : System.Web.UI.Page
                 btns.Visible = false;
                 btn2.Visible = false;
                 btn3.Visible = false;
+                divview.Visible = false;
                 // gv.Visible = false;
                 ds = reg.grid();
-                string amnt = reg.amount(id);
-                Label1.Text = amnt;
-                string exp = reg.expiry(id);
-                Label3.Text = exp;
-                string sms = reg.smsleft(id);
-                Label2.Text = sms;
-                string voiceamt = reg.voiceamount(id);
-                Label4.Text = voiceamt;
-                string voiceexp = reg.voiceexpiry(id);
-                Label6.Text = voiceexp;
-                string voicesms = reg.voicesms(id);
-                Label5.Text = voicesms;
+
+                DataSet ds1 = reg.amount(id);
+
+                if (ds1.Tables[0].Rows.Count > 0)
+                {
+                    Label1.Text = ds1.Tables[0].Rows[0]["amountleft"].ToString();
+                    Label3.Text = ds1.Tables[0].Rows[0]["expirydate"].ToString();
+                    Label2.Text = ds1.Tables[0].Rows[0]["smsleft"].ToString();
+                }
+                else
+                {
+                    Label1.Text = "0";
+                   // Label3.Text = "0";
+                    Label3.Visible = false;
+                    Label7.Visible = true;
+                    Label2.Text = "0"; 
+                    }
+              //  string amnt = reg.amount(id);
+              //  Label1.Text = amnt;
+              ////  string exp = reg.expiry(id);
+              //  Label3.Text = exp;
+              ////  string sms = reg.smsleft(id);
+              //  Label2.Text = sms;
+                DataSet ds2 = reg.voiceamount(id);
+                //Label4.Text = voiceamt;
+                //string voiceexp = reg.voiceexpiry(id);
+                //Label6.Text = voiceexp;
+                //string voicesms = reg.voicesms(id);
+                //Label5.Text = voicesms;
+                if (ds1.Tables[0].Rows.Count > 0)
+                {
+                    Label4.Text = ds2.Tables[0].Rows[0]["amountleft"].ToString();
+                    Label6.Text = ds2.Tables[0].Rows[0]["expirydate"].ToString();
+                    Label5.Text = ds2.Tables[0].Rows[0]["smsleft"].ToString();
+                }
+                else
+                {
+                    Label4.Text = "0";
+                    Label6.Visible = false;
+                    Label8.Visible = true;
+                    Label5.Text = "0";
+                }
+
                 bindgrid();
-             
             }
             else
             {
@@ -165,7 +196,7 @@ public partial class Balance : System.Web.UI.Page
     protected void btnvoice_Click(object sender, EventArgs e)
     {
         string id = Convert.ToString(Session["User"]);
-        string date = Convert.ToString(DateTime.Now);
+        DateTime date = DateTime.Now;
         lblbuy.Visible = true;
         SqlCommand cmd = new SqlCommand("voicerqst", con);
         cmd.CommandType = CommandType.StoredProcedure;
@@ -179,12 +210,13 @@ public partial class Balance : System.Web.UI.Page
     
     protected void btn1_Click(object sender, EventArgs e)
     {
-        
+        divview.Visible = true;
         container.Visible = false;
         AddToDataTable();
         BindGrid();
         btn2.Visible = true;
         btn3.Visible = true;
+        btns.Visible = false;
     }
   
     protected void gv_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -215,6 +247,9 @@ public partial class Balance : System.Web.UI.Page
             string amount = tc.Text;
             tc = grow.Cells[2];
             string desc = tc.Text;
+            try
+            {
+
             SqlCommand cmd = new SqlCommand("insertcart", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@username", Uname);
@@ -224,8 +259,7 @@ public partial class Balance : System.Web.UI.Page
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();
-            try
-            {
+            
                 Response.Redirect("ShoppingCart.aspx?username=" + Uname);
                
 
@@ -277,6 +311,8 @@ public partial class Balance : System.Web.UI.Page
     {
         container.Visible = false;
         btns.Visible = true;
+        divview.Visible = false;
+
     }
     protected void gv_RowDataBound1(object sender, GridViewRowEventArgs e)
     {

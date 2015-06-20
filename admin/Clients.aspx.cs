@@ -15,6 +15,10 @@ public partial class admin_Users : System.Web.UI.Page
 {
     SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
     DataSet dsadmin = new DataSet();
+    Registration obj = new Registration();
+    string strscript = string.Empty;
+    string Msg = string.Empty;
+    DataSet dscheck = new DataSet();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -308,4 +312,138 @@ public partial class admin_Users : System.Web.UI.Page
         }
         BindData();
     }
-  }
+    protected void btn1_Click(object sender, EventArgs e)
+    {
+        
+        View1.Visible = false;
+        createuser.Visible = true;
+        btn1.Visible = false;
+        View.Visible = false;
+        CreateClient.Visible = true;
+
+      
+    }
+
+    protected void Email_TextChanged(object sender, EventArgs e)
+    {
+        dscheck.Clear();
+        dscheck = obj.checkemail(Email.Text);
+        if (dscheck.Tables[0].Rows.Count > 0)
+        {
+            regemail.Visible = true;
+            regemail.Text = "Email id already existed";
+            Email.Text = "";
+        }
+        else
+        {
+            regemail.Visible = true;
+            regemail.Text = "Email id available";
+        }
+    }
+    protected void Phone_TextChanged(object sender, EventArgs e)
+    {
+        dscheck.Clear();
+        dscheck = obj.checkmobile(Phone.Text);
+        if (dscheck.Tables[0].Rows.Count > 0)
+        {
+            regphone.Visible = true;
+            regphone.Text = "Mobile number already existed";
+            Phone.Text = "";
+        }
+        else
+        {
+            regphone.Visible = true;
+            regphone.Text = "Mobile number is available";
+        }
+    }
+    protected void btncancel_Click(object sender, ImageClickEventArgs e)
+    {
+        Name.Text = "";
+        txtsurname.Text = "";
+        Email.Text = "";
+        Phone.Text = "";
+        Password.Text = "";
+        ConfirmPassword.Text = "";
+        regemail.Visible = false;
+        regphone.Visible = false;
+    }
+    private void insertvoicebalance(string p, int amount, string p_2, DateTime p_3, DateTime validupto, int p_4, int p_5, string p_6, int a)
+    {
+        string sql = "insert into voicesmsexpenses(uname,Amount,Smstype,Purchasedate,expirydate,numofsms,smsleft,amountleft,status ) values('" + p + "'," + amount + ",'" + p_2 + "','" + p_3 + "','" + validupto + "'," + p_4 + "," + p_5 + ",'" + p_6 + "'," + a + ")";
+        sqlConnection.Open();
+        SqlCommand cmd = new SqlCommand(sql, sqlConnection);
+        cmd.ExecuteNonQuery();
+        sqlConnection.Close();
+
+    }
+
+    private void inserttextbalance(string p, int amount, string p_2, DateTime p_3, DateTime validupto, int p_4, int p_5, string p_6, int a)
+    {
+        string sql = "insert into textsmsexpenses(uname,Amount,Smstype,Purchasedate,expirydate,numofsms,smsleft,amountleft,status ) values('" + p + "'," + amount + ",'" + p_2 + "','" + p_3 + "','" + validupto + "'," + p_4 + "," + p_5 + ",'" + p_6 + "'," + a + ")";
+        sqlConnection.Open();
+        SqlCommand cmd = new SqlCommand(sql, sqlConnection);
+        cmd.ExecuteNonQuery();
+        sqlConnection.Close();
+
+
+    }
+    protected void Create_Click(object sender, ImageClickEventArgs e)
+    {
+        SqlCommand cmd = new SqlCommand();
+        SqlDataAdapter sda = new SqlDataAdapter();
+        DataSet ds = new DataSet();
+        string date = Convert.ToString(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
+
+        string name = Name.Text;
+        string lname = txtsurname.Text;
+        string email = Email.Text;
+        string phone = Phone.Text;
+        string pwd = Password.Text;
+        string cpwd = ConfirmPassword.Text;
+        int mobilestatus = 1;
+
+        DateTime validupto = Convert.ToDateTime(System.DateTime.Now.Date.AddDays(30).ToString("MM/dd/yyyy hh:mm:ss"));
+        DateTime regdate = Convert.ToDateTime(System.DateTime.Now.Date.ToString(""));
+        int amount = 2;
+        int amount1 = 2;
+
+
+        try
+        {
+            sqlConnection.Open();
+            cmd = new SqlCommand("createclient", sqlConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@fname", name);
+            cmd.Parameters.AddWithValue("@lname", lname);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@phno", phone);
+            cmd.Parameters.AddWithValue("@password", pwd);
+            cmd.Parameters.AddWithValue("@pdate", date);
+            cmd.Parameters.AddWithValue("@mobilestatus", mobilestatus);
+            sda = new SqlDataAdapter(cmd);
+            sda.Fill(ds);
+
+            sqlConnection.Close();
+
+            inserttextbalance(phone, amount, "Text SMS", regdate, validupto, 4, 4, "2", 1);
+            insertvoicebalance(phone, amount, "Voice SMS", regdate, validupto, 2, 2, "2", 1);
+
+            string strScript = "alert('Client Registered Successfully');location.replace('Clients.aspx');";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", strScript, true);
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+        Name.Text = "";
+        txtsurname.Text = "";
+        Email.Text = "";
+        Phone.Text = "";
+        Password.Text = "";
+        ConfirmPassword.Text = "";
+        regemail.Visible = false;
+        regphone.Visible = false;
+    }
+}

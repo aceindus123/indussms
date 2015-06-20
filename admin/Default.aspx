@@ -22,40 +22,7 @@
   <br />
       <br />
        <div>
-          <%-- <table border="0" align="center">
-             <tr>
-                 <td colspan="2">
-                    <img src="images/newsletters.gif" align="left" alt=""/>
-                   <asp:Label ID="lablogin" runat ="server" Text="Admin Login"   Font-Bold="True" Font-Names="Arial" Font-Size="14pt"   ForeColor="#666666"></asp:Label>
-                </td>
-             </tr>
-             <tr>
-                <td style="height:35px;">
-                    <asp:Label ID ="ltrlUserName" Text="User Name :" runat ="server" Font-Bold="True" Font-Names="Arial" Font-Size="12pt" ForeColor="#006699" ></asp:Label>
-                   <asp:RequiredFieldValidator ID="Requiredfieldvalidator3" runat="server" ControlToValidate="UserID" Text="*" />
-                </td>
-                 <td>  
-                    <asp:TextBox ID="UserID" runat="server" Width="164px" Font-Size="12pt" />        
-                 </td>
-             </tr>
-             <tr>
-               <td style="height:35px;">
-                   <asp:Label ID="ltrlPwd" runat="server" Text="Password :" Font-Bold="True" Font-Names="Arial" Font-Size="12pt" ForeColor="#006699"></asp:Label>
-                    <asp:RequiredFieldValidator ID="Requiredfieldvalidator1" runat="server" ControlToValidate="Password" Text="*" />
-               </td>
-               <td>
-                   <asp:TextBox ID="Password" runat="server" TextMode="Password" Width="164px" Font-Size="12pt" />        
-               </td>           
-             </tr>
-             <tr>
-               <td colspan="2"><br />
-                  <div style="float:right;"><asp:ImageButton ID="imgLogin" runat="server" 
-                          ImageUrl="~/admin/images/login.png" onclick="Signin_Click"/></div>          
-      </td>
-   </tr>
-   </table>--%>
-
-
+    
    <table width="83%" border="0" align="center">
                 <tr>
                  <td colspan="2" align="center">
@@ -106,7 +73,7 @@
          <tr id="tdjoblogin" runat="server">
           <td height="30" align="right" style="font-size:15px"><asp:Label ID ="Label2" Text="User Name :" runat ="server" Font-Bold="True" Font-Names="Arial" Font-Size="12pt" ForeColor="#006699" ></asp:Label></td>
           <td colspan="4" style="padding-left:15px;"> 
-            <asp:TextBox ID="txtuname" runat="server" Width="190px" Height="20px" Font-Names="Arial" Font-Size="11pt"></asp:TextBox>
+            <asp:TextBox ID="txtuname" runat="server" Width="186px" Height="18px" Font-Names="Arial" Font-Size="11pt"></asp:TextBox>
              <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage=" Enter User Name" ControlToValidate="txtuname" ValidationGroup="login">*</asp:RequiredFieldValidator>
               <ad1:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender1" runat="server" Enabled="true" TargetControlID="txtuname" WatermarkText="Enter User Name" WatermarkCssClass="watermarked">
               </ad1:TextBoxWatermarkExtender>
@@ -116,7 +83,7 @@
           <tr>
           <td align="right" style="font-size:15px"><asp:Label ID ="Label3" Text="Password :" runat ="server" Font-Bold="True" Font-Names="Arial" Font-Size="12pt" ForeColor="#006699" ></asp:Label></td>
           <td colspan="4" valign="top" style="padding-left:15px;">
-            <asp:TextBox ID="txtpwd" runat="server" Width="190px" Height="20px" TextMode="Password" Font-Names="Arial" Font-Size="11pt"></asp:TextBox>
+            <asp:TextBox ID="txtpwd" runat="server" Width="186px" Height="18px" TextMode="Password" Font-Names="Arial" Font-Size="11pt"></asp:TextBox>
             <asp:RequiredFieldValidator ID="rfvpwd" ControlToValidate="txtpwd" 
                 runat="server" ErrorMessage="Enter the Password" ValidationGroup="login">*</asp:RequiredFieldValidator>
              <ad1:TextBoxWatermarkExtender ID="TextBoxWatermarkExtender2" runat="server" Enabled="true" TargetControlID="txtpwd" WatermarkText="Enter Password"  WatermarkCssClass="watermarked">

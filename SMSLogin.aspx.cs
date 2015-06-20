@@ -29,45 +29,60 @@ public partial class SMSLogin : System.Web.UI.Page
         try
         {
             string mobile1 = UserID.Text;
-            Session["User"] = mobile1;
             //  string email1= txtemail.Text;
             string pwd1 = Password.Text;
             int confirm = reg.confirmuser(mobile1, pwd1);
 
             if (confirm == 1)
             {
-                    //string date = Convert.ToString(System.DateTime.Now.ToString());
-                    DateTime date = Convert.ToDateTime(System.DateTime.Now.ToString());
-                    Session["date"] = date;
-                    string ip = HttpContext.Current.Request.UserHostAddress;
-                    string ipa = Request.UserHostAddress;
-                    string ip1 = GetIP();
-                    Session["ip"] = ip1;
-                    int status = 2;
-                    SqlCommand cmd = new SqlCommand("sploginreport", sqlConnection);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Uname", mobile1);
-                    cmd.Parameters.AddWithValue("@IpAddress", ip1);
-                    cmd.Parameters.AddWithValue("@Datetime", date);
-                    cmd.Parameters.AddWithValue("@status", status);
+                Session["User"] = mobile1;
 
-                    sqlConnection.Open();
-                    cmd.ExecuteNonQuery();
-                    sqlConnection.Close();
+                //string date = Convert.ToString(System.DateTime.Now.ToString());
+                DateTime date = Convert.ToDateTime(System.DateTime.Now.ToString());
+                Session["date"] = date;
+                string ip = HttpContext.Current.Request.UserHostAddress;
+                string ipa = Request.UserHostAddress;
+                string ip1 = GetIP();
+                Session["ip"] = ip1;
+                int status = 2;
+                SqlCommand cmd = new SqlCommand("sploginreport", sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Uname", mobile1);
+                cmd.Parameters.AddWithValue("@IpAddress", ip1);
+                cmd.Parameters.AddWithValue("@Datetime", date);
+                cmd.Parameters.AddWithValue("@status", status);
+
+                sqlConnection.Open();
+                cmd.ExecuteNonQuery();
+                sqlConnection.Close();
+                DataSet ds1 = reg.amount(mobile1);
+
+
+                if ((ds1.Tables[0].Rows[0]["Status"].ToString() == "1") && (ds1.Tables[0].Rows[0]["Amount"].ToString() == "2"))
+                {
+                    Response.Redirect("SMsDemo.aspx");
+
+                }
+                else 
+                {
                     Response.Redirect("SMSMainMenu.aspx");
+
+                }
+
             }
             else
             {
                 string script = "alert('Mobile Number / Password is  invalid ')";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
             }
-        }    
+        }
         catch (Exception ex)
         {
             err.insert_exception(ex, excep_page);
         }
     }
-     protected string GetIP()
+
+    protected string GetIP()
     {
         IPAddress[] addr = new IPAddress[0];
         try
@@ -87,11 +102,13 @@ public partial class SMSLogin : System.Web.UI.Page
         { }
         return addr[addr.Length - 2].ToString();
     }
+
     protected void HyperLink1_Click(object sender, EventArgs e)
     {
         Panel1.Visible = false;
         frgetdiv.Visible = true;
     }
+
     protected void btncancel_Click(object sender, EventArgs e)
     {
         frgetdiv.Visible = false;
@@ -145,7 +162,7 @@ public partial class SMSLogin : System.Web.UI.Page
         Body += "<b>Password :</b> " + pwd + "<br/>";
         Body += "<b>Mobile Number :</b> " + mobile + "<br/>";
 
-        Body += "You Can Login here <a href=" + ConfigurationManager.AppSettings["ApplicationURL"] + "SMSLogin.aspx >here</a>";
+        Body += "You Can Login here <a href=" + ConfigurationManager.AppSettings["ApplicationURL"] + "/SMSLogin.aspx>here</a>";
 
         WebClient client = new WebClient();
         NameValueCollection values = new NameValueCollection();

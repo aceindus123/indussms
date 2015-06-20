@@ -174,6 +174,7 @@ public partial class admin_Reports : System.Web.UI.Page
         gvvoicereports.Visible = false;
         reports.Visible = true;
         btncancel.Visible = true;
+        rddownload.Visible = false;
         if (Session["login"] != null)
         {
             //try

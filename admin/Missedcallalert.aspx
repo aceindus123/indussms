@@ -7,6 +7,17 @@
 <head runat="server">
     <title>: : Admin : Missed Call Alerts : :</title>
     <link href="css/StyleSheet.css" rel="stylesheet" type="text/css" />
+     <style type="text/css"> 
+    .simple1 
+    { 
+      text-decoration:none;
+    } 
+    .simple1:hover 
+    { 
+     text-decoration:underline;
+    } 
+  </style>  
+
 </head>
 
 
@@ -19,7 +30,7 @@
     <div align="center">
     <br />
     <head:header ID="head1" runat="server" />
-    <br /> <br /> <br /> <br /> <br />
+    <br /> <br />
 
     <table>
            <tr>
@@ -49,7 +60,7 @@
                                   <HeaderTemplate>Phone Number</HeaderTemplate>
                                   <ItemStyle ForeColor="Gray" BorderColor="#CCCCCC" HorizontalAlign="Center"/>
                                   <ItemTemplate>
-                                  <asp:LinkButton ID="linknumber" runat="server" Font-Underline="false" Text='<%# Eval("number") %>' CommandArgument='<%#Eval("mno") %>' OnCommand="ListName"></asp:LinkButton>
+                                  <asp:LinkButton ID="linknumber" runat="server" CssClass="simple1" Text='<%# Eval("number") %>' CommandArgument='<%#Eval("mno") %>' OnCommand="ListName"></asp:LinkButton>
 
                                
                                   </ItemTemplate>
@@ -64,7 +75,9 @@
                              <asp:TemplateField>
                                  <HeaderTemplate>Response</HeaderTemplate>
                                   <ItemStyle ForeColor="Gray" BorderColor="#CCCCCC" HorizontalAlign="Center"/>
-                                  <ItemTemplate><asp:Label ID="lblresponse" runat="server" Text='<%# Eval("response") %>' /></ItemTemplate>
+                                  <ItemTemplate>
+                                  <div style="overflow-y:auto;overflow-x:auto;word-break:break-all " > 
+                                  <asp:Label ID="lblresponse" runat="server" Text='<%# Eval("response") %>' /></div></ItemTemplate>
                              </asp:TemplateField>
                         </Columns>
                         <EmptyDataTemplate>No Records.</EmptyDataTemplate>
@@ -75,7 +88,7 @@
                     <asp:ModalPopupExtender ID="Popup1"  runat="server" TargetControlID="Hid_Sno" CancelControlID="btnimcan" 
                      PopupControlID="panview" DropShadow="true" BackgroundCssClass="Modalpopup"> </asp:ModalPopupExtender> 
                    <asp:Panel ID="panview" runat="server" HorizontalAlign="Center">
-                                      <table width="150%" bgcolor="#33ccff" align="center">
+                                      <table width="110%" bgcolor="#33ccff" align="center">
                                           <tr>
                                             <td align="right">
                                                 <asp:ImageButton ID="btnimcan" runat="server" ImageUrl="~/images/close.jpg" width="25" height="21"/>
@@ -83,7 +96,7 @@
                                          </tr>
                                      </table>
 
-                                      <table width="150%" bgcolor="white" align="center">
+                                      <table width="110%" bgcolor="white" align="center">
                                          <tr><td colspan="2"><br /></td></tr>
                                          <tr><td colspan="2"><br /></td></tr>
                                          <tr>

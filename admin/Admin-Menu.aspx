@@ -11,26 +11,23 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    <br />
-
-    <head:header ID="head1" runat="server" />
-
-    <br />
-    <br />
-     <br /> <br /> <br />
-        <table border="0" width="80%" height="200px" align="center">
+    <div >
+  
+        <table border="0" width="50%" height="200px" align="center">
+        <tr><td> <head:header ID="head1" runat="server" width="80%" /></td></tr>
+        <tr><td><br /></td></tr>
+        <tr><td align="center" style="width:100%"><table width="70%">
              <tr>
-                <td align="center" class="style1"><asp:ImageButton ID="imgrc" 
+                <td align="center" ><asp:ImageButton ID="imgrc" 
                         ImageUrl="images/user.png"  runat="server" onclick="imgrc_Click" /></td>
-                <td class="style1"></td>
-                <td align="center" class="style1"><asp:ImageButton ID="imgservices" 
+                <td ></td>
+                <td align="center" ><asp:ImageButton ID="imgservices" 
                         ImageUrl="images/voicesms.png" runat="server" onclick="imgservices_Click"   /></td>
-                <td class="style1"></td>
-                <td align="center" class="style1"><asp:ImageButton ID="imgsupport" 
+                <td ></td>
+                <td align="center" ><asp:ImageButton ID="imgsupport" 
                         ImageUrl="images/suport.png" runat="server" onclick="imgsupport_Click"/></td>
-                <td class="style1"></td>
-                <td align="center" class="style1"><asp:ImageButton ID="imgbtnpostjobs" 
+                <td ></td>
+                <td align="center" ><asp:ImageButton ID="imgbtnpostjobs" 
                         ImageUrl="images/contact.png" runat="server" onclick="imgbtnpostjobs_Click" /></td>
             </tr>
             <tr>
@@ -93,6 +90,7 @@
                         </td>
                           <td>&nbsp;</td>
                     </tr>
+                    </table></td></tr>
                 </table>
       </div>
     </form>

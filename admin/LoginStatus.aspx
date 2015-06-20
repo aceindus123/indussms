@@ -12,7 +12,7 @@
      <div align="center">
     <br />
      <head:header ID="head1" runat="server" />
-     <br /><br /><br /><br />
+     <br /><br />
     <table width="998px" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
   
        <tr>
@@ -26,6 +26,7 @@
          
          <asp:Label ID="lblTitle" runat="server" Text="Login Users List" Font-Bold="true" ForeColor="#00277a" Font-Size="15pt"></asp:Label>
              <br />
+             <br />
            </td>
        </tr>
    
@@ -35,67 +36,55 @@
     </tr>   
    <tr>
    <td align="center">
-   <asp:GridView ID="GrdLoginUsers" runat="server" Width="96%" AutoGenerateColumns="False"  BorderColor="#CCCCCC" BorderStyle="Solid" OnPageIndexChanging="PageIndexChanging"
-                BorderWidth="3px" CellPadding="3" Font-Bold="False" Font-Italic="False" Font-Overline="False" Font-Size="11pt" Font-Strikeout="False" 
-                Font-Underline="False"  BackColor="White" AllowPaging="True"  PagerStyle-Mode="NumericPages" PageSize="10" PagerStyle-BackColor="White" >
-        <Columns>         
-         <asp:TemplateField ItemStyle-BorderColor="#CCCCCC"  HeaderText="Login Id" HeaderStyle-HorizontalAlign="Center">
-                
-                <ItemTemplate>
-                    <asp:Label ID="Labelid" runat="server" Text='<%# Bind("id") %>' ForeColor="Gray"></asp:Label>
-                </ItemTemplate>
-                
-                <ItemStyle HorizontalAlign="Center" />
-                 <HeaderStyle Width="20%" />
-            </asp:TemplateField>  
-             <asp:TemplateField ItemStyle-BorderColor="#CCCCCC"  HeaderText="User Name" HeaderStyle-HorizontalAlign="Center">
-                
-                <ItemTemplate>
-                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("Uname") %>' ForeColor="Gray"></asp:Label>
-                </ItemTemplate>
-                
-                <ItemStyle HorizontalAlign="Center" />
-                 <HeaderStyle Width="20%" />
-            </asp:TemplateField>
+    <asp:GridView ID="GrdLoginUsers" runat="server"   Width="900px"  
+                                AutoGenerateColumns="False"  BorderColor="#CCCCCC" BorderStyle="Solid"
+                BorderWidth="3px" CellPadding="3" Font-Bold="False" Font-Italic="False"  
+                                Font-Overline="False" Font-Size="10pt" Font-Strikeout="False" 
+                Font-Underline="False"   BackColor="White" AllowPaging="True"  
+                                PagerStyle-Mode="NumericPages"  
+           PagerStyle-BackColor="White"   PageSize="10" 
+                               ShowHeaderWhenEmpty="true"
+            EmptyDataText="No Records Found." EmptyDataRowStyle-ForeColor="Red" 
+                                EmptyDataRowStyle-HorizontalAlign="Center" EmptyDataRowStyle-Font-Size="Medium" 
+                                 
+                                 DataKeyNames="id" onpageindexchanging="GrdLoginUsers_PageIndexChanging" 
+                                ><%--onrowdatabound="gvpermission_RowDataBound"--%>
+                    <PagerStyle  ForeColor="#003399" HorizontalAlign="Center" Height="25px" Width="100%" CssClass="letterspace" BackColor="#bfbfbf"/>
+                   <HeaderStyle Font-Bold="True"  ForeColor="#003399" Height="30px" BackColor="#bfbfbf" Font-Size="14px" Font-Names="Arial" /> 
+                     <Columns>
+                        <asp:TemplateField  HeaderText="SlNo" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC">
+                        <ItemTemplate>
+                            <asp:Label ID="lblid" runat="server" Text='<%#Container.DataItemIndex+1 %>' ></asp:Label>
+                        </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField  HeaderText="UserName" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC">
+                        <ItemTemplate>                
+                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("Uname") %>'></asp:Label>
+                        </ItemTemplate></asp:TemplateField>
+                         <asp:TemplateField  HeaderText="LoginTime" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC">
+                        <ItemTemplate>
+                            <asp:Label ID="Label2" runat="server" Text='<%#Eval("Datetime") %>'></asp:Label>
+                        </ItemTemplate></asp:TemplateField>
+                         <asp:TemplateField  HeaderText="IP Address" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl3" runat="server" Text='<%#Eval("IpAddress") %>'></asp:Label>
+                        </ItemTemplate></asp:TemplateField>
+                        <asp:TemplateField HeaderText="LogOutTime" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC">
+                        <ItemTemplate>
+                                   <asp:Label ID="lbllogouttime" runat="server" Text='<%#Eval("Logoutdate") %>'></asp:Label>
+                                   </ItemTemplate>
+                        </asp:TemplateField>
 
-                <asp:TemplateField ItemStyle-BorderColor="#CCCCCC" HeaderText="Login Time" >
-                
-                <ItemTemplate>
-                    <asp:Label ID="Label4" runat="server" Text='<%# Bind("Datetime") %>' ForeColor="Gray"></asp:Label>
-                </ItemTemplate>
-                
-                <ItemStyle HorizontalAlign="Center" />
-               
-            </asp:TemplateField> 
-
-            <asp:TemplateField ItemStyle-BorderColor="#CCCCCC" HeaderText="LogOut Time" >
-                
-                <ItemTemplate>
-                    <asp:Label ID="Label5" runat="server" Text='<%# Bind("logoutdate") %>' ForeColor="Gray"></asp:Label>
-                </ItemTemplate>
-                
-                <ItemStyle HorizontalAlign="Center" />
-                 
-            </asp:TemplateField> 
-
-             <asp:TemplateField ItemStyle-BorderColor="#CCCCCC" HeaderText="Ip Address" >
-                
-                <ItemTemplate>
-                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("ipaddress") %>' ForeColor="Gray"></asp:Label>
-                </ItemTemplate>
-                
-                <ItemStyle HorizontalAlign="Center" />
-                 
-            </asp:TemplateField> 
-         
-        </Columns>
-         <FooterStyle BackColor="#f0f0f0" ForeColor="#00277a" />
-                <RowStyle  Font-Size="9pt" Font-Strikeout="False" Font-Underline="False" />
-                <PagerStyle BackColor="#f0f0f0" ForeColor="#00277a" HorizontalAlign="Right" BorderColor="#CCCCCC" Font-Bold="True" Font-Italic="True" Font-Size="8pt" 
-                    Font-Underline="False" Height="20px" Wrap="True" />
-                <SelectedRowStyle BackColor="#CCCCCC" Font-Bold="True" ForeColor="#00277a" />
-                <HeaderStyle  BackColor="#f0f0f0" Font-Bold="false" Font-Size="10pt"  HorizontalAlign="Center" ForeColor="#00277a" Height="20px"  />
-    </asp:GridView>
+                        <%--<asp:TemplateField HeaderText="Downloadfile" ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lnkdwnld" runat="server" Font-Underline="false" OnClick="downloadimg"  CommandArgument='<%#Eval("imagepath") %>' Text="Documents Download"></asp:LinkButton>
+                        </ItemTemplate>
+                        
+                        </asp:TemplateField>--%>
+                        
+                    </Columns>
+                    <EmptyDataTemplate>No Records.</EmptyDataTemplate>
+                </asp:GridView>
    </td>
    </tr>
    <tr>

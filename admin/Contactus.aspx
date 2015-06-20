@@ -14,7 +14,8 @@
            <br />
             <head:header ID="head1" runat="server" />
             <br />
-               <br /> <br /> <br />
+               <br /> 
+              
              <table>
                             <tr><td align="center" id="View" runat="server">
                                 <font size="5" color="#00277a"><strong>Contact Us List</strong></font>
@@ -22,7 +23,7 @@
                             </tr>
                             <tr><td></td></tr>
                         <tr id="View1" runat="server"><td height="100px" style="padding-left:0px; padding-right:0px">            
-                       <asp:GridView ID="gvcontact" runat="server"   Width="1000px"  
+                       <asp:GridView ID="gvcontact" runat="server"   Width="800px"  
                                 AutoGenerateColumns="False"  BorderColor="#CCCCCC" BorderStyle="Solid"
                 BorderWidth="3px" CellPadding="3" Font-Bold="False" Font-Italic="False"  
                                 Font-Overline="False" Font-Size="10pt" Font-Strikeout="False"  OnPageIndexChanging="PageIndexChanging"
@@ -33,7 +34,12 @@
                     <PagerStyle  ForeColor="#003399" HorizontalAlign="Center" Height="25px" Width="100%" CssClass="letterspace" BackColor="#bfbfbf"/>
                    <HeaderStyle Font-Bold="True"  ForeColor="#003399" Height="30px" BackColor="#bfbfbf" Font-Size="14px" Font-Names="Arial" /> 
                                   <Columns>
-                        <asp:BoundField DataField="cid" ItemStyle-ForeColor="Gray"  ItemStyle-BorderColor="#CCCCCC" ItemStyle-HorizontalAlign="Center"  HeaderText="Cid"    />            
+                                  <asp:TemplateField HeaderText="SlNo">
+                                  <ItemTemplate>
+                                      <asp:Label ID="Label1" runat="server" Text='<%#Container.DataItemIndex+1 %>' ForeColor="Gray"></asp:Label>
+                                  </ItemTemplate>
+                                  </asp:TemplateField>
+                       <%-- <asp:BoundField DataField="cid" ItemStyle-ForeColor="Gray"  ItemStyle-BorderColor="#CCCCCC" ItemStyle-HorizontalAlign="Center"  HeaderText="Cid"    />            --%>
                         <asp:BoundField DataField="fname" ItemStyle-ForeColor="Gray"  ItemStyle-BorderColor="#CCCCCC" ItemStyle-HorizontalAlign="Center"  HeaderText="Contact Name"    />            
                         <asp:BoundField DataField="email"  ItemStyle-ForeColor="Gray"  ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC"  HeaderText="EMail" SortExpression="FName" />
                         <asp:BoundField DataField="address"  ItemStyle-ForeColor="Gray" ItemStyle-HorizontalAlign="Center" ItemStyle-BorderColor="#CCCCCC"  HeaderText="Contact Address" />

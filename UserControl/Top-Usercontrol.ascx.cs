@@ -24,7 +24,7 @@ public partial class UserControl_Top_Usercontrol: System.Web.UI.UserControl
             welcome1.Visible = false;
             lblnumber.Visible = false;
             lnklogout.Visible = false;
-            lnkprofile.Visible = false;
+           // lnkprofile.Visible = false;
             ipadd.Visible = false;
 
             signup2.Visible = true;
@@ -37,7 +37,7 @@ public partial class UserControl_Top_Usercontrol: System.Web.UI.UserControl
             welcome1.Visible = true;
             lblnumber.Visible = true;
             lnklogout.Visible = true;
-            lnkprofile.Visible = true;
+           // lnkprofile.Visible = true;
             ipadd.Visible = true;
 
             signup2.Visible = false;
@@ -94,19 +94,56 @@ public partial class UserControl_Top_Usercontrol: System.Web.UI.UserControl
     }
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
-        Response.Redirect("BulkSMSPricing.aspx");
+       // Response.Redirect("BulkSMSPricing.aspx");
+        if (Session["User"] != null)
+        {
+            Response.Redirect("SMSTemplates.aspx");
+        }
+        else
+        {
+            Response.Redirect("SMSLogin.aspx");
+
+        }
     }
     protected void LinkButton3_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Reseller.aspx");
+
+//Response.Redirect("Reseller.aspx");
+        if (Session["User"] != null)
+        {
+            Response.Redirect("AccountInfo.aspx");
+        }
+        else
+        {
+            Response.Redirect("SMSLogin.aspx");
+
+        }
     }
     protected void LinkButton4_Click(object sender, EventArgs e)
     {
-        Response.Redirect("FAQ.aspx");
+        //Response.Redirect("FAQ.aspx");
+        if (Session["User"] != null)
+        {
+            Response.Redirect("Notifications.aspx");
+        }
+        else
+        {
+            Response.Redirect("SMSLogin.aspx");
+
+        }
     }
     protected void LinkButton5_Click(object sender, EventArgs e)
     {
-        Response.Redirect("HowToBuy.aspx");
+       // Response.Redirect("HowToBuy.aspx");
+        if (Session["User"] != null)
+        {
+            Response.Redirect("ShoppingCart.aspx");
+        }
+        else
+        {
+            Response.Redirect("SMSLogin.aspx");
+
+        }
     }
 
     protected void lnklogout_Click1(object sender, EventArgs e)
@@ -135,7 +172,7 @@ public partial class UserControl_Top_Usercontrol: System.Web.UI.UserControl
             string date1 = Session["date"].ToString();
             con.Open();
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("update Loginreport set Status=1,Logoutdate='" + date + "' where Uname='" + user + "' and IpAddress='" + ip + "' and Status=2", con);
-           // int s = cmd.ExecuteNonQuery();
+            int s = cmd.ExecuteNonQuery();
             con.Close();
             Session.Clear();
             Response.Redirect("SMSLogin.aspx");

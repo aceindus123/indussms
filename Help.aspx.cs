@@ -80,7 +80,7 @@ public partial class Help : System.Web.UI.Page
             GridView1.DataSource = ds;
             GridView1.DataBind();
         }
-        
+
         con.Close();
     }
 
@@ -98,6 +98,7 @@ public partial class Help : System.Web.UI.Page
         string s1 = TextBox2.Text;
         string date = Convert.ToString(DateTime.Now);
         string user1 = Convert.ToString(Session["User"]);
+        //DateTime dt = null;
 
         if (FileUpload1.HasFile)
         {
@@ -216,6 +217,7 @@ public partial class Help : System.Web.UI.Page
         {
             con.Open();
             Session["initdate"] = date;
+
             SqlDataAdapter da1 = new SqlDataAdapter("select * from issue where postdate='" + Session["initdate"].ToString() + "'", con);
             da1.Fill(ds);
 
@@ -227,10 +229,11 @@ public partial class Help : System.Web.UI.Page
                 string year = DateTime.Now.Year.ToString().Substring(2);
                 string newid = "IS-" + year + ids;
                 string modurl = newid + newsid;
+                Session["id"] = newsid;
                 SqlCommand cmd23 = new SqlCommand("update issue set raisedid='" + modurl + "' where iid='" + newsid + "'", con);
                 cmd23.ExecuteNonQuery();
                 con.Close();
-                
+
                 //string id = cmd.Parameters["@id"].Value.ToString();
                 lbl.Text = "Your Raised Token No:" + modurl;
                 lbl1.Visible = true;
@@ -251,7 +254,7 @@ public partial class Help : System.Web.UI.Page
 
 
     }
-        
+
     private Boolean InsertUpdateData(SqlCommand cmd)
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
@@ -277,19 +280,54 @@ public partial class Help : System.Web.UI.Page
         }
 
     }
+
+    protected void crmview(object sender, EventArgs e)
+    {
+
+    }
+
+
+
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         GridView1.PageIndex = e.NewPageIndex;
         GridView1.DataBind();
         binddata();
     }
-    protected void crmview(object sender, EventArgs e)
+ 
+ 
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string data = "";
+            string userID = GridView1.DataKeys[e.Row.RowIndex].Values[0].ToString();
+            string select = "select * from issue where iid= '" + userID + "'";
+            SqlDataAdapter ad = new SqlDataAdapter(select, con);
+            DataSet ds = new DataSet();
+            ad.Fill(ds);
+            string q = ds.Tables[0].Rows[0]["replay"].ToString();
 
+
+            if (q == data)
+            {
+                Image img = (Image)e.Row.FindControl("display");
+                img.Visible = false;
+                //this.GridView1.Columns[4].Visible = false;
+                //e.Row.Cells[columnIndex].Visible = false;
+                //this.GridView1.Cells[4].Visible = false;
+
+            }
+            else
+            {
+                this.GridView1.Columns[4].Visible = true;
+            }
+
+
+        }
     }
-    
-   
-    
 }
+    
+
 
     

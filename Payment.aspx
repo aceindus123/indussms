@@ -8,25 +8,24 @@
 
 <div class="container">
 <asp:ScriptManager ID="sp1" runat="server"></asp:ScriptManager>
-  <table  width="100%" align="center">
-     <tr>
-       <td>
-            <uc1:TopMenu ID="Topmenu1" runat="server" />
-       </td>
-     </tr>
-   </table>
-   <br />
-     <br />
-     </div>
-<div align="center" class="container" style="width:500px;" >
-<table width="500px" align="center" height="380px">
-<tr><td colspan="3" align="center">
+
+<div  style="width:100%;" >
+<table width="100%" >
+    <tr>
+      <td  style="background: url(images/confrmplan.png); background-repeat:no-repeat; width:995px; height:70px;"  align="right" colspan="3">
+             <asp:ImageButton ID="ImageButton1" ImageUrl="~/images/backbutton.png" runat="server" CssClass="back"  PostBackUrl="~/ShoppingCart.aspx"  />
+
+              </td>
+              </tr>
+
+
+<%--<tr><td colspan="3" align="center">
 <asp:Label ID="Lbheading" runat="server" style="font-weight:bold;font-size:15pt" 
         Text="Confirm Plan Change" ForeColor="#006666" Font-Bold="True" 
         Font-Names="Arial" Font-Size="14pt"></asp:Label><br />
-</td></tr>
+</td></tr>--%>
 <tr>
-<td  valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td  valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="ltrlName" runat="server" Text="Your Name" Font-Bold="false" 
         ForeColor="#336699" Font-Size="14px" Font-Names="vani"></asp:Label>
 </td>
@@ -38,7 +37,7 @@
 </td>
 </tr>
 <tr>
-<td  valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td  valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="ltrcname" runat="server" Text="Your Email Id" Font-Bold="false" Font-Size="14px" Font-Names="vani" 
         ForeColor="#336699" ></asp:Label>
 </td>
@@ -53,7 +52,7 @@
 </td>
 </tr>
 <tr>
-<td height="10px" valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td height="10px" valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="ltrphno" runat="server" Text="Your Phone No" Font-Bold="false" Font-Size="14px" Font-Names="vani"
         ForeColor="#336699"></asp:Label>
 </td>
@@ -66,7 +65,7 @@
 </td>
 </tr>
 <tr>
-<td  valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td  valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="ltramount" runat="server" Text="Amount" Font-Bold="false" Font-Size="14px" Font-Names="vani"
         ForeColor="#336699"></asp:Label>
 
@@ -80,7 +79,7 @@
 </td>
 </tr>
 <tr>
-<td  valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td  valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="ltrcurrency" runat="server" Text="Currency" Font-Bold="false" Font-Size="14px" Font-Names="vani" 
         ForeColor="#336699"></asp:Label>
 </td>
@@ -93,7 +92,7 @@
 </td>
 </tr>
 <tr>
-<td valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="lblCountry" runat="server" Text="Country" Font-Bold="false" Font-Size="14px" Font-Names="vani"
         ForeColor="#336699"></asp:Label>
 
@@ -108,7 +107,7 @@
 </tr>
 
 <tr>
-<td  valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td  valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="lblState" runat="server" Text="State" Font-Bold="false" Font-Size="14px" Font-Names="vani" 
         ForeColor="#336699"></asp:Label>
 
@@ -121,7 +120,7 @@
 </td>
 </tr>
 <tr>
-<td  valign="middle" align="left" style="padding-left: 20px;" class="tddimentions">
+<td  valign="middle" align="right" style="padding-left: 20px;" class="tddimentions">
 <asp:Label ID="lblCity" runat="server" Text="City" Font-Bold="false" Font-Size="14px" Font-Names="vani" 
         ForeColor="#336699"></asp:Label>
 
@@ -135,7 +134,7 @@
 </td>
 </tr>
 <tr>
-<td align="left" style="padding-left: 20px;" valign="middle" class="tddimentions">
+<td align="right" style="padding-left: 20px;" valign="middle" class="tddimentions">
 <asp:Label ID="ltrpurpose" runat="server" Text="Transaction Purpose" Font-Bold="false" Font-Size="14px" Font-Names="vani"
         ForeColor="#336699"></asp:Label>
  
@@ -143,23 +142,24 @@
 <td width="1px" align="center" class="tddimentions"><strong>&nbsp;:&nbsp;</strong></td>
 <td align="left" style="padding-left: 20px;padding-top: 5px;"  valign="middle" class="tddimentions" runat="server" id="txtaccount"  >
 <asp:TextBox runat="server" ID="txtPurpose" Font-Size="14px" Font-Names="vani" Text="Indussms Subscription" Width="156px" Enabled="False"></asp:TextBox></td>
-<td align="left" style="padding-left: 20px;padding-top: 5px;"  valign="middle" class="tddimentions" runat="server" id="txtdeliver" visible="false"  >
-<asp:TextBox runat="server" ID="TextBox1" Font-Size="14px" Font-Names="vani" Text="Indussms Deliver Report" Width="156px" Enabled="False"></asp:TextBox>
+<%--<td align="left" style="padding-left: 20px;padding-top: 5px;"  valign="middle" class="tddimentions" runat="server" id="txtdeliver" visible="false"  >--%>
+<%--<asp:TextBox runat="server" ID="TextBox1" Font-Size="14px" Font-Names="vani" Text="Indussms Deliver Report" Width="156px" Enabled="False"></asp:TextBox>--%>
     <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator6" ControlToValidate="txtPurpose"
         ErrorMessage="Can not be left blank" 
-        runat="server" ForeColor="red">*</asp:RequiredFieldValidator>--%></td>
+        runat="server" ForeColor="red">*</asp:RequiredFieldValidator>--%><%--</td>--%>
 </tr>
+<tr><td><br /></td></tr>
 <tr>
 <td colspan="3" align="center" >
-<asp:Button ID="btnPay" runat="server" Text="Pay Amount" onclick="btnPay_Click" />
+<%--<asp:Button ID="btnPay" runat="server" Text="Pay Amount" onclick="btnPay_Click" />--%>
+            <asp:ImageButton ID="btnPay" runat="server" onclick="btnPay_Click"  ImageUrl="~/images/payamount.png" />
 
-<%--<asp:ImageButton ID="btnsubmit" runat="server" ImageUrl="images/buttons1/paypal_button.png" Height="34px" Width="140px" 
-        Font-Size="14px" onclick="btnsubmit_Click"/>--%>
 
 </td>
 </tr>
+<tr><td><br /></td></tr>
 </table>
 </div>
-
+</div>
 </asp:Content>
 

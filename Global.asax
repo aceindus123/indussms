@@ -38,6 +38,7 @@
     
     protected void sessionclose()
     {
+        
         if ((Session["User"].ToString() == null) && (Session["User"].ToString() == ""))
         {
 
@@ -64,7 +65,7 @@
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("update Loginreport set Status=0,Logoutdate='" + date + "' where Uname='" + user + "' and IpAddress='" + ip + "' and Status=2", con);
             int s = cmd.ExecuteNonQuery();
             con.Close();
-            Response.Redirect("SMSLogin.aspx");
+           Response.Redirect("SMSLogin.aspx");
         }
     }
        

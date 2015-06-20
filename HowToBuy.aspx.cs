@@ -33,7 +33,13 @@ public partial class HowToBuy : System.Web.UI.Page
 
         if (Session["User"] != null)
         {
-            Response.Redirect("HowToBuy.aspx");
+            Response.Redirect("SMSMainMenu.aspx");
+
+        }
+        else
+        {
+            Response.Redirect("Default.aspx");
+
         }
        
     }

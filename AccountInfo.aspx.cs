@@ -114,7 +114,9 @@ public partial class AccountInfo : System.Web.UI.Page
             string subject = "Account Information";
             string oldpwd = txtprepwd.Text;
             string newpwd = Txtnewpwd.Text;
-            string pdate = Convert.ToString(DateTime.Now);
+        //    string pdate = Convert.ToString(DateTime.Now);
+            string pdate = System.DateTime.Now.ToString();
+
             string frm = "info@indussms.com";
             string username = Convert.ToString(Session["User"]);
 

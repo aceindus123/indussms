@@ -32,7 +32,8 @@ public partial class SMSRegistration : System.Web.UI.Page
             obj.Reg_password = Password.Text;
             obj.Reg_compurl = Company.Text;
             obj.Reg_phone = Phone.Text;
-            obj.Reg_pdate = System.DateTime.Now.ToString("dd/MM/yyyy");
+          //  obj.Reg_pdate = System.DateTime.Now.ToString("dd/MM/yyyy");
+            obj.Reg_pdate = Convert.ToString(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt"));
             obj.Reg_lname = txtsurname.Text;
             obj.Reg_address = TextBox1.Text;
 
@@ -69,8 +70,10 @@ public partial class SMSRegistration : System.Web.UI.Page
             Msg = Msg + "<td class='lable1'>" + obj.Reg_phone + "</td>";
             Msg = Msg + "</tr></table>";
 
-            obj.SendMailToUser("Indussms@info.com", obj.Reg_email, " Your registraion details for Indussms ", Msg);
-            Response.Redirect("Mobile verification.aspx?MobVCode=" + lblsms.Text + "&mblno=" + obj.Reg_phone + "&pwd=" + obj.Reg_password + "&username=" + obj.Reg_fname + "");
+            Session["code"] = lblsms.Text;
+            obj.SendMailToUser("info@indussms.com", obj.Reg_email, " Your registraion details for Indussms ", Msg);
+
+            Response.Redirect("Mobile verification.aspx?mblno=" + obj.Reg_phone + "&pwd=" + obj.Reg_password + "&username=" + obj.Reg_fname + "&email="+obj.Reg_email+"");
 
     
 
@@ -121,5 +124,9 @@ public partial class SMSRegistration : System.Web.UI.Page
             regphone.Visible = true;
             regphone.Text = "Mobile number is available";
         }
+    }
+    protected void Button2_Click(object sender, ImageClickEventArgs e)
+    {
+
     }
 }

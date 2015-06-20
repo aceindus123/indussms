@@ -26,7 +26,7 @@ public class SMSCAPI
     public string SendSMS(string User, string password, string Mobile_Number, string Message)
     {
         string stringpost = null;
-        string id = "MONTES";
+        string id = "ACEIND";
           stringpost = "User=" + User + "&passwd=" + password + "&mobilenumber=" + Mobile_Number + "&message=" + Message +"&sid="+id;
         HttpWebRequest objWebRequest = null;
         HttpWebResponse objWebResponse = null;
@@ -292,6 +292,10 @@ public class SMSCAPI
 
         System.Object stringpost = "user=" + accuser + "&passwd=" + accpassword + "&mobilenumber=" + number + "&message=" + subject + "&SenderName=" + name + "&schedulerName=" + sname + "&ScheduledDateTime=" + time + "&systemcurrenttime=" + sysdate + "&interval=" + 0;
 
+//        http://www.smscountry.com/APISetReminder.asp?
+//user=xxxx&passwd=xxxx&mobilenumber=971xxxxxxx,971xxxxxxx&message=xxxxxxx&Send
+//erName=SMSCountry&schedulerName= Test scheduler&ScheduledDateTime=04/02/2010
+//06:30:00PM &systemcurrenttime=01/02/2010 02:10:00 PM
         HttpWebRequest objWebRequest = null;
         HttpWebResponse objWebResponse = null;
         StreamWriter objStreamWriter = null;
@@ -437,7 +441,7 @@ public class SMSCAPI
         string stringpost = null;
         string url = "http://indussms.com/voicesms/" + file;
         string request = "";
-        request = "http://voiceapi.smscountry.com/api?api_key=PdiHP80jNEOTrOaJrCvf&access_key=cbhEYUDKjoDUZbNwmQDDhgmjUXAaH8q8NRVdR32J&xml=<request action ='www.indusssms.com'><to>" + Mobile_Number + "</to><play>" + url + "</play></request>";
+        request = "http://voiceapi.smscountry.com/api?api_key=PdiHP80jNEOTrOaJrCvf&access_key=cbhEYUDKjoDUZbNwmQDDhgmjUXAaH8q8NRVdR32J&xml=<request action='www.indussms.com/Callback.aspx' method='GET'><to>" + Mobile_Number + "</to><play>" + url + "</play></request>";
         //request = "<request action=http://smscountry.com/testdr.aspx method='GET'><to>" + Mobile_Number + "</to><play>" +url+"</play></request>";
         stringpost = "api_key=" + api_key + "&access_key=" + access_key + "&xml=" + request;
         HttpWebRequest objWebRequest = null;
@@ -480,7 +484,8 @@ public class SMSCAPI
             objWebResponse = null;
             objProxy1 = null;
         }
-    }  
+    }
+
 
 
 

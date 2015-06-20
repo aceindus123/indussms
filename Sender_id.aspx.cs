@@ -24,19 +24,20 @@ public partial class Default3 : System.Web.UI.Page
     {
         if (Session["User"] != null)
         {
+            details.Visible = true;
+            sndid.Visible = false;
+
+            if (!IsPostBack)
+            {
+                DataSet ds = reg.databind(Convert.ToString(Session["User"]));
+                sndid.Visible = false;
+                gvview.Visible = true;
+                binddata();
+            }
         }
         else
         {
             Response.Redirect("SMSLogin.aspx");
-
-        }
-
-        if (Session["User"] != "")
-        {
-            DataSet ds = reg.databind(Convert.ToString(Session["User"]));
-            sndid.Visible = false;
-            gvview.Visible = true;
-            binddata();
 
         }
     }
@@ -244,7 +245,11 @@ public partial class Default3 : System.Web.UI.Page
     }
     protected void btn1_Click(object sender, EventArgs e)
     {
-        Response.Redirect("ContactBook.aspx");
+        txtsender.Text = "";
+        sndid.Visible = true;
+        details.Visible = false;
+        gvview.Visible = false;
+        instructions.Visible = true;
     }
     protected void dwnld_Click(object sender, EventArgs e)
     {

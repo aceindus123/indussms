@@ -27,7 +27,13 @@ public partial class SMSAboutUs : System.Web.UI.Page
 
         if (Session["User"] != null)
         {
-            Response.Redirect("SMSAboutUs.aspx");
+            Response.Redirect("SMSMainMenu.aspx");
+
+        }
+        else
+        {
+            Response.Redirect("Default.aspx");
+
         }
        
     }

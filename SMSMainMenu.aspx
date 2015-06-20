@@ -4,11 +4,15 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-  <div class="container" style="border:none;">
+
+<div id="main">
+
+        <div class="container" style="border:none;">
+
             <div class="one" style="margin-left: -0.7px;">
                 <h3>
                     <img src="images/missedcall.png" />
-                    missed call alert
+                    Missed call alert
                 </h3>
                 <p>
                     It is a platform that can be widely used by business organizations to generate a
@@ -17,6 +21,7 @@
                 <div class="read">
                     <a href="MissedCall.aspx">Read more</a></div>
             </div>
+
             <div class="one">
                 <h3>
                     <img src="images/voice.png" />
@@ -29,79 +34,86 @@
                 <div class="read">
                     <a href="Compose VoiceSMS.aspx">Read more</a></div>
             </div>
+
             <div class="one">
                 <h3>
                     <img src="images/message.png" width="31" height="32" />
-                    Wedding/Event SMS
+                    Events SMS
                 </h3>
                 <p>
-                    Wedding/Event SMS Where the wedding day is all about celebration and enjoyment of
-                    every virtue a thing which
+                     Whether the event is a wedding or an election campaign, you can easily send sms to your network with Events SMS option
                 </p>
                 <div class="read">
-                    <a href="SMSEvent.aspx?mode=wedding">Read more</a></div>
+                    <a href="SMSEvent.aspx">Read more</a></div>
             </div>
+
             <div class="one">
                 <h3>
-                    <img src="images/election-campaign.png" />
-                    Election Campaign</h3>
+                    <img src="images/watch.png" width="31" height="32"  />
+                    Schedule SMS</h3>
                 <p>
-                    Reach your voters directly through SMS. Provide Information regarding Political
-                    campaigns.
+                    Schedule an SMS so that it is sent at a future date with this application. Choose the date and then enter the phone number and a message.<br />
                 </p>
                 <div class="read">
-                    <a href="SMSEvent.aspx?mode=election">Read more</a></div>
+                    <a href="ScheduleSMS.aspx">Read more</a></div>
             </div>
         </div>
-        <!--<! container ends here!>-->
+      
         <div class="content">
-            <div class="second" style="margin-left: -0.6px">
+            <div class="one" style="margin-left: -0.7px;">
                 <h3>
-                    Bulk SMS</h3>
-                <img src="images/bulk-services.png" alt="0" style="border:1px solid #afafaf;" />
-                <p>
-                    BulkSmsMantra offer bulk sms services including bulk sms software, bulk voice calls,
-                    short codes, and long codes for businesses & organizations.</p>
-                <div class="more">
-                   <%-- <a href="Default.aspx" >--%>
-                    <asp:ImageButton ID="imaagsms" runat="server" ImageUrl="~/images/moreinfo.png" 
-                        alt="More info" onclick="imaagsms_Click" />
-                        <%--<img src="images/moreinfo.png" alt="More Info" /></a>--%></div>
-            </div>
-            <div class="second">
-                <h3>
-                    Email Marketing
+                    <img src="images/contact.png" />
+                    Contacts 
                 </h3>
-                <img src="images/email-marketing.png" alt="More Info" style="border:1px solid #afafaf;" />
                 <p>
-                    BulkSmsMantra offer bulk sms services including bulk sms software, bulk voice calls,
-                    short codes, and long codes for businesses & organizations.</p>
+                    Build your list of contacts easily and effectively. You can also import and export contacts<br /><br />
+                </p>
                 <div class="more">
-                    <a href="http://www.indusemail.com/" target="_blank">
-                        <img src="images/moreinfo.png" alt="More Info"  /></a></div>
+                    <a href="ContactBook.aspx" >
+                        <img src="images/moreinfo.png" alt="More Info" /></a></div>
             </div>
-            <div class="second">
+
+            <div class="one">
                 <h3>
-                    Internal Messenger
+                    <img src="images/sms-senderid1.png" />
+                    Sender Id
                 </h3>
-                <img src="images/internal-messanger.png" alt="Internal Messanger"  style="border:1px solid #afafaf;"/>
                 <p>
-                    BulkSmsMantra offer bulk sms services including bulk sms software, bulk voice calls,
-                    short codes, and long codes for businesses & organizations.</p>
-                <div class="more">
-                    <a href="images/comming-soon.jpg" target="_blank">
-                        <img src="images/moreinfo.png" alt="More info"  align="middle"  /></a></div>
+                    Maintain and track the list of sender id’s who have sent you SMS text messages. Name and number will be shown.<br />
+                </p>
+               <div class="more">
+                    <a href="Sender_id.aspx" >
+                        <img src="images/moreinfo.png" alt="More Info" /></a></div>
             </div>
-            <div class="second" >
+
+            <div class="one">
                 <h3>
-                    Schedule SMS</h3>
-                <img src="images/schedulesms.jpg" alt="ScheduleSMS"   style="border:1px solid #afafaf;" />
+                    <img src="images/Fall-in-Rupee.png" width="31" height="32" />
+                    Balance
+                </h3>
                 <p>
-                    Schedule an SMS so that it is sent at a future date with this application. Choose the date and then enter the mobile phone number and a message.  </p>
+                     Easily check your balance amount and number of SMSes left. You can also buy a new plan <br /><br />
+                </p>
                 <div class="more">
-                     <a href="SMSEvent.aspx?mode=schedule"> 
-                        <img src="images/moreinfo.png" alt="More info"  align="middle"  /></a></div>
+                    <a href="Balance.aspx" >
+                        <img src="images/moreinfo.png" alt="More Info" /></a></div>
+            </div>
+
+            <div class="one">
+                <h3>
+                    <img src="images/call.png" />
+                   Support</h3>
+                <p>
+                    A dedicated customer support team to help you with all your SMS related queries as and when required<br /><br />
+                </p>
+               
+                <div class="more">
+                    <a href="Help.aspx">
+                        <img src="images/moreinfo.png" alt="More Info" /></a></div>
             </div>
         </div>
+
+ </div>
+
 </asp:Content>
 

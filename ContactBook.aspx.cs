@@ -12,6 +12,8 @@ using System.Configuration;
 using System.IO;
 using System.Data.OleDb;
 using System.Text;
+using System.Text.RegularExpressions;
+using ClosedXML.Excel;
 
 public partial class ContactBook : System.Web.UI.Page
 {
@@ -133,7 +135,7 @@ public partial class ContactBook : System.Web.UI.Page
 
             if (s == 0)
             {
-                string script = "alert('Contact Added Successfully')";
+                string script = "alert('Contact Added Successfully.');location.replace('ContactBook.aspx');";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
                 txtname.Text = "";
                 txtnumber.Text = "";
@@ -147,14 +149,14 @@ public partial class ContactBook : System.Web.UI.Page
         }
         else
         {
-            string script = "alert('Please Select Lis')";
+            string script = "alert('Please Select List')";
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
         }
 
         ddlist.SelectedIndex = -1;
         txtname.Text = "";
         txtnumber.Text = "";
-        Response.Redirect("ContactBook.aspx");
+       // Response.Redirect("ContactBook.aspx");
     }
 
     protected void allcontacts_Click(object sender, EventArgs e)
@@ -252,7 +254,7 @@ public partial class ContactBook : System.Web.UI.Page
                         gv1.DataSource = ds1;
                         gv1.DataBind();
 
-                        string strscpt = "alert('Selected Contact deleted sucessfully');";
+                        string strscpt = "alert('Selected Contact deleted sucessfully.');location.replace('ContactBook.aspx');";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alert", strscpt, true);
                         griddata.Visible = true;
                     }
@@ -273,6 +275,8 @@ public partial class ContactBook : System.Web.UI.Page
 
     protected void btnnew_Click(object sender, EventArgs e)
     {
+        ddlist.SelectedIndex = -1;
+
         tablegrid.Visible = false;
         divcontact.Visible = true;
         griddata.Visible = false;
@@ -320,6 +324,7 @@ public partial class ContactBook : System.Web.UI.Page
 
     protected void btnnewlist_Click(object sender, EventArgs e)
     {
+        ddlist.SelectedIndex = -1;
         listname.Visible = true;
         tablegrid.Visible = false;
         divcontact.Visible = false;
@@ -337,7 +342,7 @@ public partial class ContactBook : System.Web.UI.Page
         int n = reg.createlist(uname, lname);
         if (n == 0)
         {
-            string script = "alert('List Name Added Successfully')";
+            string script =  "alert('List Name Added Successfully.');location.replace('ContactBook.aspx');";
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
             txtlistname.Text = "";
         }
@@ -347,31 +352,45 @@ public partial class ContactBook : System.Web.UI.Page
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
         }
         txtlistname.Text = "";
-        Response.Redirect("ContactBook.aspx");
+      //  Response.Redirect("ContactBook.aspx");
     }
+
     protected void ddlist_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string x = ddlist.SelectedItem.Text;
-
-        DataSet ds1 = reg.savedata2(uname, x);
-
-        if (ds1.Tables[0].Rows.Count > 0)
+        if (ddlist.SelectedItem.Text != "Select List")
         {
+            string x = ddlist.SelectedItem.Text;
 
-            gv1.DataSource = ds1;
-            gv1.DataBind();
-            ddllist.SelectedIndex = -1;
-            griddata.Visible = true;
+            DataSet ds1 = reg.savedata2(uname, x);
+
+            if (ds1.Tables[0].Rows.Count > 0)
+            {
+
+                gv1.DataSource = ds1;
+                gv1.DataBind();
+                ddllist.SelectedIndex = -1;
+                griddata.Visible = true;
+
+            }
+
+            else
+            {
+                string script = "alert('No Contacts Found')";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+                griddata.Visible = false;
+                tablegrid.Visible = true;
+            }
         }
-
         else
         {
-            string script = "alert('No Contacts Found')";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
             griddata.Visible = false;
+            string script = "alert('First Select List Name')";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
         }
-        Response.Redirect("ContactBook.aspx");
-
+       // Response.Redirect("ContactBook.aspx");
+        import.Visible = false;
+        listname.Visible = false;
+        divcontact.Visible = false;
     }
     protected void lnkimp_Click(object sender, EventArgs e)
     {
@@ -400,54 +419,116 @@ public partial class ContactBook : System.Web.UI.Page
             FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
             IExcelDataContainer excelReader; //import the excel class library(dll) class and methods
             if (strExtension == ".xls")
+            {
                 // Reading from a binary Excel file ('97-2003 format; *.xls)
                 excelReader = ExcelReaderContainer.CreateBinaryReader(stream); //filestream as a parameter
-            else
-                //Reading from a OpenXml Excel file (2007 format; *.xlsx)
-                excelReader = ExcelReaderContainer.CreateOpenXmlReader(stream); //filestream as a parameter
-            // DataSet - The result of each spreadsheet will be created in the result.Tables
-            DataSet result = new DataSet();
-            result = excelReader.AsDataSet();
-            //result=null;
-            excelReader.Close(); //close the excel reader
-            excelReader.Dispose();
-            stream.Close();
-            if (result.Tables.Count > 0)
+            }
+            else if ((strExtension == ".txt"))
             {
-                if (result.Tables[0].Rows.Count > 0)
+
+                //if (File.Exists(MapPath(path)))                 //System.IO.File.ReadAllBytes(path);
+                //{
+                string[] readText = File.ReadAllLines(path);
+                StringBuilder strbuild = new StringBuilder();
+                foreach (string s in readText)
                 {
-                    if (result.Tables[0].Rows[0][0].ToString() != "mobile")
+                    strbuild.Append(s);
+                    strbuild.AppendLine();
+                }
+                Label l = new Label();
+                l.Text = strbuild.ToString();
+                // }
+
+                string crdres = "";
+
+                string mobile = "";
+                string crdrevs = l.Text;
+
+                crdrevs = crdrevs.TrimEnd(',');
+
+                crdrevs = crdrevs.Remove(crdrevs.Length - 2, 1);
+                crdrevs = crdrevs.Remove(crdrevs.Length - 1, 1);
+
+
+                string[] crdrevis = Regex.Split(crdrevs, ",");
+                for (int i = 0; i < crdrevis.Length; i++)
+                {
+                   
+                    crdres = crdrevis[i];
+
+
+
+                    if (crdres.Length == 10)
                     {
-                        string script = "alert('Enter Column name mobile')";
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
-                    }
-                    else
-                    {
-                        for (int i = 1; i < result.Tables[0].Rows.Count; i++)
-                        {
-                            string a = result.Tables[0].Rows[i][0].ToString();
-                            int x = a.Length;
-                            if (x == 10)
-                            {
-                                string sqlqry = "insert into SingleNumbers(cname,number,listname,postdate,username)values('" + subscriber + "','" + a + "','" + listname + "','" + date + "','" + uname + "')";
-                                con.Open();
-                                SqlCommand cmd = new SqlCommand(sqlqry, con);
-                                cmd.ExecuteNonQuery();
-                                con.Close();
-                            }
-                        }
+                        string sqlqry = "insert into SingleNumbers(cname,number,listname,postdate,username)values('" + subscriber + "','" + crdres + "','" + listname + "','" + date + "','" + uname + "')";
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand(sqlqry, con);
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+
                         string script = "alert('Valid Numbers Upload Successfully')";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+
+                        // mobile += crdres + ',';
                     }
+
+                }
+
+            }
+
+            else
+            {
+                //Reading from a OpenXml Excel file (2007 format; *.xlsx)
+                excelReader = ExcelReaderContainer.CreateOpenXmlReader(stream); //filestream as a parameter
+                // DataSet - The result of each spreadsheet will be created in the result.Tables
+                DataSet result = new DataSet();
+                result = excelReader.AsDataSet();
+                //result=null;
+                excelReader.Close(); //close the excel reader
+                excelReader.Dispose();
+                stream.Close();
+
+                if (result.Tables.Count > 0)
+                {
+                    if (result.Tables[0].Rows.Count > 0)
+                    {
+                        if (result.Tables[0].Rows[0][0].ToString() != "mobile")
+                        {
+                            string script = "alert('Enter Column name mobile')";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+                        }
+                        else
+                        {
+                            for (int i = 1; i < result.Tables[0].Rows.Count; i++)
+                            {
+                                string a = result.Tables[0].Rows[i][0].ToString();
+                                int x = a.Length;
+                                if (x == 10)
+                                {
+                                    string sqlqry = "insert into SingleNumbers(cname,number,listname,postdate,username)values('" + subscriber + "','" + a + "','" + listname + "','" + date + "','" + uname + "')";
+                                    con.Open();
+                                    SqlCommand cmd = new SqlCommand(sqlqry, con);
+                                    cmd.ExecuteNonQuery();
+                                    con.Close();
+                                }
+                            }
+                            string script = "alert('Valid Numbers Upload Successfully')";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script, true);
+                        }
+
+                    }
+                    string script1 = "alert('Enter numbers in Excel sheet with Column name mobile')";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script1, true);
 
                 }
 
 
             }
-            string script1 = "alert('Enter numbers in Excel sheet with Column name mobile')";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script1, true);
+          
 
         }
+
+
         else
         {
             string script = "alert('Browse file first')";
@@ -479,35 +560,30 @@ public partial class ContactBook : System.Web.UI.Page
             da.Fill(ds1);
             if (ds1.Tables[0].Rows.Count != 0)
             {
-                string strExcelConn = "";
-                Response.Clear();
-                Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment; filename=Mobilenumbers.xls");
-                Response.ContentType = "application/ms-excel";
-                string tab = string.Empty;
-
-                DataTable dexp = new DataTable();
-                //  ds1 = (DataSet)Session["values"];
-                dexp = ds1.Tables[0];
-                foreach (DataColumn datacol in dexp.Columns)
+                using (DataTable dt = new DataTable())
                 {
-                    Response.Write(tab + datacol.ColumnName);
-                    tab = "\t";
-                }
-                Response.Write("\n");
-                foreach (DataRow dr in dexp.Rows)
-                {
-                    tab = "";
-                    for (int j = 0; j < dexp.Columns.Count; j++)
+                    da.Fill(dt);
+                    using (XLWorkbook wb = new XLWorkbook())
                     {
-                        Response.Write(tab + Convert.ToString(dr[j]));
-                        tab = "\t";
+
+                        wb.Worksheets.Add(dt, "Customers");
+                        string y = "MobileNumbers.xlsx";
+                        string strExcelConn = "";
+                        Response.Clear();
+                        Response.Buffer = true;
+                        Response.AddHeader("content-disposition", "attachment;filename=" + y);
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        using (MemoryStream MyMemoryStream = new MemoryStream())
+                        {
+                            wb.SaveAs(MyMemoryStream);
+                            MyMemoryStream.WriteTo(Response.OutputStream);
+                            Response.Flush();
+                            Response.End();
+                            //Response.Redirect("Reports.aspx");
+
+                        }
                     }
-
-                    Response.Write("\n");
                 }
-
-                Response.End();
             }
             else
             {
@@ -569,48 +645,7 @@ public partial class ContactBook : System.Web.UI.Page
 
 
 
-    protected void btndel(object sender, EventArgs e)
-    {
-        //Session["listname"] = listname;
-        //string listname = "select * from listname where listname='" + uname + "'";
-        //Session["qry"] = listname;
-        //SqlDataAdapter ad = new SqlDataAdapter("delete   from lists where lname='" + X + "'", con);
-        //ad.Fill(ds);
-        foreach (GridViewRow gvrow in listtable.Rows)
-        {
-            //    //Finiding checkbox control in gridview for particular row
-            CheckBox chkdelete = (CheckBox)gvrow.FindControl("chk1");
-            //    //Condition to check checkbox selected or not
-            //    //if (chkdelete != null)
-            if (chkdelete.Checked)
-            {
-                string usrid = Convert.ToString(listtable.DataKeys[gvrow.RowIndex].Value);
-
-
-                con.Open();
-                SqlCommand cmd = new SqlCommand("DELETE SingleNumbers FROM SingleNumbers   INNER JOIN  lists  ON SingleNumbers.listname= lists.lname WHERE lists.lno =" + usrid, con);
-        
-        
-         
-                //SqlCommand cmd = new SqlCommand("delete lists  where lno=" + usrid, con);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                string str = "alert('Your Selected  list Deleted ')";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", str, true);
-                bindgridview();
-
-
-
-            }
-            else
-            {
-
-
-                string str1 = "alert(' Please Select CheckBox ')";
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", str1, true);
-            }
-        }
-    }
+  
   
     protected void listtable_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
@@ -626,10 +661,10 @@ public partial class ContactBook : System.Web.UI.Page
     protected void listtable_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         string dmid;
-        
+
         Label l1 = listtable.Rows[e.RowIndex].FindControl("lbl1") as Label;
         dmid = l1.Text;
-        SqlCommand cmd = new SqlCommand("delete lname from lists where lname='"+dmid+"'", con);
+        SqlCommand cmd = new SqlCommand("delete lname from lists where lname='" + dmid + "'", con);
         con.Open();
         cmd.ExecuteNonQuery();
         con.Close();
@@ -643,13 +678,6 @@ public partial class ContactBook : System.Web.UI.Page
 
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        string id = Convert.ToString(Session["listname"]);
-        string q ="delete from   SingleNumbers where listname='"+id+"'";
-        con.Open();
-        SqlCommand cmdn = new SqlCommand(q, con);
-        cmdn.ExecuteNonQuery();
-        con.Close();
-        
         foreach (GridViewRow gvrow in listtable.Rows)
         {
             //Finiding checkbox control in gridview for particular row
@@ -659,25 +687,47 @@ public partial class ContactBook : System.Web.UI.Page
             {
                 //Getting UserId of particular row using datakey value
                 string usrid = Convert.ToString(listtable.DataKeys[gvrow.RowIndex].Value);
-                
+
+
                 {
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("delete  from lists where lno=" + usrid, con);
+                    //SqlCommand cmd = new SqlCommand("DELETE  from lists from lists e inner join singlenumbers s on e.lname=s.listname where lno="+usrid,con); 
+                    SqlCommand cmd = new SqlCommand("DELETE t1 from singlenumbers as t1 left outer join  lists as t2 on t1.listname=t2.lname where lno=" + usrid, con);
+
+
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    string str = "alert('Your Selected  list Deleted ')";
+                }
+                try
+                {
+                    con.Open();
+                    SqlCommand cmds = new SqlCommand("delete  from lists where lno=" + usrid, con);
+                    cmds.ExecuteNonQuery();
+                    con.Close();
+
+                    string str = "alert('Your Selected Lists Deleted.');location.replace('ContactBook.aspx');";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", str, true);
                     bindgridview();
                 }
-            }
-                else
+
+                catch (Exception e1)
                 {
-                    string str1 = "alert(' Please Select CheckBox ')";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", str1, true);
+
                 }
             }
+            //else
+            //{
+            //    string str1 = "alert(' Please Select CheckBox ')";
+            //    Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", str1, true);
+            //}
         }
-            
     }
 
-    
+    protected void listtable_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+    {
+         listtable.PageIndex = e.NewPageIndex;
+         listtable.DataBind();
+         mp1.Show();
+         bindgridview();
+    }
+}

@@ -11,8 +11,8 @@
                                     <table width="100%">
                                     <tr>
                                                <td  runat="server"  align="right" colspan="5">
-                                  <asp:LinkButton ID="lnkprofile" runat="server" Text="Profile"   
-                                         Font-Names="Segoe UI" ForeColor="#191919"  Font-Bold="true" onclick="lnkprofile_Click"></asp:LinkButton>
+                                 <%-- <asp:LinkButton ID="lnkprofile" runat="server" Text="Profile"   
+                                         Font-Names="Segoe UI" ForeColor="#191919"  Font-Bold="true" onclick="lnkprofile_Click"></asp:LinkButton>--%>
                                &nbsp; &nbsp;
                                                    <asp:Label ID="ipadd" runat="server"  ForeColor="#3366FF" ></asp:Label>&nbsp;&nbsp;&nbsp;
                                        <asp:Label ID="welcome1" runat="server" Text="Wel Come :"  Font-Names="Segoe UI" ForeColor="#191919" ></asp:Label>
@@ -54,7 +54,7 @@
                      <table width="100%" align="center" style="padding:10px 10px 0 30px; color:#191919;">
   <tr style="color:#191919;">
     <td >
-       <asp:LinkButton ID="lnk1" runat="server" Text="HOME" Font-Underline="false"  
+       <asp:LinkButton ID="lnk1" runat="server" Text="HOME" Font-Underline="false"   CausesValidation="true"
             onclick="lnk1_Click"></asp:LinkButton>
     </td>
     <td>
@@ -62,19 +62,19 @@
             Font-Underline="false" onclick="LinkButton1_Click"></asp:LinkButton>
     </td>
     <td>
-       <asp:LinkButton ID="LinkButton2" runat="server" Text="BULK SMS PRICING" 
+       <asp:LinkButton ID="LinkButton2" runat="server" Text="TEMPLATES" 
             Font-Underline="false"   onclick="LinkButton2_Click"></asp:LinkButton>
     </td>
     <td>
-       <asp:LinkButton ID="LinkButton3" runat="server" Text="BE A RESELLER" 
+       <asp:LinkButton ID="LinkButton3" runat="server" Text="PROFILE" 
             Font-Underline="false"   onclick="LinkButton3_Click"></asp:LinkButton>
     </td>
-    <td width="70px">
-       <asp:LinkButton ID="LinkButton4" runat="server" Text="FAQ" 
+    <td >
+       <asp:LinkButton ID="LinkButton4" runat="server" Text="NOTIFICATIONS" 
             Font-Underline="false"   onclick="LinkButton4_Click"></asp:LinkButton>
     </td>
-    <td>
-       <asp:LinkButton ID="LinkButton5" runat="server" Text="HOW TO BUY" 
+    <td  >
+       <asp:LinkButton ID="LinkButton5" runat="server" Text="CART" 
             Font-Underline="false"   onclick="LinkButton5_Click"> </asp:LinkButton>
     </td>
   </tr>

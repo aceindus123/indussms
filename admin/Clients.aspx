@@ -20,6 +20,28 @@
                return false;
            }
 </script>
+
+  <style type="text/css">
+
+        .style2
+        {
+            height: 35px;
+            text-align: right;
+            width: 27%;
+            color: Black;
+            font-family: Segoe UI;
+        }
+    </style>
+    <style type="text/css">
+         .simple1 
+    { 
+      text-decoration:none;
+    } 
+    .simple1:hover 
+    { 
+     text-decoration:underline;
+    } 
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -28,19 +50,18 @@
          <div align="center">
           <br />
             <head:header ID="head1" runat="server" />
-            <br /><br /><br /><br />
+            <br /><br />
              <table>
-                            <tr><td align="center" id="View" runat="server">
+                            <tr><td align="center" id="View" runat="server" >
                                 <font size="5" color="#00277a"><strong>Clients List  </strong></font></td>
+                                
+                                <td align="right"><asp:Label ID="CreateClient"
+                                 runat="server" Text="Create Client" Visible="false" ForeColor="#00277a" Font-Size="22px" Font-Bold="true"></asp:Label><asp:Button ID="btn1" runat="server" Text="Create User" 
+                                        onclick="btn1_Click" /> </td>
                             </tr>
                             <tr><td></td></tr>
-                           <%-- <tr>
-                              <td align="right">
-                                 <asp:Button ID="btncreat" runat="server" Text="Create Client" 
-                                      onclick="btncreat_Click" />
-                              </td>
-                            </tr>--%>
-                        <tr id="View1" runat="server"><td height="100px" style="padding-left:0px; padding-right:0px">            
+
+                        <tr id="View1" runat="server"><td height="100px" style="padding-left:0px; padding-right:0px" colspan="2">            
                        <asp:GridView ID="gvusers" runat="server"   Width="1000px"  
                                 AutoGenerateColumns="False"  BorderColor="#CCCCCC" BorderStyle="Solid"
                 BorderWidth="3px" CellPadding="3" Font-Bold="False" Font-Italic="False"  
@@ -57,7 +78,7 @@
                                   <asp:TemplateField>
                                   <HeaderTemplate>Uid</HeaderTemplate>
                                   <ItemStyle ForeColor="Gray" BorderColor="#CCCCCC" HorizontalAlign="Center"/>
-                                  <ItemTemplate><asp:Label ID="lblid" runat="server" Text='<%# Eval("rid") %>'  /></ItemTemplate>
+                                  <ItemTemplate><asp:Label ID="lblid" runat="server" Text='<%#Container.DataItemIndex+1 %>'  /></ItemTemplate>
                                   </asp:TemplateField>
                                   <asp:TemplateField>
                                   <HeaderTemplate>Fast Name</HeaderTemplate>
@@ -106,6 +127,103 @@
                     <EmptyDataTemplate>No Records.</EmptyDataTemplate>
                 </asp:GridView>
                 </td></tr></table>
+
+                <br />
+                <table id="createuser" runat="server" visible="false">
+                      <tr>
+                     <td   valign="top" align="right" class="style1">
+                         <asp:Label ID="Literal3" runat="server" Text="Firstname" Font-Names="Segoe UI" ForeColor="Black" /><span  style="text-align:center;">*</span><strong>&nbsp;&nbsp;:&nbsp;&nbsp;</strong>
+                     </td>
+                      <td align="left" style="background: url(images/text_boxnew.png); background-repeat:no-repeat; padding-left:6px; " width="60%">
+                        <asp:TextBox ID="Name" runat="server"  Width="262px"  Height="26px" CssClass="textboxsch4"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="Requiredfieldvalidator7" runat="server" ControlToValidate="Name"
+                         ErrorMessage="Provide name" ValidationGroup="RegForm" ><span >*</span></asp:RequiredFieldValidator>                
+                     <br /> <br /> </td>
+                 </tr>
+
+                 <tr>
+                <td  class="style2" valign="top" >
+                 <asp:Literal ID="ltlsurname" runat="server" Text="Lastname" /><span >*</span><strong>&nbsp;&nbsp;:&nbsp;&nbsp;</strong>
+                </td>
+                <td align="left" style="background: url(images/text_boxnew.png); background-repeat:no-repeat; padding-left:6px; ">
+                <asp:TextBox ID="txtsurname" runat="server" Width="262px"  Height="26px" CssClass="textboxsch4">
+                </asp:TextBox>
+                <asp:RequiredFieldValidator ID="Requiredfieldvalidator3" runat="server" ControlToValidate="txtsurname"
+                    ErrorMessage="Provide initialname" ValidationGroup="RegForm"><span >*</span></asp:RequiredFieldValidator>                
+                <br /><br /></td>
+                </tr>
+                <tr>
+                <td  class="style2" valign="top">
+                <asp:Literal ID="Literal4" runat="server" Text="Email" /><span >*</span><strong>&nbsp;&nbsp;:&nbsp;&nbsp;</strong>
+                </td>
+                <td align="left" style="background: url(images/text_boxnew.png); background-repeat:no-repeat; padding-left:6px; ">
+                 <asp:TextBox ID="Email" runat="server" Width="262px"  Height="26px" CssClass="textboxsch4" AutoPostBack="true"
+                        ontextchanged="Email_TextChanged" ValidationGroup="reg1"></asp:TextBox>
+           <asp:RequiredFieldValidator ID="Requiredfieldvalidator8" runat="server" ControlToValidate="Email" 
+                ErrorMessage="Provide a valid email address" ValidationGroup="RegForm"><span >*</span></asp:RequiredFieldValidator>
+                <asp:RegularExpressionValidator ID="Regularexpressionvalidator2" runat="server" ControlToValidate="Email"
+                    ErrorMessage="Enter valid email address" Display="dynamic" ValidationExpression=".*@.*\..*" ValidationGroup="RegForm"><span >*</span></asp:RegularExpressionValidator>
+                <asp:Label ID="regemail" runat="server" Visible="false"></asp:Label>
+               <br /><br /> </td>                
+                </tr>
+                
+                     <tr>
+                <td  class="style2" valign="top">
+                 <asp:Literal ID="Literal8" runat="server" Text="Phone" /><span >*</span><strong>&nbsp;&nbsp;:&nbsp;&nbsp;</strong>
+                </td>
+                <td  align="left" style="background: url(images/text_boxnew.png); background-repeat:no-repeat; padding-left:6px; ">             
+                  <asp:TextBox ID="Phone" runat="server" MaxLength="10" Width="262px"  Height="26px" CssClass="textboxsch4" AutoPostBack="true"
+                        onkeypress="return onlyNos(event,this);" ontextchanged="Phone_TextChanged"></asp:TextBox> 
+                  <asp:RequiredFieldValidator ID="Requiredfieldvalidator12" runat="server" ControlToValidate="Phone"
+                    ErrorMessage="Provide a Phone number" ValidationGroup="RegForm"><span >*</span></asp:RequiredFieldValidator>
+                <asp:Label ID="regphone" runat="server" Visible="false"></asp:Label><br />
+
+                <br /></td>
+                </tr>
+                <tr>
+                <td  class="style2" valign="top">
+                <asp:Literal ID="Literal6" runat="server" Text="Password" /><span >*</span><strong>&nbsp;&nbsp;:&nbsp;&nbsp;</strong>
+                </td>
+                <td align="left" style="background: url(images/text_boxnew.png); background-repeat:no-repeat; padding-left:6px; ">
+                <asp:TextBox ID="Password" runat="server"  TextMode="Password" Width="262px"  Height="26px" CssClass="textboxsch4">
+                </asp:TextBox>
+                <asp:RequiredFieldValidator ID="Requiredfieldvalidator10" runat="server" ControlToValidate="Password"
+                    ErrorMessage="Provide a password" ValidationGroup="RegForm"><span >*</span></asp:RequiredFieldValidator>
+         
+                    <asp:RegularExpressionValidator  ID="RegularExpressionValidator1"  ControlToValidate="Password"
+                      ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"  runat="server"
+                      ErrorMessage="Password must contain: Minimum 8 characters atleast One Alphabet and One Number and one special Character"  
+                       ValidationGroup="RegForm"></asp:RegularExpressionValidator>
+               <br /> </td>
+                </tr>
+                <tr>
+                <td  class="style2" valign="top">
+                <asp:Literal ID="Literal1" runat="server" Text="Confirm Password" /><span >*</span><strong>&nbsp;&nbsp;:&nbsp;&nbsp;</strong>
+                </td>
+                <td  align="left" style="background: url(images/text_boxnew.png); background-repeat:no-repeat; padding-left:6px; ">
+                 <asp:TextBox ID="ConfirmPassword" runat="server"  TextMode="Password" Width="262px"  Height="26px" CssClass="textboxsch4">
+                </asp:TextBox>
+                <asp:RequiredFieldValidator ID="Requiredfieldvalidator1" runat="server" ControlToValidate="ConfirmPassword"
+                    ErrorMessage="Provide a Confirm Password" ValidationGroup="RegForm"><span >*</span></asp:RequiredFieldValidator>
+                     <asp:CompareValidator ID="Requiredfieldvalidator2" runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
+                    ErrorMessage="Provide same Password" ValidationGroup="RegForm"><span >*</span></asp:CompareValidator>
+                <br /><br /></td>
+                </tr>
+                     <tr>
+                     <td></td>
+                <td  align="left"  style="padding-left:15%;">
+                
+                <asp:ImageButton  ID="Create" ToolTip="Submit" runat="server"   
+                        ImageUrl="~/images/submit1r.png" ValidationGroup="RegForm" 
+                        onclick="Create_Click" />
+              <asp:ImageButton  ID="btncancel" runat="server" ImageUrl="~/images/cancel3.png" 
+                        onclick="btncancel_Click" />
+
+                <asp:ValidationSummary runat="server" ID="ValidationSummary1" ValidationGroup="RegForm" ShowMessageBox="True" ShowSummary="False"/>
+                
+                 </td>
+                </tr>
+                </table>
         
         </div>
 

@@ -1,27 +1,33 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Menu.ascx.cs" Inherits="admin_UserControl_Menu" %>
 
- <div class="adminlogo1" align="center"  width="100%" >
-          <img src="images/bulk-sms3.jpg" />
+ <div  align="center" style="width:1024px;margin:0 auto" >
+        <img src="images/bulk-sms3.jpg" width="1024px" height="180px" />
 
-          <table width="80%"  style="margin-top:-38px">
+          <table width="100%"  style="margin-top:-35px">
+          <tr><td style="background-color:#0b2f8a;height:18px;width:1024px">
+          <table width="100%">
             <tr >
-            &nbsp;  &nbsp; <td align="left" valign="bottom"  width="2%">
-                  <img src="images/icon.png"  height="28px"/>
+           <td align="left" valign="bottom"  width="2%">
+                  <img src="images/icon.png"  height="20px"/>
                      </td>
                   <td align="left"  width="58%" >
                  <asp:Label ID="lbluser" runat="server"  Font-Bold="true"  ForeColor="White" Width="100px"  ></asp:Label>
               </td>
-              <td align="right "  width="10%" >
+              <td align="right "  width="40%" >
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                  <asp:LinkButton ID="lnklogout" runat="server" Font-Underline="false"  
                       Text="Logout" Font-Bold="true"  ForeColor="White"  
                       onclick="lnklogout_Click"></asp:LinkButton>
-              </td>
-
+           </td>
             </tr>
+           </table>
+          </td></tr>
+    <tr><td style="background-color:#db212a;height:1px;"></td></tr>
+        
           </table>
-
-            <br />
+          <br />
         <table align="center" width="80%" >
+        
                       <tr>
                             <td align="center" width="16%"  >    
                                 <asp:LinkButton ID="lnkhome" runat="server" Text="Home" Font-Underline="false"  CausesValidation="false"
@@ -35,7 +41,7 @@
                              </td>
 
                         <td style="font-size:16px;  font-weight:bold;">&nbsp;|</td>
-                        <td align="center"  id="new1" runat="server"  width="16%" >
+                        <td align="center"  id="new1" runat="server"  width="20%" >
                               <asp:LinkButton ID="lnknew" runat="server" Text="Voice SMS & Lists" Font-Underline="false" CausesValidation="false"
                                  CssClass="datalp9" onclick="lnknew_Click"      ></asp:LinkButton>
                         </td>

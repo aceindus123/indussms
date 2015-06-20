@@ -56,49 +56,55 @@
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
+ 
 <body>
     <form id="form1" runat="server">
     <div id="main">
-<div >
-  <uc1:TopMenu ID="Topmenu1" runat="server" />
-</div>
-<!--<! banner starts here!>-->
-<div class="banner">
- <div id="der"></div>
-<h1> <img src="images/slide.gif" width="665" height="45"  style="margin-top:5px;" alt="Bannerslide"/> </h1>
-<!--<! banner ends here!>-->
-</div>
-    <div>
-    <table width="100%">
-    <tr><td>  
-    <table bgcolor="#cccccc" width="100%" style="line-height:30px;">
-    <tr><td valign="middle">   
-    <strong>
-  <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Compose VoiceSMS.aspx" ToolTip="Compose SMS" CssClass="linkbutton1"  Font-Underline="false"><img src="images/compose1.jpg" width="25" height="21" alt=""/>  Compose Voice SMS</asp:HyperLink>
- </strong>&nbsp;&nbsp;&nbsp;
-   <asp:Label ID="Label2" runat="server" Text="|"></asp:Label>
-   <strong>&nbsp;&nbsp;&nbsp;
- <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Text.aspx" ToolTip="Text to Speech" CssClass="linkbutton1"  Font-Underline="false"><img src="images/textvoice.jpg" width="25" height="21" alt=""/>  Text to Speech</asp:HyperLink> 
- </strong></td>
- <td align="right"><asp:HyperLink ID="hypreport" runat="server" NavigateUrl="~/Voicereports.aspx" ToolTip="Reports" CssClass="linkbutton1"  Font-Underline="false">Report</asp:HyperLink> </td>
- </tr>
-    </table>  
-    </td></tr>
-    <tr><td>
-    <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-           
-        </asp:ContentPlaceHolder>
-    </td></tr>
-    </table>
-        
-    </div>
+
+          <div >
+              <uc1:TopMenu ID="Topmenu1" runat="server" />
+         </div>
+
+         <div class="banner">
+           <div id="der"></div>
+               <h1> <img src="images/slide.gif" width="665" height="45"  style="margin-top:5px;" alt="Bannerslide"/> </h1>
+        </div>
+       
+        <div class="container">
+           <table width="100%">
+              <tr>
+                 <td style="background: url(images/bgbalence.png); background-repeat:no-repeat; width:1050px; height:50px;">  
+                    <table  width="100%" >
+                        <tr> 
+                            <td valign="top"   align="left">   
+                                     <asp:ImageButton ID="HyperLink3" runat="server" ImageUrl="~/images/composemail.png"  PostBackUrl="~/Compose VoiceSMS.aspx"  />
+                                     <asp:ImageButton ID="HyperLink4" runat="server" ImageUrl="~/images/texttop.png" PostBackUrl="~/Text.aspx" />
+                             </td>
+                             <td align="right" style="padding-right:10px;" valign="middle"><asp:ImageButton ID="ImageButton1" 
+                                     runat="server" ImageUrl="~/images/reportdownload.png"  ToolTip="Detailed Reports"  Height="36px" Width="36px"
+                                     PostBackUrl="~/DetailedVoiceReport.aspx" />&nbsp;&nbsp;&nbsp;<asp:ImageButton ID="hypreport" runat="server" ImageUrl="~/images/reports.png" PostBackUrl="~/Voicereports.aspx" ToolTip="Reports" /></td>
+                        </tr>
+                     </table>  
+                  </td>
+                </tr>
+
+                <tr>
+                   <td>
+                     <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+                     </asp:ContentPlaceHolder>
+                   </td>
+                </tr>
+            </table>
+        </div>
+
     <div class="footer">
-<div class="nav">
-  <uc2:BottomMenu ID="BottomMenu2" runat="server" />
-<a style="display: inline;" href="#" id="slide_top"><span style="opacity: 0;" id="slide_top_hover"></span>To Top</a>
-</div>
-</div>
-</div>
+       <div class="nav">
+          <uc2:BottomMenu ID="BottomMenu2" runat="server" />
+             <a style="display: inline;" href="#" id="slide_top"><span style="opacity: 0;" id="slide_top_hover"></span>To Top</a>
+       </div>
+   </div>
+
+   </div>
     </form>
 </body>
 </html>

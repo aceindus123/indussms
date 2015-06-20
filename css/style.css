@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 * {
-	margin: 0;
+	margin: 0 0 0 0px;
 	padding: 0;
 }
 body {
@@ -89,12 +89,17 @@ body {
 
 .banner h1 {	width: 1000px;	text-align: center;	color: #0985c8;	font: 34px/87px Georgia, "Times New Roman", Times, serif;}
 .container {	width: 1000px;	margin: 0 auto;	float: none; background-color:White; margin-top:10px; margin-bottom:10px; border:1px solid #e1e1e1}
+.container23 {	width: 1000px;	margin: 0 auto;	float: none; background-color:White;  margin-top:10px; margin-bottom:10px; border:1px solid #e1e1e1}
+.container1 {	width: 1000px;	margin: 0 auto;	float: none; background-color:White; margin-top:0px; margin-bottom:10px; border:1px solid #e1e1e1}
+
 .containerformasterpage{     margin-left: auto;    margin-right: auto;    width: 70%;    float: inherit;   }
-.one {	width: 240px;	height: 190px;	border: 1px solid #e1e1e1;	margin: 5px 0px 0 10.5px;	background: #FFF;	float: left;	position:relative;}
+.one {	width: 240px;	height: 190px;	border: 1px solid #e1e1e1;	margin: 5px 0px 0 9.5px;	background: #FFF;	float: left;	position:relative;}
 .oneforpages {	width: 240px;	height: 220px;	border: 1px solid #e1e1e1;	margin: 12px 15px 15px 10.5px;	background: #FFF;	float: right;	position:absolute;}
 .one h3 {	width: 200px;	margin: 10px auto auto auto;	border-bottom: 1px solid #e1e1e1;	padding-bottom: 10px;	font-size: 18px;	color: #258605;}
 .one h3 img {	vertical-align: middle;}
 .one p {	font: 12px/20px Arial, Helvetica, sans-serif;	width: 200px;	margin: 5px auto;	color: #565656;}
+
+.onebg {	width: 240px;	height: 10px;		margin: 5px 0px 0 10.5px;	float: left;	position:relative;}
 .read {	width: 80px;	height: 25px;	background: #0598d3;	font: 12px/25px Arial, Helvetica, sans-serif;	color: #FFF;	text-align: center;	border-radius: 5px;	position:absolute; 	bottom:10px;	left:20px;}
 .read a {	text-decoration: none;	display: block;	color: #FFF;}
 
@@ -105,7 +110,7 @@ body {
 }
 
 .content {
-	width: 1000px;
+	width: 1020px;
 	margin: auto;
 	float: left; margin-bottom:10px;
 }
@@ -142,10 +147,11 @@ body {
 	width: 105px;
 }
 .footer { overflow:hidden; clear:both;
-	 width:998px; margin:0 auto;
+	 width:1005px; margin:0 auto;
 	height:38px;
 	background: #258605;
     text-align:center; 
+
 	border-top: 3px solid #e04006; 
 	color:#FFF; 
 }
@@ -229,6 +235,7 @@ margin-left: 1px;
                     text-align:right;
                     width:50%;
                     color:Black;
+                  font-family:Segoe UI;
                     
                 }
                .lblstyle
@@ -245,10 +252,9 @@ margin-left: 1px;
                   font-size:14px;
                   border-width:1px;
                   border-color:Black;
-                  width:190px;
               } 
               .lblstyle{font-weight:bold;font-style:italic;font-family:Arial; font-size:Medium;  color:#993300;     }
-              .tblstyle{width:100%;text-align:center;}
+              .tblstyle{width:100%;text-align:left;}
               .divstyle{float: right; position: relative; height: 30px; text-align: right; top: 0px;left: 0px;  width: 580px; }
               .divstyle1{float: left; position: relative; height: 30px; text-align: right; top: 0px;left: 0px;  width: 280px;}
               .menuul{float: left; list-style: none;}
@@ -260,7 +266,7 @@ margin-left: 1px;
        .customercare{position: relative; overflow: hidden; line-height: 24px;}
        .titlecampain{padding-top:15px;}
        
-       .titlecampain1{padding-top:15px; padding-bottom:15px; font-weight:bold;font-style:italic;font-family:Arial; font-size:Medium;  color:#993300; }
+       .titlecampain1{ font-weight:bold;font-style:italic;font-family:Arial; font-size:Medium;  color:#993300; }
        
           span
               {
@@ -287,6 +293,7 @@ margin-left: 1px;
 
 
 .tableborder{background-color:White;border:1px solid #e1e1e1;margin-top:10px;margin-bottom:10px;}
+.tableborder1{background-color:White;border:1px solid #e1e1e1;margin-top:10px;margin-bottom:10px; background-image:url(~/images/registration_img.jpg);}
               
               
               
@@ -306,14 +313,24 @@ margin-left: 1px;
    .tdlbl
            {
                width:40%;
-               align:center;
                vertical-align:middle;
+               font-family:Segoe UI;
+           
+               padding-right:20px;
            }
            .tdtxt
            {
                width:200px;
                height:20px;
                font-size:14px;
+               
+           }
+             .tdtxt1
+           {
+               width:202px;
+               height:20px;
+               font-size:14px;
+               
            }
            .multxt 
            {
@@ -425,19 +442,6 @@ list-style:none; text-decoration:none; }
     height:auto;
     }
     
- .Background
-        {
-            background-color: #000;
-            filter: alpha(opacity=70);
-            opacity: 0.7;
-        }
-         .LoginPopup
-        {
-            background-color: #FFFFFF;
-            border: 5px solid #ABA9AA;
-            padding: 0 0 15px;
-            margin: 0;
-        }
         
         
         .lbl12
@@ -448,12 +452,7 @@ list-style:none; text-decoration:none; }
     
     
 }
-.modalpop
-{
-    background-color:#FFFFD6;
-    width:auto;
-    height:auto;
-    }
+
     
  .Background
         {
@@ -504,8 +503,7 @@ list-style:none; text-decoration:none; }
 
 .btnbutton
 {
-    font-size:17px; width:50px;height:26px;
-	color: Black;
+    font-size:17px; color: Black;
 }
 
 .btnbutton1
@@ -525,4 +523,175 @@ list-style:none; text-decoration:none; }
 	font-size:15px;
 	color: #003399;
 }
+#wrapperclass {
 
+height:auto;
+margin:auto;
+box-shadow:2px 2px 15px 2px #999;
+
+background-color:#FFF;
+}
+
+.simple 
+    { 
+       
+      text-decoration:none;
+      color:#006699; 
+      font-family:Segoe UI;
+      font-size:13px;
+    } 
+    .simple:hover 
+    { 
+       text-decoration:underline;
+      color:green; 
+      font-size:14px;
+      
+    } 
+    .active{
+	font-weight: bold;
+      font-family:Segoe UI;
+	font-size:16px;
+	color: DarkOrange;
+	text-decoration:none;
+}
+.water
+{
+    color:Gray;
+}
+
+
+
+.news {margin-left:5px;}
+.news a:link{ color:#343435; text-decoration:none; }
+.news a:visited{ color:#333; text-decoration:none; }
+
+.news ul { width:300px; } 
+
+.news ul li { width:97%; 
+list-style-type: none;
+display: block;
+padding: 5px 20px; padding-left:22px;
+margin: 0;
+float: left; 
+background:url(../images/arrow.png) no-repeat scroll left 6px transparent;
+padding:0px 0 10 0px; line-height:22px;
+border-bottom:#b8b8b8 dotted 1px; font-size:16px; font-family:Segoe UI;
+}
+.news a:hover{ color:#000; }
+
+
+.back
+{
+    padding-right:30px;
+    padding-bottom:20px;
+}
+
+.back1
+{
+    padding-right:60px;
+    padding-bottom:20px;
+}
+
+
+.textboxsch
+{
+    border:none;
+    margin-top:10px;
+    
+}
+
+.textboxschcon
+{
+    border-style: hidden;
+    border-color: inherit;
+    border-width: medium;
+    padding-top:2px;
+    border:none;
+    width:210px;
+    border-color:White;
+    border: 0px solid transparent;
+
+}
+
+.textboxschcon1
+{
+    border:none;
+   width:210px; 
+   padding-bottom:15px;
+   height:38px;
+    border-color:White;
+
+}
+
+.textboxsch4
+{
+    border:none;
+    margin-top:3px;
+    
+
+}
+.textboxsch2
+{
+    border:none;
+    margin-top:5px;
+    margin-left:5px;
+}
+
+.textboxsch1
+{
+    border:none;
+    margin-top:10px;
+  position:relative;
+  clear:both;
+  float:left;
+  margin-left:4px;
+  
+}
+
+.schlabel
+{
+ font-family : Segoe UI;
+ font-color:2c2c2c;
+}
+
+.reports
+    { 
+       
+      text-decoration:none;
+      color:black; 
+       font-size:medium
+    } 
+    .reports:hover 
+    { 
+       text-decoration:underline;
+      color:blue; 
+       font-size:medium;
+    }
+    .notificationstyle
+    {
+        text-decoration:none;
+      color:#003399; 
+       font-size:medium
+    }
+    .notificationstyle:hover
+    {
+        text-decoration:underline;
+        color:Green;
+        font-size:medium
+    }
+    
+    .rounded-corners {
+  border: 1px solid #b3b3b3;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+    }
+    .rounded-corners1 {
+  border: 0px solid  #b3b3b3;
+  -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+    }
+    

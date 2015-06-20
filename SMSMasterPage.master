@@ -71,11 +71,12 @@
 
 <!--<! banner ends here!>-->
 </div>
-    <div>
+    <div >
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
            
         </asp:ContentPlaceHolder>
     </div>
+    
     <div class="footer">
 <div class="nav">
   <uc2:BottomMenu ID="BottomMenu2" runat="server" />

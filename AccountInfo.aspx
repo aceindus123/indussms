@@ -3,24 +3,48 @@
 <%@ Register Src="~/UserControl/accountmenu.ascx" TagName="TopMenu" TagPrefix="uc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<style type="text/css">
+.beforespace
+{
+    padding-left:2px;
+}
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div class="container">
 <ajax:ToolkitScriptManager ID="tl1" runat="server"></ajax:ToolkitScriptManager>
-   <table  width="100%" align="center">
+ <%--  <table  width="100%" align="center">
      <tr>
        <td>
             <uc1:TopMenu ID="Topmenu1" runat="server" />
        </td>
      </tr>
+   </table>--%>
+  
+<%--    <br />
+        <table width="100%" >
+     <tr>
+        <td align="center" width="100%"  class="titlecampain1" valign="middle">
+           <h2> Account Information</h2>
+        </td>
+     
    </table>
-   <br />
-    
+    <br />--%>
    <table width="100%" align="center">
+
    <tr>
+         <td  style="background: url(images/accouninformation.png); background-repeat:no-repeat; width:995px; height:70px;"  align="right" colspan="2">
+             <asp:ImageButton ID="ImageButton2" ImageUrl="~/images/backbutton.png" runat="server" CssClass="back"  PostBackUrl="~/SMSMainMenu.aspx"  />
+
+              </td>
+    </tr>
+<%--   <tr>
      <td align="center" >
      <asp:Label ID="lbltitle" runat="server"   Text="Account Information" ForeColor="Black" Font-Size="22px"></asp:Label><br /><br /><br />
      </td>
+   </tr>--%>
+   <tr>
+     <td><br /></td>
    </tr>
      <tr>
        <td>
@@ -92,7 +116,7 @@
                                                             </td>
                                                             <td style="width: 181px">
                                                                  
-                                                                <asp:TextBox ID="txtadd1" runat="server" Width="190px" TextMode="MultiLine"></asp:TextBox> 
+                                                                <asp:TextBox ID="txtadd1" runat="server" Width="190px" TextMode="MultiLine" CssClass="beforespace"></asp:TextBox> 
 
 <asp:RequiredFieldValidator ID="reqadd1" runat="server" ControlToValidate="txtadd1" ErrorMessage="Enter your Address" ValidationGroup="signup" ForeColor="red">*</asp:RequiredFieldValidator>
                                                             </td>
@@ -101,15 +125,25 @@
                                                             </td>
                                                         </tr>                                           
                                                             <tr id="trupdate" runat="server">
-                                                            <td  colspan="2" align="center">
-                                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                             <asp:Button ID="edit1" runat="server" 
+                                                            <td  colspan="3" align="center">
+                                                          
+                                                            <%-- <asp:Button ID="edit1" runat="server" 
                                                                     Text="Edit" onclick="edit1_Click" Height="26px" Width="61px" />&nbsp;&nbsp;
                                                                 <asp:Button ID="btnupdate" runat="server" ValidationGroup="signup" 
                                                                     Text="Update" onclick="btnupdate_Click"  Height="26px" Width="61px"/>&nbsp;&nbsp;
                                                              
                                                                 <asp:Button ID="Editreset" runat="server" Text="Cancel" 
-                                                                    onclick="btncancel_Click" Height="26px" Width="61px"   />
+                                                                    onclick="btncancel_Click" Height="26px" Width="61px"   />--%>
+
+
+                                                           <asp:ImageButton ID="edit1" runat="server" onclick="edit1_Click" ImageUrl="~/images/edit1.png" />
+                                                           <asp:ImageButton ID="btnupdate" runat="server" onclick="btnupdate_Click" ImageUrl="~/images/update4.png" />
+
+                                                           <asp:ImageButton ID="Editreset" runat="server" onclick="btncancel_Click" ImageUrl="~/images/cancel3.png" />
+
+
+
+
                                                             </td></tr>
                                                        
                                                         <tr id="prvalidsummary" runat="server">
@@ -158,8 +192,11 @@
    </tr>
    <tr >
      <td  style="width:70%;  padding-left:150px;">
-     <br /> <asp:Button ID="update2" runat="server"  Text="Update Password" Height="26px" Width="120px"
-             onclick="update2_Click"  />&nbsp;&nbsp;
+     <br /> <%--<asp:Button ID="update2" runat="server"  Text="Update Password" Height="26px" Width="120px"
+             onclick="update2_Click"  />--%>&nbsp;&nbsp;
+
+
+             <asp:ImageButton ID="update2" runat="server"  onclick="update2_Click"  ImageUrl="~/images/updatepassword.png" />
      </td>
    </tr>
    </table>
@@ -208,6 +245,7 @@
             <td align="left" style="padding-left:35px;" valign="top">
              <asp:TextBox ID="Txtnewpwd" runat="server" Width="200px" TextMode="Password" Font-Size="15px"/>
               <asp:RequiredFieldValidator ID="Requiredfieldvalidator3" runat="server" ControlToValidate="Txtnewpwd" Text="*"  ValidationGroup="vg1" />
+              <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="Txtnewpwd" ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" runat="server" ErrorMessage="Password must contain: Minimum 8 characters atleast One Alphabet and One Number and one special Character"  ValidationGroup="vg1">*</asp:RegularExpressionValidator>
             </td>
             </tr>
             <tr>
@@ -222,7 +260,7 @@
             <td align="left" style="padding-left:35px;" valign="top">
              <asp:TextBox ID="Txtconfirmpwd" runat="server" Width="200px" TextMode="Password" Font-Size="15px"/>
               <asp:RequiredFieldValidator ID="Requiredfieldvalidator4" runat="server" ControlToValidate="Txtconfirmpwd" Text="*"  ValidationGroup="vg1" />
-              <asp:CompareValidator ID="CompareValidator1" runat="server"  ControlToValidate="Txtconfirmpwd" ControlToCompare="Txtnewpwd" ValidationGroup="vg1" Text="Password must be match">*</asp:CompareValidator>
+              <asp:CompareValidator ID="CompareValidator1" runat="server"  ControlToValidate="Txtconfirmpwd" ControlToCompare="Txtnewpwd" ValidationGroup="vg1" ErrorMessage="Password must be match">*</asp:CompareValidator>
             </td>
             </tr>
             <tr>
@@ -239,6 +277,8 @@
                 />
             </td>
             </tr>
+            <tr>  <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="vg1" ShowMessageBox="true" ShowSummary="false" /></tr>
+                  
             </table>
         </asp:Panel>
         

@@ -120,22 +120,21 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <ajax:ToolkitScriptManager ID="tm" runat="server"></ajax:ToolkitScriptManager>
   <div class="container">
-   <table  width="100%" align="center">
-     <tr>
-       <td>
-            <uc1:topmenu ID="Topmenu1" runat="server" />
-       </td>
+  <table width="100%" >
+<%--     <tr>
+        <td align="center" width="100%"  class="titlecampain1" valign="middle">
+           <h2> Contacts Information</h2>
+        </td>
      </tr>
    </table>
-     <br />
-     <br />
-   <table width="100%" align="center">
-     <tr>
-     <td align="center" colspan="3" >
-     <asp:Label ID="lbltitle" runat="server"   Text="Contact Details" ForeColor="Black" Font-Size="22px"></asp:Label><br /><br />
-     </td>
-   </tr>
-   
+   <br />
+   <table width="100%" align="center">--%>
+  <tr>
+         <td  style="background: url(images/contactinformation.png); background-repeat:no-repeat; width:995px; height:70px;"  align="right" colspan="2">
+             <asp:ImageButton ID="ImageButton1" ImageUrl="~/images/backbutton.png" runat="server" CssClass="back"  PostBackUrl="~/SMSMainMenu.aspx"  />
+
+              </td>
+    </tr>
      <tr>
        <td align="left" width="25%" style="padding-left:20px; " valign="top">
         <div  >
@@ -151,14 +150,17 @@
         </div>
         <br />
         <div>
-           <asp:Button ID="btnnew" runat="server" Text="New Contact"  Height="27px" Width="100px"
+         <%--  <asp:Button ID="btnnew" runat="server" Text="New Contact"  Height="27px" Width="100px"
                 Font-Bold="true" onclick="btnnew_Click"/>
             <asp:Button ID="btnnewlist" runat="server" Text="New List" Height="27px"   Width="100px"
-                Font-Bold="true" onclick="btnnewlist_Click"/>
+                Font-Bold="true" onclick="btnnewlist_Click"/>--%>
+             <asp:ImageButton ID="btnnew" ImageUrl="~/images/newcontact.png" runat="server"  OnClick="btnnew_Click"   />
+             <asp:ImageButton ID="btnnewlist" ImageUrl="~/images/newlist.png" runat="server"  onclick="btnnewlist_Click"   />
+
         </div>
      </td>
      
-       <td align="left" width="75%" valign="top" >
+       <td align="center" width="75%" valign="top" >
      
         <table width="100%" id="tablegrid" runat="server"   >
     
@@ -182,15 +184,18 @@
                  </td></tr>
                  <tr><td align="center"><br />
                  <asp:GridView ID="listtable" runat="server" AutoGenerateColumns="false" 
-                         Width="500px" HorizontalAlign="Center" GridLines="None" ShowFooter="true"
+                         Width="700px" HorizontalAlign="Center" GridLines="None" 
                   AllowPaging="true" PageSize="5" ForeColor="#333333" CellPadding="4" 
                          EmptyDataRowStyle-HorizontalAlign="Center" EmptyDataRowStyle-Font-Size="Medium" 
                          EmptyDataRowStyle-ForeColor="Black" DataKeyNames="lno" 
-                         onrowdeleting="listtable_RowDeleting">
+                         onrowdeleting="listtable_RowDeleting" 
+                         onpageindexchanging="listtable_PageIndexChanging1" 
+                         >
+                         <RowStyle HorizontalAlign="Center"  Height="30px"/>
                  <HeaderStyle Font-Bold="True"  ForeColor="#003399" Height="30px" BackColor="#999999" Font-Size="14px" Font-Names="Arial" /> 
                  <Columns>
                 <asp:TemplateField ItemStyle-HorizontalAlign="Center">
-               
+               <ItemStyle HorizontalAlign="Center" />
                  <ItemTemplate>
                      <asp:CheckBox ID="chk1" runat="server"  />
                  </ItemTemplate>
@@ -237,7 +242,7 @@
                 <ajax:ModalPopupExtender ID="mp1" runat="server" PopupControlID="panview" TargetControlID="delctc" BackgroundCssClass="Background" CancelControlID="btnimcan" RepositionMode="RepositionOnWindowResize"></ajax:ModalPopupExtender>
 
 
-                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Sender_id.aspx" Text="Create SenderId" ForeColor="Black" Font-Underline="false"  Font-Size="17px" Width="150px" Height="26px"></asp:HyperLink>
+                <%--<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Sender_id.aspx" Text="Create SenderId" ForeColor="Black" Font-Underline="false"  Font-Size="17px" Width="150px" Height="26px"></asp:HyperLink>--%>
                 <asp:LinkButton ID="lnkimp" runat="server" Text="Import Contacts" 
                     ForeColor="Black" Font-Underline="false"
                  Font-Size="17px" Width="150px" Height="26px" onclick="lnkimp_Click"></asp:LinkButton>
@@ -246,8 +251,8 @@
     </td>
        </tr>
        <tr style="margin-top:20px;">
-         <td style="float:left; background-color: Gray; line-height:34px; font-size:19px; font-style:oblique" width="100%" >
-           &nbsp;&nbsp;  All Contacts<br />
+         <td  width="100%" class="rounded-corners" style="line-height:26px; background-color:#0985c5;" >
+           &nbsp;&nbsp; <span style="color:White;"> All Contacts<br /></span>
         </td>
       </tr>
        <tr>
@@ -321,8 +326,8 @@
           
           <table  cellspacing="10px">
           <tr>
-             <td align="center" style="background-color: Gray; line-height:34px; font-size:19px; font-style:oblique" width="100%">
-                Add Contact Individual
+             <td align="center" style="background-color: #0985c5; line-height:34px; font-size:19px; font-style:oblique" width="100%" class="rounded-corners">
+              <span style="color:White;">  Add Contact Individual</span>
              </td>
           </tr>
             <tr>
@@ -334,7 +339,9 @@
             </tr>
             <tr>
                <td>
-                <asp:Label ID="lblnumber" runat="server" Width="200px" Text="Enter Mobile Number" ForeColor="Black"></asp:Label>  : <asp:TextBox ID="txtnumber" runat="server" Width="200px" ></asp:TextBox>
+                <asp:Label ID="lblnumber" runat="server" Width="200px" Text="Enter Mobile Number" ForeColor="Black"></asp:Label>  : <asp:TextBox ID="txtnumber" runat="server" Width="200px"  MaxLength="10"></asp:TextBox>
+
+                <ajax:FilteredTextBoxExtender ID="ftxt1" runat="server" TargetControlID="txtnumber" FilterType="Numbers"></ajax:FilteredTextBoxExtender>
                   <asp:RequiredFieldValidator ID="Requiredfieldvalidator1" runat="server" ControlToValidate="txtnumber"
                     ErrorMessage="Provide Number" ValidationGroup="RegForm"><span >*</span></asp:RequiredFieldValidator> 
                      <asp:RegularExpressionValidator ID="mNoValidator" runat="server" ControlToValidate="txtnumber" ForeColor="Red"
@@ -353,7 +360,8 @@
             </tr>
             <tr>
              <td align="center">
-               <asp:Button ID="btnadd" runat="server" Text="Add" onclick="btnadd_Click" ValidationGroup="RegForm"  Width="50px" Height="30px"/>
+               <%--<asp:Button ID="btnadd" runat="server" Text="Add" onclick="btnadd_Click" ValidationGroup="RegForm"  Width="50px" Height="30px"/>--%>
+               <asp:ImageButton ID="btnadd" runat="server" onclick="btnadd_Click" ValidationGroup="RegForm" ImageUrl="~/images/add.png" />
              </td>
             </tr>
           </table>
@@ -368,9 +376,9 @@
                  <Columns>
                       <asp:TemplateField ControlStyle-Width="20px" HeaderStyle-Width="20px" FooterStyle-Width="20px"  HeaderStyle-HorizontalAlign="Center"
                          ItemStyle-HorizontalAlign="Center" >
-                    
+                    <ItemStyle HorizontalAlign="Center" />
                         <ItemTemplate>
-                        &nbsp; &nbsp; &nbsp;  <asp:CheckBox ID="chkone" runat="server"  onclick="Sample();" />
+                        <asp:CheckBox ID="chkone" runat="server"  onclick="Sample();" />
                         </ItemTemplate>
                         <FooterTemplate >
        
@@ -447,10 +455,10 @@
       </tr>
    </table>
 
-        <table id="listname" runat="server" height="120px" >
-         <tr>
-             <td align="center" style="background-color: Gray; line-height:22px; font-size:19px; font-style:oblique" width="100%">
-                Create List
+        <table id="listname" runat="server" height="120px"  align="center" width="60%" >
+         <tr> 
+             <td align="center" style="background-color: #0985c5; line-height:22px; font-size:19px; font-style:oblique" class="rounded-corners"   width="60%">
+               <span style="color:White;"> Create List</span>
              </td>
           </tr>
            <tr>
@@ -463,8 +471,9 @@
            </tr>
            <tr>
              <td align="center">
-               <asp:Button ID="btnadd1" runat="server" Text="Add"  ValidationGroup="RegForm1"  
-                     Width="50px" Height="30px" onclick="btnadd1_Click"/>
+               <%--<asp:Button ID="btnadd1" runat="server" Text="Add"  ValidationGroup="RegForm1"  
+                     Width="50px" Height="30px" onclick="btnadd1_Click"/>--%>
+                     <asp:ImageButton ID="btnadd1" runat="server" onclick="btnadd1_Click" ValidationGroup="RegForm1" ImageUrl="~/images/add.png" />
              </td>
            </tr>
         </table>
@@ -487,11 +496,25 @@
                 <asp:FileUpload ID="upload1" runat="server" />    
              </td>
           </tr>
+          <tr>
+          <td></td>
+            <td>
+              upload multiple Numbers with comma(,)sepateted in notepad file or
+            </td>
+          </tr>
+          <tr>
+          <td></td>
+            <td>
+              Excel sheet(.xls) with mobile column name
+            </td>
+          </tr>
 
           <tr>
            <td> &nbsp;</td>
-            <td>  <asp:Button ID="btnsubmit" runat="server" Text="Upload" 
-                    onclick="btnsubmit_Click" />      </td>
+            <td>  <%--<asp:Button ID="btnsubmit" runat="server" Text="Upload" 
+                    onclick="btnsubmit_Click" />--%>   
+                    <asp:ImageButton  ID="btnsubmit" runat="server"
+                    onclick="btnsubmit_Click" ImageUrl="~/images/upload.png" />  </td>
           </tr>
         </table>
        
@@ -515,7 +538,9 @@
            <tr>
            <td> &nbsp;</td>
             <td>  
-                <asp:Button ID="btnexport" runat="server" Text="Download" onclick="btnexport_Click"/>      </td>
+                <%--<asp:Button ID="btnexport" runat="server" Text="Download" onclick="btnexport_Click"/>--%>   
+                
+                <asp:ImageButton   ID="btnexport" runat="server" Text="Download" onclick="btnexport_Click" ImageUrl="~/images/download2.png" /> </td>
           </tr>
           </table>
          

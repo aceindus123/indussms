@@ -26,6 +26,16 @@ IndusSMS offers an ideal promotional bulk SMS service to your business which can
 <img src="images/bulk.jpg"  id="imgbulk"  alt=""  />
 
 
+<table>
+ <tr>
+   <td>
+    Pricing List
+   </td>
+ </tr>
+</table>
+
+
+
 <ul class="list">
        <li>Useful for the promotional activities.</li>
        <li>Sender id will be like e.g. <strong>LM-234516</strong>, digits will be random system generated number.</li>

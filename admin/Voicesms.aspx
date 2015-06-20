@@ -18,11 +18,12 @@
     <br />
      <head:header ID="head1" runat="server" />
      <br /> <br /> <br /> <br />
-             <table>
 
-          
-                            <tr><td align="center" id="View" runat="server">
-                                <font size="5" color="#00277a"><strong>Voice SMS & Lists                     <br /><br /> </td>
+     <br />
+     <br />
+             <table>
+                        <tr><td align="center" id="View" runat="server">
+                                <font size="5" color="#00277a"><strong>Voice SMS & Lists                      </td>
                             </tr>
 
                                <tr>
@@ -59,21 +60,33 @@
                     <HeaderTemplate>SMS Records</HeaderTemplate>
                     <ItemStyle HorizontalAlign="Center"/> 
                     <ItemTemplate>
-                        <asp:LinkButton ID="linkview" runat="server">View SMS</asp:LinkButton>
-                        <asp:Panel ID="panview" runat="server" HorizontalAlign="Center">
-                         <table width="130%" bgcolor="#33ccff" align="center">
+                        <asp:LinkButton ID="linkview" runat="server" OnCommand="pandetails" CommandArgument='<%#Eval("Username") %>'>View SMS</asp:LinkButton>
+                       
+                        </ItemTemplate>                        
+                    </asp:TemplateField>
+                   </Columns>
+                   <EmptyDataTemplate>No Records.</EmptyDataTemplate>
+                </asp:GridView>
+                </td></tr></table>
+     </div>
+         <input id="Hid_Sno" type="hidden" name="hddclick" runat="server" />
+         <asp:ModalPopupExtender ID="ModalPopupExtender1"  runat="server" TargetControlID="Hid_Sno" CancelControlID="btnimcan" ViewStateMode="Disabled" PopupControlID="panview" DropShadow="true" BackgroundCssClass="Modalpopup" >
+    </asp:ModalPopupExtender>
+         <asp:Panel ID="panview" runat="server" HorizontalAlign="Center">
+                         <table width="110%" bgcolor="#33ccff" align="center">
              <tr><td align="right">
                  <asp:ImageButton ID="btnimcan" runat="server" ImageUrl="~/images/close.jpg" width="25" height="21"/></td></tr>
              </table>
-             <table width="130%" bgcolor="white">
+             <table width="110%" bgcolor="white">
              <tr><td></td></tr>
              <tr>
-             <td align="center" id="View" runat="server"><br />
-                 <font size="4" color="#00277a"><strong><u>Voice SMS List For '<%# Eval("Username") %>'</u></strong></font>
+             <td align="center" id="Td1" runat="server"><br />
+                 <font size="4" color="#00277a"><strong><u>Voice SMS Lists</u></strong></font>
                  </td>
                  <tr><td><br />
-                 <asp:GridView ID="gvview" runat="server" AutoGenerateColumns="false" Width="600px" HorizontalAlign="Center">
-                 <HeaderStyle Font-Bold="True"  ForeColor="#003399" Height="30px" BackColor="#999999" Font-Size="14px" Font-Names="Arial" /> 
+                 <asp:GridView ID="gvview" runat="server" AutoGenerateColumns="false" Width="700px" HorizontalAlign="Center" AllowPaging="true" PageSize="5" OnPageIndexChanging="gvview_PageIndexChanging">
+                      <HeaderStyle Font-Bold="True"  ForeColor="#003399" Height="32px" BackColor="#999999" Font-Size="14px" Font-Names="Arial" /> 
+                  <PagerStyle Font-Bold="True" HorizontalAlign="Center"  ForeColor="#003399" Height="25px" BackColor="#999999" Font-Size="14px" Font-Names="Arial" /> 
                  <Columns>
                  <asp:TemplateField>
                  <HeaderTemplate>SMS No</HeaderTemplate>
@@ -99,15 +112,7 @@
              </td></tr>
              </table>
                 </asp:Panel>
-                <asp:ModalPopupExtender ID="ModalPopupExtender1"  runat="server" TargetControlID="linkview" CancelControlID="btnimcan" ViewStateMode="Disabled" PopupControlID="panview" DropShadow="true" BackgroundCssClass="Modalpopup">
-    </asp:ModalPopupExtender>
-                        </ItemTemplate>                        
-                    </asp:TemplateField>
-                   </Columns>
-                   <EmptyDataTemplate>No Records.</EmptyDataTemplate>
-                </asp:GridView>
-                </td></tr></table>
-     </div>
+               
     </form>
 </body>
 </html>

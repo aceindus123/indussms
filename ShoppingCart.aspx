@@ -4,23 +4,28 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div class="container">
+ <div class="container">
+
 <asp:ScriptManager ID="sp1" runat="server"></asp:ScriptManager>
-  <table  width="100%" align="center">
-     <tr>
-       <td>
-            <uc1:topmenu ID="Topmenu1" runat="server" />
-       </td>
+
+ <table width="100%" >
+   <tr>
+      <td  style="background: url(images/shopping.png); background-repeat:no-repeat; width:995px; height:70px; padding-top:5px;"  align="right" colspan="4">
+             <asp:ImageButton ID="imgsch" ImageUrl="~/images/backbutton.png" runat="server" CssClass="back"  PostBackUrl="~/SMSMainMenu.aspx"  />
+
+          <br /><br /> </td>
      </tr>
+     <tr>
+     <td></td>
+     </tr>
+     
    </table>
-   <br />
-     <br />
-     </div>
 
      <asp:Panel ID="up" runat="server" style=" width:100%; background-color:White">
          <%--<asp:Label ID="Label5" runat="server" Text="Your Cart Is Empty"></asp:Label>--%>
          <br />
-        <asp:GridView ID="gv1" runat="server"   Width="1000px"  
+         <table align="center" width="100%"><tr ><td align="center" colspan="2">
+        <asp:GridView ID="gv1" runat="server"   Width="900px"  
                                 AutoGenerateColumns="False"  BorderColor="#CCCCCC" BorderStyle="Solid"
                 BorderWidth="3px" CellPadding="3" Font-Bold="False" Font-Italic="False"  
                                 Font-Overline="False" Font-Size="10pt" 
@@ -28,7 +33,8 @@
                 Font-Underline="False"   BackColor="White" AllowPaging="True" RowStyle-Height="30px"  
                                 PagerStyle-Mode="NumericPages"  
              PagerStyle-BackColor="White"   PageSize="5" ShowFooter="true"
-                               ShowHeaderWhenEmpty="true"  GridLines="Horizontal" DataKeyNames="crid" EmptyDataRowStyle-Font-Bold="true" EmptyDataRowStyle-HorizontalAlign="Center" EmptyDataText="Your Cart Is Empty"
+                               ShowHeaderWhenEmpty="true"  GridLines="Horizontal" DataKeyNames="crid" EmptyDataRowStyle-Font-Bold="true" EmptyDataRowStyle-HorizontalAlign="Center" EmptyDataText="Your Cart Is Empty...."
+                                EmptyDataRowStyle-Font-Size="Medium" EmptyDataRowStyle-ForeColor="Red" EmptyDataRowStyle-Height="30px"
              
              
              onrowdeleting="gv1_RowDeleting" onrowdatabound="gv1_RowDataBound">
@@ -57,20 +63,19 @@
                           <asp:CommandField ButtonType="Button" ShowDeleteButton="true" ItemStyle-Width="40px" 
                           ControlStyle-CssClass="buttonStyle1" HeaderText="Action" />  
                     </Columns>
-                    <EmptyDataTemplate>
-                    Your Cart Is Empty..
-                    </EmptyDataTemplate>
-                    <EmptyDataRowStyle ForeColor="Red" Font-Size="Medium" Height="30px" />
-                </asp:GridView>
+                  
+                   
+                </asp:GridView></td></tr></table>
       
       <br />
-         <asp:Label ID="Label4" runat="server" ></asp:Label>
-         <asp:Button ID="Button1" runat="server" Text="PayNow" onclick="Button1_Click" CssClass="buttonStyle1"  Width="100px"/>
+         <%--<asp:Label ID="Label4" runat="server" ></asp:Label>--%>
+      <%--   <asp:Button ID="Button1" runat="server" Text="PayNow" onclick="Button1_Click" CssClass="buttonStyle1"  Width="100px"/>--%>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <asp:ImageButton ID="Button1" runat="server" Text="PayNow" onclick="Button1_Click" ImageUrl="~/images/paynow.png" />
          <br />
          <br />
 
      </asp:Panel>
      
-    
+    </div>
 </asp:Content>
 

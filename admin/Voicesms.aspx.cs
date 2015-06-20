@@ -54,17 +54,62 @@ public partial class admin_Voicesms : System.Web.UI.Page
     protected void RowDataBound(object sender, GridViewRowEventArgs e)
     {
 
-        if (e.Row.RowType == DataControlRowType.DataRow)
+      
+    }
+     private void BindOrders(string name, GridView gvOrders)
+    {
+        //Label l1 = e.Row.FindControl("lbluname") as Label;
+        name = Convert.ToString(Session["id"]);
+        gvOrders.ToolTip = name;
+        gvOrders.DataSource = GetData(string.Format("select * from VoiceSms where Username='{0}'", name));
+        gvOrders.DataBind();
+        ModalPopupExtender1.Show();
+         
+        
+    }
+    protected void gvview_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GridView gvOrders = (sender as GridView);
+        gvOrders.PageIndex = e.NewPageIndex;
+        BindOrders(gvOrders.ToolTip, gvOrders);
+       
+       
+        
+    }
+    private static DataTable GetData(string query)
+    {
+        //string constr = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        //using (SqlConnection con = new SqlConnection(constr))
+        //{
+        SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        using (SqlCommand cmd = new SqlCommand())
         {
-            string name;
-            GridView gv = (GridView)e.Row.FindControl("gvview");
-            Label l1 = e.Row.FindControl("lbluname") as Label;
-            name = l1.Text;
-            SqlDataAdapter da = new SqlDataAdapter("select * from VoiceSms where Username='" + name + "'", sqlConnection);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            gv.DataSource = ds;
-            gv.DataBind();
+            cmd.CommandText = query;
+            using (SqlDataAdapter sda = new SqlDataAdapter())
+            {
+                cmd.Connection = sqlConnection;
+                sda.SelectCommand = cmd;
+                using (DataSet ds = new DataSet())
+                {
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    return dt;
+                }
+            }
         }
     }
+    protected void pandetails(object sender, CommandEventArgs e)
+    {
+        string id = e.CommandArgument.ToString();
+        Session["id"] = id;
+        string qry = "select * from Voicesms where Username=" + id;
+        SqlCommand cmd = new SqlCommand(qry, sqlConnection);
+        SqlDataAdapter ad = new SqlDataAdapter(cmd);
+        DataSet ds = new DataSet();
+        ad.Fill(ds);
+        gvview.DataSource = ds;
+        gvview.DataBind();
+        ModalPopupExtender1.Show();
+    }
 }
+

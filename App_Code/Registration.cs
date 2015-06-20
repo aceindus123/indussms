@@ -11,6 +11,8 @@ using System.Data.OleDb;
 using System.Collections.Specialized;
 using ExcelReader;
 using System.IO;
+using Microsoft.VisualBasic;
+using System;
 
 
 /// <summary>
@@ -18,6 +20,8 @@ using System.IO;
 /// </summary>
 public class Registration
 {
+    string _to, _from, _calluid, _event, _call_status, _start_time, end_time, _endreason;
+
     public DBOperations obj = new DBOperations();
     SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
     string script = string.Empty;
@@ -151,6 +155,9 @@ public class Registration
 
 
     }
+
+   
+
     public bool updateRegstatus(string mobile, int mobilestatus, string pdate)
     {
         try
@@ -403,65 +410,65 @@ public class Registration
         return ds2;
     }
 
-    public int insertnumbers1(string strFileName, string strExtension, string strUploadFileName, string path, string user1, string listname)
-    {
-        int n = 0;
-        string date = Convert.ToString(DateTime.Now);
-        string listname1 = listname;
-        string user2 = user1;
+    //public int insertnumbers1(string strFileName, string strExtension, string strUploadFileName, string path, string user1, string listname)
+    //{
+    //    int n = 0;
+    //    string date = Convert.ToString(DateTime.Now);
+    //    string listname1 = listname;
+    //    string user2 = user1;
 
-        FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
-        IExcelDataContainer excelReader; //import the excel class library(dll) class and methods
-        if (strExtension == ".xls")
-            excelReader = ExcelReaderContainer.CreateBinaryReader(stream); //filestream as a parameter
-        else
-            excelReader = ExcelReaderContainer.CreateOpenXmlReader(stream); //filestream as a parameter
-        DataSet result = new DataSet();
-        result = excelReader.AsDataSet();
-        excelReader.Close(); 
-        excelReader.Dispose();
-        stream.Close();
-        if (result.Tables.Count > 0)
-        {
-            if (result.Tables[0].Rows.Count > 0)
-            {
-                if (result.Tables[0].Rows[0][0].ToString() != "mobile")
-                {
-                    n = 1;
-                    return n;
-                }
-                else
-                {
-                    if (result.Tables[0].Rows.Count < 22)
-                    {
-                        for (int i = 1; i < result.Tables[0].Rows.Count; i++)
-                        {
-                            string a = result.Tables[0].Rows[i][0].ToString();
-                            int x = a.Length;
-                            if (x == 10)
-                            {
-                                string sqlqry = "insert into EventNumbers(number,postdatedate,username,listname)values('" + a + "','" + date + "','" + user2 + "','" + listname1 + "')";
-                                con.Open();
-                                SqlCommand cmd = new SqlCommand(sqlqry, con);
-                                cmd.ExecuteNonQuery();
-                                con.Close();
-                            }
-                        }
-                        n = 4;
-                        return n;
-                    }
-                    else
-                    {
-                        n = 5;
-                        return n;
-                    }
-                }
-            }
-            return n;
-        }
-        n = 6;
-        return n;
-    }
+    //    FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+    //    IExcelDataContainer excelReader; //import the excel class library(dll) class and methods
+    //    if (strExtension == ".xls")
+    //        excelReader = ExcelReaderContainer.CreateBinaryReader(stream); //filestream as a parameter
+    //    else
+    //        excelReader = ExcelReaderContainer.CreateOpenXmlReader(stream); //filestream as a parameter
+    //    DataSet result = new DataSet();
+    //    result = excelReader.AsDataSet();
+    //    excelReader.Close(); 
+    //    excelReader.Dispose();
+    //    stream.Close();
+    //    if (result.Tables.Count > 0)
+    //    {
+    //        if (result.Tables[0].Rows.Count > 0)
+    //        {
+    //            if (result.Tables[0].Rows[0][0].ToString() != "mobile")
+    //            {
+    //                n = 1;
+    //                return n;
+    //            }
+    //            else
+    //            {
+    //                if (result.Tables[0].Rows.Count < 22)
+    //                {
+    //                    for (int i = 1; i < result.Tables[0].Rows.Count; i++)
+    //                    {
+    //                        string a = result.Tables[0].Rows[i][0].ToString();
+    //                        int x = a.Length;
+    //                        if (x == 10)
+    //                        {
+    //                            string sqlqry = "insert into EventNumbers(number,postdatedate,username,listname)values('" + a + "','" + date + "','" + user2 + "','" + listname1 + "')";
+    //                            con.Open();
+    //                            SqlCommand cmd = new SqlCommand(sqlqry, con);
+    //                            cmd.ExecuteNonQuery();
+    //                            con.Close();
+    //                        }
+    //                    }
+    //                    n = 4;
+    //                    return n;
+    //                }
+    //                else
+    //                {
+    //                    n = 5;
+    //                    return n;
+    //                }
+    //            }
+    //        }
+    //        return n;
+    //    }
+    //    n = 6;
+    //    return n;
+    //}
 
 
     public DataSet databind(string user)
@@ -630,7 +637,7 @@ public class Registration
         return ds2.Tables[0].Rows[0]["fname"].ToString();
     }
 
-    public int insertschreport(string sname, string uname, string name, string number, string subject, string time1, string time)
+    public int insertschreport(string sname, string uname, string name, string number, string subject, string time1, string time, string template, string senderid)
     {
         int n = 0;
         int interval = 0;
@@ -650,6 +657,8 @@ public class Registration
             cmd.Parameters.AddWithValue("@time", time);
             cmd.Parameters.AddWithValue("@interval", interval);
             cmd.Parameters.AddWithValue("@stat", stat);
+            cmd.Parameters.AddWithValue("@template", template);
+            cmd.Parameters.AddWithValue("@senderid", senderid);
 
             sda = new SqlDataAdapter(cmd);
             sda.Fill(ds);
@@ -772,12 +781,21 @@ public class Registration
         SqlDataAdapter da = new SqlDataAdapter(qry, con);
         DataSet ds = new DataSet();
         da.Fill(ds);
-        string name = ds.Tables[0].Rows[0]["fname"].ToString();
-        return name;
+        if (ds.Tables[0].Rows.Count != 0)
+        {
+            string name = ds.Tables[0].Rows[0]["fname"].ToString();
+            return name;
+        }
+        else
+        {
+            return null;
+        }
     }
 
 
-    public int insertschreport1(string username, string uname, string number, string message, DateTime time, string result)
+  //  public int insertschreport1(string username, string uname, string number, string message, DateTime time, string result)
+    public int insertschreport1(string username, string uname, string number, string message, string time, string result, string tempalet, string id)
+
     {
         int n = 0;
         string stat = "Sent";
@@ -793,7 +811,11 @@ public class Registration
             cmd.Parameters.AddWithValue("@subject", message);
             cmd.Parameters.AddWithValue("@time1", time);
             cmd.Parameters.AddWithValue("@stat", stat);
+
             cmd.Parameters.AddWithValue("@rid", result);
+            cmd.Parameters.AddWithValue("@tempaletename", tempalet);
+            cmd.Parameters.AddWithValue("@senderid", id);
+
 
             sda = new SqlDataAdapter(cmd);
             sda.Fill(ds);
@@ -813,8 +835,11 @@ public class Registration
     public DataSet tetrivenormaltodaydata(string uname, string x, string y)
     {
         string date1 = x;
-        string date2 = y;
-        string s4 = "SELECT  * FROM NormalReport WHERE currentdate  BETWEEN '" + date1 + "' and '" + date2 + "'";
+       // string date2 = y;
+        DateTime d = Convert.ToDateTime(y);
+        string date2 = Convert.ToString(d.AddDays(2).ToString("MM/dd/yyyy"));
+
+        string s4 = "SELECT  * FROM NormalReport WHERE currentdate  BETWEEN '" + date1 + "' and '" + date2 + "' and sendernumber='" + uname + "' order by sid desc ";
         SqlDataAdapter da2 = new SqlDataAdapter(s4, con);
         DataSet ds2 = new DataSet();
         da2.Fill(ds2);
@@ -823,9 +848,9 @@ public class Registration
 
     public DataSet tetrivenormaltodaydata1(string uname, string date1)
     {
-        string date2 = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+        string date2 = DateTime.Now.AddDays(1).ToString("MM/dd/yyyy");
 
-        string s4 = "SELECT  * FROM  NormalReport WHERE currentdate BETWEEN '"+date1+"' and '"+date2+"'";
+        string s4 = "SELECT  * FROM  NormalReport WHERE currentdate BETWEEN '" + date1 + "' and '" + date2 + "' and sendernumber='" + uname + "' order by sid desc";
         SqlDataAdapter da2 = new SqlDataAdapter(s4, con);
         DataSet ds2 = new DataSet();
         da2.Fill(ds2);
@@ -841,62 +866,88 @@ public class Registration
         da.Fill(ds);
         return ds;
     }
-    public string amount(string id)
+
+    public DataSet amount(string id)
     {
-        string qry = "select amountleft from textsmsexpenses where Uname='" + id + "'";
+        string qry = "select Amount,amountleft,smsleft,expirydate,status from textsmsexpenses where Uname='" + id + "'" ;
         SqlDataAdapter da = new SqlDataAdapter(qry, con);
         DataSet ds = new DataSet();
         da.Fill(ds);
-        string amt = ds.Tables[0].Rows[0]["amountleft"].ToString();
-        return amt;
-    }
-    public string smsleft(string id)
-    {
-        string sub = "select smsleft from textsmsexpenses where Uname='" + id + "'";
-        SqlDataAdapter ads = new SqlDataAdapter(sub, con);
-        DataSet ds = new DataSet();
-        ads.Fill(ds);
-        string sms = ds.Tables[0].Rows[0]["smsleft"].ToString();
-        return sms;
-    }
-    public string expiry(string id)
-    {
-        string q = "select expirydate from textsmsexpenses where Uname='" + id + "'";
-        SqlDataAdapter ad1= new SqlDataAdapter(q,con);
-        DataSet ds = new DataSet();
-        ad1.Fill(ds);
-        string exp = ds.Tables[0].Rows[0]["expirydate"].ToString();
-        return exp;
+        //string amt = ds.Tables[0].Rows[0]["amountleft"].ToString();
+        return ds;
     }
 
-    public string voiceamount(string id)
+    //public string smsleft(string id)
+    //{
+    //    string sub = "select smsleft from textsmsexpenses where Uname='" + id + "'";
+    //    SqlDataAdapter ads = new SqlDataAdapter(sub, con);
+    //    DataSet ds = new DataSet();
+    //    ads.Fill(ds);
+    //    string sms = ds.Tables[0].Rows[0]["smsleft"].ToString();
+    //    return sms;
+    //}
+    //public string expiry(string id)
+    //{
+    //    string q = "select expirydate from textsmsexpenses where Uname='" + id + "'";
+    //    SqlDataAdapter ad1= new SqlDataAdapter(q,con);
+    //    DataSet ds = new DataSet();
+    //    ad1.Fill(ds);
+    //    string exp = ds.Tables[0].Rows[0]["expirydate"].ToString();
+    //    return exp;
+    //}
+
+    public DataSet voiceamount(string id)
     {
-        string qry = "select amountleft from voicesmsexpenses where Uname='" + id + "'";
+        string qry = "select amountleft,smsleft,expirydate,status from voicesmsexpenses where Uname='" + id + "'";
         SqlDataAdapter da = new SqlDataAdapter(qry, con);
         DataSet ds = new DataSet();
         da.Fill(ds);
-        string am = ds.Tables[0].Rows[0]["amountleft"].ToString();
-        return am;
+       // string am = ds.Tables[0].Rows[0]["amountleft"].ToString();
+        return ds;
     }
-    public string voicesms(string id)
+    //public string voicesms(string id)
+    //{
+    //    string sub = "select smsleft from voicesmsexpenses where Uname='" + id + "'";
+    //    SqlDataAdapter ads = new SqlDataAdapter(sub, con);
+    //    DataSet ds = new DataSet();
+    //    ads.Fill(ds);
+    //    string sms = ds.Tables[0].Rows[0]["smsleft"].ToString();
+    //    return sms;
+    //}
+
+    //public string voiceexpiry(string id)
+    //{
+    //    string q = "select expirydate from voicesmsexpenses where Uname='" + id + "'";
+    //    SqlDataAdapter ad1 = new SqlDataAdapter(q, con);
+    //    DataSet ds = new DataSet();
+    //    ad1.Fill(ds);
+    //    string exp = ds.Tables[0].Rows[0]["expirydate"].ToString();
+    //    return exp;
+    //}
+
+    public DataSet voicereports(string uname, string x, string y)
     {
-        string sub = "select smsleft from voicesmsexpenses where Uname='" + id + "'";
-        SqlDataAdapter ads = new SqlDataAdapter(sub, con);
-        DataSet ds = new DataSet();
-        ads.Fill(ds);
-        string sms = ds.Tables[0].Rows[0]["smsleft"].ToString();
-        return sms;
+        string date1 = x;
+        string date2 = y;
+        string s4 = "SELECT  * FROM Voicereports WHERE Senttime  BETWEEN '" + date1 + "' and '" + date2 + "' and Username='" + uname + "' order by rid desc";
+        SqlDataAdapter da2 = new SqlDataAdapter(s4, con);
+        DataSet ds2 = new DataSet();
+        da2.Fill(ds2);
+        return ds2;
     }
 
-    public string voiceexpiry(string id)
+    public DataSet voicereports1(string uname, string date1)
     {
-        string q = "select expirydate from voicesmsexpenses where Uname='" + id + "'";
-        SqlDataAdapter ad1 = new SqlDataAdapter(q, con);
-        DataSet ds = new DataSet();
-        ad1.Fill(ds);
-        string exp = ds.Tables[0].Rows[0]["expirydate"].ToString();
-        return exp;
+        //string date1 = x;
+        //string date3 = Convert.ToDateTime(date1.ToString("yyyy-MM-dd"));
+        string date2 = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+
+
+        string s = "SELECT  * FROM Voicereports WHERE Senttime  BETWEEN '" + date1 + "' and '" + date2 + "' and Username='" + uname + "' order by rid desc";
+        SqlDataAdapter da2 = new SqlDataAdapter(s, con);
+        DataSet dss = new DataSet();
+        da2.Fill(dss);
+        return dss;
     }
 
-   
 }

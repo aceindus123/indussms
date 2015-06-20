@@ -16,6 +16,8 @@
     <br />
      <head:header ID="head1" runat="server" />
      <br /> <br /> <br /> <br />
+     <br />
+     <br />
              <table>
                             <tr><td align="center" id="View" runat="server">
                                 <font size="5" color="#00277a"><strong>Lists</strong></font>
@@ -44,22 +46,35 @@
                     <HeaderTemplate>List Records</HeaderTemplate>
                     <ItemStyle HorizontalAlign="Center"/> 
                     <ItemTemplate>
-                        <asp:LinkButton ID="listview" runat="server">View List</asp:LinkButton>
-                        <asp:Panel ID="panlist" runat="server" HorizontalAlign="Center">
-                         <table width="130%" bgcolor="#33ccff" align="center">
+                        <asp:LinkButton ID="listview" runat="server" OnCommand="pandetails" CommandArgument='<%#Eval("username") %>'>View List</asp:LinkButton>
+                    
+               
+                        </ItemTemplate>                        
+                    </asp:TemplateField>
+                   </Columns>
+                   <EmptyDataTemplate>No Records.</EmptyDataTemplate>
+                </asp:GridView>
+                </td></tr></table>
+     </div>
+       <input id="Hid_Sno" type="hidden" name="hddclick" runat="server" />
+         <asp:ModalPopupExtender ID="ModalPopupExtender1"  runat="server" TargetControlID="Hid_Sno" CancelControlID="btnimcan" ViewStateMode="Disabled" PopupControlID="panlist" DropShadow="true" BackgroundCssClass="Modalpopup">
+    </asp:ModalPopupExtender>
+            <asp:Panel ID="panlist" runat="server" HorizontalAlign="Center">
+                         <table width="110%" bgcolor="#33ccff" align="center">
              <tr><td align="right">
                  <asp:ImageButton ID="btnimcan" runat="server" ImageUrl="~/images/close.jpg" width="25" height="21"/></td></tr>
              </table>
-             <table width="130%" bgcolor="white">
+             <table width="110%" bgcolor="white">
              <tr><td></td></tr>
              <tr>
-             <td align="center" id="View" runat="server"><br />
-                                <font size="4" color="#00277a"><strong><u>Lists For '<%# Eval("username") %>'</u></strong></font>
+             <td align="center" id="Td1" runat="server"><br />
+                                <font size="4" color="#00277a"><strong><u>Detailed Lists</u></strong></font>
                               </td>
              </tr>
              <tr><td><br />
-                 <asp:GridView ID="gvviewlists" runat="server" AutoGenerateColumns="false" Width="500px" HorizontalAlign="Center">
+                 <asp:GridView ID="gvviewlists" runat="server" AutoGenerateColumns="false" Width="700px" HorizontalAlign="Center"  PageSize="3" AllowPaging="true" OnPageIndexChanging="gvviewlists_PageIndexChanging">
                  <HeaderStyle Font-Bold="True"  ForeColor="#003399" Height="30px" BackColor="#999999" Font-Size="14px" Font-Names="Arial" /> 
+                     <PagerStyle Font-Bold="True" HorizontalAlign="Center"  ForeColor="#003399" Height="30px" BackColor="#999999" Font-Size="14px" Font-Names="Arial" /> 
                  <Columns>
                  <asp:TemplateField>
                  <HeaderTemplate>List No</HeaderTemplate>
@@ -85,15 +100,7 @@
              </td></tr>
              </table>
                 </asp:Panel>
-                <asp:ModalPopupExtender ID="ModalPopupExtender1"  runat="server" TargetControlID="listview" CancelControlID="btnimcan" ViewStateMode="Disabled" PopupControlID="panlist" DropShadow="true" BackgroundCssClass="Modalpopup">
-    </asp:ModalPopupExtender>
-                        </ItemTemplate>                        
-                    </asp:TemplateField>
-                   </Columns>
-                   <EmptyDataTemplate>No Records.</EmptyDataTemplate>
-                </asp:GridView>
-                </td></tr></table>
-     </div>
+
     </form>
 </body>
 </html>

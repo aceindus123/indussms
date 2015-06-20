@@ -200,8 +200,9 @@ public partial class admin_Admin_Support : System.Web.UI.Page
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
-                Bindexception();
+                //Bindexception();
                 Page.ClientScript.RegisterStartupScript(this.GetType(),"alert box","alert('Deleted Successfully');",true);
+                BindData();
             }
             else
             {
@@ -307,4 +308,85 @@ public partial class admin_Admin_Support : System.Web.UI.Page
             Bindexception();
         }
     }
+
+
+
+    protected void status(object sender, CommandEventArgs e)
+    {
+        dsadmin = Permission();
+        if (dsadmin.Tables[0].Rows.Count != 0)
+        {
+            if (dsadmin.Tables[0].Rows[0]["permissionaccept"].ToString() == "1")
+            {
+                int listid;
+                try
+                {
+                    string list_id;
+                    list_id = e.CommandArgument.ToString();
+                    listid = Convert.ToInt32(list_id);
+
+                    string disable = "Select  * from  issue where iid=" + listid + "";
+                    SqlDataAdapter sda = new SqlDataAdapter(disable, con);
+                    DataSet ds = new DataSet();
+                    sda.Fill(ds);
+                    if (ds.Tables[0].Rows.Count != 0)
+                    {
+                        if (Convert.ToString(ds.Tables[0].Rows[0]["status"]) == "Process")
+                        {
+                            con.Open();
+                            string disable1 = "update issue set status='Completed' where iid=" + listid + "";
+                            SqlCommand cmd = new SqlCommand(disable1,con);
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+
+                            string strScript = "alert('Client Request Processed');";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", strScript, true);
+                        }
+                        else
+                        {
+                            if (Convert.ToString(ds.Tables[0].Rows[0]["status"]) == "Completed")
+                            {
+                                con.Open();
+                                string disable1 = "update issue set status='Process' where iid=" + listid + "";
+                                SqlCommand cmd = new SqlCommand(disable1, con);
+                                cmd.ExecuteNonQuery();
+                                con.Close();
+
+                                string strScript = "alert('Client Request Not Processed');";
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", strScript, true);
+                            }
+
+                        }
+                    }
+                    bindData();
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            else
+            {
+                //ModalPopup1.Hide();
+                string strScript = "alert('No Permissions to do this task');";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", strScript, true);
+            }
+        }
+        else
+        {
+            string strScript = "alert('You Don't Have Permission');";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", strScript, true);
+        }
+    }
+    protected void bindData()
+    {
+        SqlDataAdapter da = new SqlDataAdapter("Select * from issue", con);
+        DataSet ds = new DataSet();
+        da.Fill(ds);
+        gvsupports.DataSource = ds;
+        gvsupports.DataBind();
+    }
+   
+    
 }

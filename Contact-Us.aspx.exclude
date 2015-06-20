@@ -1,0 +1,133 @@
+﻿
+<%@ Page Title="" Language="C#" MasterPageFile="~/SMSMasterPage.master" AutoEventWireup="true" CodeFile="Contact-Us.aspx.cs" Inherits="Contact_Us" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:ScriptManager ID="sp1" runat="server"></asp:ScriptManager>
+<table width="100%" cellpadding="0" cellspacing="0" >
+           <%-- <tr>
+                <td align="left"><h2>Contact Us</h2></td>
+            </tr>--%>
+               <tr>
+         <td >
+             <asp:ImageButton ID="ImageButton2" ImageUrl="~/images/contact-us11.png" runat="server"    />
+
+              </td>
+    </tr>
+
+        <tr><td>
+        <table width="100%">
+        <tr><td align="left">We would be pleased to help you. If you have any queries or want to write a comment or suggestion, you can kindly write in on the form mentioned below.<br /><br />
+    For any further queries, you can also contact us at the information provided below:</td></tr>
+        </table>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+        <td><asp:UpdatePanel ID="UpdatePanel1" runat="server">
+
+         <ContentTemplate>
+    <table width="90%" border="0" style="background-color:#F8F8FF">
+    <tr bgcolor="green" style="height:30px"><td align="center" colspan="2"><h3>Contact Form</h3></td></tr>
+    <tr>
+     <td class="tdlbl"  ><b>Full Name</b>&nbsp;<strong>:</strong></td>
+     <td align="left"><asp:TextBox id="txtfname" runat="server" style="width:170px; height:20px;" Font-Size="14px"></asp:TextBox>
+     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter fullname" ValidationGroup="ContactForm" ControlToValidate="txtfname">*</asp:RequiredFieldValidator></td></tr>
+     <tr>
+     <td class="tdlbl" ><b>E-Mail</b>&nbsp;<strong>:</strong></td>
+     <td align="left"><asp:TextBox id="txtEmailid" runat="server" CssClass="tdtxt"></asp:TextBox>
+     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="ContactForm" ErrorMessage="Enter Emailaddress" ControlToValidate="txtEmailid">*</asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="Regularexpressionvalidator2" runat="server" ControlToValidate="txtEmailid"
+                                              ErrorMessage="Enter valid emailaddress" Display="dynamic" ValidationExpression=".*@.*\..*" ValidationGroup="ContactForm">*</asp:RegularExpressionValidator></td></tr>
+       <tr>
+     <td  class="tdlbl" style="padding-top:5px;"><b>Address</b>&nbsp;<strong>:</strong></td>
+     <td align="left"><asp:TextBox id="txtAddress" runat="server" style="width:170px; height:50px;" TextMode="MultiLine" Font-Size="14px"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="ContactForm" ErrorMessage="Enter Address" ControlToValidate="txtAddress">*</asp:RequiredFieldValidator></td>
+     </tr>
+     <tr>
+     <td  class="tdlbl" ><b>Country</b>&nbsp;<strong>:</strong></td>
+     <td align="left"><asp:DropDownList id="ddlcountry" runat="server" 
+             style="width:170px; height:20px;" appenddatabounditems="True"  
+             AutoPostBack="true" onselectedindexchanged="ddlcountry_SelectedIndexChanged"  >
+                                       
+                                            <asp:ListItem Value="Select Country">Select Country</asp:ListItem>
+                                       </asp:DropDownList>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="ContactForm" InitialValue="Select Country" ErrorMessage="Enter Country" ControlToValidate="ddlcountry">*</asp:RequiredFieldValidator>
+                                         
+                                    </td>
+     </tr>
+     <tr>
+         <td class="tdlbl">
+             <b>State</b>&nbsp;<strong>:</strong></td>
+         <td align="left">
+             <asp:DropDownList ID="ddlstate" runat="server" appenddatabounditems="True" 
+                 AutoPostBack="true" onselectedindexchanged="ddlstate_SelectedIndexChanged" 
+                 style="width:170px; height:20px;">
+                 <asp:ListItem Value="Select State">Select State</asp:ListItem>
+             </asp:DropDownList>
+         </td></tr>
+
+         <tr>
+     <td class="tdlbl"><b>City</b>&nbsp;<strong>:</strong></td>
+     <td align="left"><asp:DropDownList id="ddlcity" runat="server" style="width:170px; height:20px;" appenddatabounditems="True">
+                                       <asp:ListItem Value="Select City">Select City</asp:ListItem>
+                                       </asp:DropDownList>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" InitialValue="Select City" ValidationGroup="ContactForm" ErrorMessage="Enter city" ControlToValidate="ddlcity">*</asp:RequiredFieldValidator></td>
+     
+     </tr>
+     <tr><td class="tdlbl"><b>Zip Code</b><strong>:</strong></td>
+     <td align="left"><asp:TextBox id="txtzipcode" runat="server" CssClass="tdtxt" MaxLength="6" onkeypress="return isNumberKey(event)" Font-Size="14px"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="ContactForm" ErrorMessage="Enter zipcode" ControlToValidate="txtzipcode">*</asp:RequiredFieldValidator>
+     </tr>
+    <tr>
+     <td class="tdlbl"style="padding-top:5px;"><b>PhoneNumber</b>&nbsp;<strong>:</strong></td>
+     <td align="left"><asp:TextBox id="txtphno" runat="server" CssClass="tdtxt" onkeypress="return isNumberKey(event)" MaxLength="10"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="ContactForm" ErrorMessage="Enter phonenumber" ControlToValidate="txtphno">*</asp:RequiredFieldValidator>
+                                    </td>
+     </tr>
+      <tr>
+     <td align="left"  style="padding-top:5px;"><b>Comments</b>&nbsp;<strong>:</strong></td>
+     <td align="left"><asp:TextBox id="txtcomments" runat="server"  CssClass="multxt" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="ContactForm" ErrorMessage="Enter your comments" ControlToValidate="txtcomments">*</asp:RequiredFieldValidator>
+                                    </td>
+     </tr>
+        <tr><td align="right">
+     <asp:Button ID="btnsubmit" runat="server" ValidationGroup="ContactForm" 
+             Text="Submit" onclick="btnsubmit_Click" />&nbsp;</td>
+     <td><asp:Button ID="btnreset" runat="server" ValidationGroup="ContactForm" Text="Cancel" /></td>
+        </tr>
+        <tr><td align="center" valign="middle" style="padding-right:10px;" 
+                colspan="2">
+        
+                                    <asp:ValidationSummary ID="ValidationSummary1" runat="server"  ValidationGroup="ContactForm" ShowMessageBox="true" ShowSummary="false"/></td></tr>
+
+
+               </table>                     
+    </ContentTemplate>
+    </asp:UpdatePanel></td>
+        <td><table width="100%">
+        
+        <td style="padding-top:10px;"><p align="justify" style="font-size:14px;line-height:22px">Global Head Quarters - USA<br />
+    Indus Group Incorporated,<br />
+1033 Sterling Road, Ste. 204 & 205,<br />
+Herndon-VA-20170. USA.<br />
+Washington DC Metro Area.<br />
+Voice:<font style="font-weight:normal; font-size:12px; color:#1e5784; text-decoration:none;line-height:22px ">  <b> 703-957-7829 </b></font> <br />
+Fax:   <font style="font-weight:normal; font-size:12px; color:#1e5784; text-decoration:none; line-height:22px"><b>  703-842-8746</b></font><br /><br /><br />
+
+
+For general inquiries please email us 	 :<a href="mailto:info@indussms.com"> <font style="font-weight:normal; font-size:12px; color:#1e5784; text-decoration:none;line-height:22px "><b>info@indussms.com</b></font></a><br />
+For Feedback, Please email us  :     <a href="mailto:feedback@indussms.com"> <font style="font-weight:normal; font-size:12px; color:#1e5784; text-decoration:none;line-height:22px "><b>feedback@indussms.com</b></font></a> <br />                        
+<p align="justify">For Technical Difficulties, please email us  :   </p>  <a href="mailto:support@indussms.com"> <font style="font-weight:normal; font-size:12px; color:#1e5784; text-decoration:none;line-height:22px "><b>support@indussms.com</b></font></a> <br />                        
+For suggestions and Innovative Ideas to improve the portal, Please email us  : <a href="mailto:webmaster@indussms.com"> <font style="font-weight:normal; font-size:12px; color:#1e5784; text-decoration:none;line-height:22px "><b>webmaster@indussms.com</b></font></a> <br />                                 
+For Sales Please email us  :  <a href="mailto:sales@indussms.com"> <font style="font-weight:normal; font-size:12px; color:#1e5784; text-decoration:none; line-height:22px"><b>sales@indussms.com</b></font></a>  
+</p>
+</td>
+        </table></td>
+        </tr>
+     
+        </table></td></tr>
+
+        </table>
+</asp:Content>
+  

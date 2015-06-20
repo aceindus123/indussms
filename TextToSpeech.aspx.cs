@@ -24,10 +24,16 @@ public partial class TextToSpeech : System.Web.UI.Page
     static string excep_page = "TextToSpeech.aspx";
     exception err = new exception();
     SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+    Registration reg = new Registration();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User"] != null)
         {
+            string id = Convert.ToString(Session["User"]);
+            DataSet voiceamt = reg.voiceamount(id);
+
+            lblamount.Text = voiceamt.Tables[0].Rows[0]["amountleft"].ToString() + " INR";
+
             string path = Path.GetFileName(Request.PhysicalPath);
             switch (path)
             {

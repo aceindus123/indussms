@@ -27,27 +27,33 @@ public partial class ShoppingCart : System.Web.UI.Page
     {
         if (Session["User"] != null)
         {
-            DataSet ds = reg.databind(Convert.ToString(Session["User"]));
+            if (!IsPostBack)
+            {
+
+                DataSet ds = reg.databind(Convert.ToString(Session["User"]));
+                data();
+            }
         }
         else
         {
             string strScript = "alert('Session expired pleased login again.');location.replace('SMSLogin.aspx');";
             Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", strScript, true);
         }
+    }
 
-        if (!IsPostBack)
-        {
-            //SqlDataAdapter da = new SqlDataAdapter("Select * from cart", con);
-            //ds = reg.grid();
-            string id1 = Convert.ToString(Session["User"]);
-            SqlDataAdapter ad = new SqlDataAdapter("Select * from cart where username='" + id1 + "'", con);
-            DataSet ds1 = new DataSet();
-            ad.Fill(ds1);
-            gv1.DataSource = ds1;
-            gv1.DataBind();
-            con.Close();       
-        }
-    } 
+    //    if (!IsPostBack)
+    //    {
+    //        //SqlDataAdapter da = new SqlDataAdapter("Select * from cart", con);
+    //        //ds = reg.grid();
+    //        string id1 = Convert.ToString(Session["User"]);
+    //        SqlDataAdapter ad = new SqlDataAdapter("Select * from cart where username='" + id1 + "'", con);
+    //        DataSet ds1 = new DataSet();
+    //        ad.Fill(ds1);
+    //        gv1.DataSource = ds1;
+    //        gv1.DataBind();
+    //        con.Close();       
+    //    }
+    //} 
        
         //binddata();    
 
@@ -56,28 +62,39 @@ public partial class ShoppingCart : System.Web.UI.Page
         string id = Convert.ToString(Session["User"]);
         SqlDataAdapter da = new SqlDataAdapter("Select * from cart where username='" + id + "'", con);
         DataSet ds = new DataSet();
-        DataTable dt = new DataTable();
+        //DataTable dt = new DataTable();
         da.Fill(ds);
          if (ds.Tables[0].Rows.Count == 0)
-        {
-            ds.Tables[0].Rows.Add(ds.Tables[0].NewRow());
-            gv1.DataSource = ds;
-            gv1.DataBind();
-            int columncount = gv1.Rows[0].Cells.Count;
-            gv1.Rows[0].Cells.Clear();
-            gv1.Rows[0].Cells.Add(new TableCell());
-            gv1.Rows[0].Cells[0].ColumnSpan = columncount;
-            gv1.Rows[0].Cells[0].Text = "Your Cart Is Empty...";
-            gv1.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
-            gv1.Rows[0].Cells[0].ForeColor = System.Drawing.Color.Black;
-            Button1.Visible = false;
+         {
+          
+             up.Visible = false;
+             string script1 = "alert('Your Cart Is Empty.... ');location.replace('Balance.aspx');";
+             Page.ClientScript.RegisterStartupScript(this.GetType(), "alertBox", script1, true);
+             //ds.Tables[0].Rows.Add(ds.Tables[0].NewRow());
+            // gv1.DataSource = ds;
+            // gv1.DataBind();
+            // //int columncount = gv1.Rows[0].Cells.Count;
+            // gv1.Rows[0].Cells.Clear();
+            // gv1.Rows[0].Cells.Add(new TableCell());
+            // //gv1.Rows[0].Cells[0].ColumnSpan = columncount;
+            // gv1.Rows[0].Cells[0].Text = "No Records Found";
+            // gv1.Rows[0].Cells[0].ForeColor = System.Drawing.Color.Red;
+            // gv1.Rows[0].Cells[0].HorizontalAlign = HorizontalAlign.Center;
+             
+             
+            ////gv1.Rows[0].Cells[0].Style.Font = new Font("Tahoma", 9.75F, FontStyle.Bold);
+            ////gv1.Rows[0].Cells[0].Font.Size = System.Drawing.FontStyle.Bold;
+            //Button1.Visible = false;
+            //btn.Visible = false;
         }
         else
         {            
             gv1.DataSource = ds;
             gv1.DataBind();
-            con.Close();
+            //pan.Visible = false;
+            
         }
+         con.Close();
     }
     
     protected void Button1_Click(object sender, EventArgs e)
@@ -100,6 +117,9 @@ public partial class ShoppingCart : System.Web.UI.Page
         da.DeleteCommand = new SqlCommand("delete from cart where crid=" + catid, con);
         da.DeleteCommand.ExecuteNonQuery();
         con.Close();
+        Session.Remove("totalamt");
+        Response.Redirect("ShoppingCart.aspx");
+        
         data();
     }
     protected void gv1_RowDataBound(object sender, GridViewRowEventArgs e)

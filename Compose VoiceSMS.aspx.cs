@@ -8,19 +8,25 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.IO;
+using Indussms;
+using Indussms.DataAccessLayer;
 
 
 public partial class Compose_VoiceSMS : System.Web.UI.Page
 {
+
+    Registration reg = new Registration();
     
     SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
     protected void Page_Load(object sender, EventArgs e)
     {
         string Uname = Convert.ToString(Session["User"]);
+        string id = Convert.ToString(Session["User"]);
         if (Session["User"] != null)
         {
-            int ds5 = getbal(Session["User"].ToString());
-            if (ds5 != 0)
+            string ds5 = getbal(Session["User"].ToString());
+            if (ds5 != "0" && ds5 != "")
+                
             {
                 string path = Path.GetFileName(Request.PhysicalPath);
                 switch (path)
@@ -35,6 +41,9 @@ public partial class Compose_VoiceSMS : System.Web.UI.Page
                         break;
                 }
                 txtno.Text = Uname;
+                DataSet voiceamt = reg.voiceamount(id);
+
+                lblamount.Text = voiceamt.Tables[0].Rows[0]["amountleft"].ToString() + " INR";
             }
             else
             {
@@ -49,15 +58,23 @@ public partial class Compose_VoiceSMS : System.Web.UI.Page
         }
     }
 
-    private int getbal(string p)
+    private string getbal(string p)
     {
-        string qry = "select amountleft from voicesmsexpenses where uname='" + p + "'";
+        string qry = "select amountleft from voicesmsexpenses where uname='" + p + "' and status=1";
         SqlDataAdapter da2 = new SqlDataAdapter(qry, sqlConnection);
         DataSet ds2 = new DataSet();
         da2.Fill(ds2);
-        int value = Convert.ToInt32(ds2.Tables[0].Rows[0]["amountleft"].ToString());
-        return value;
+        if (ds2.Tables[0].Rows.Count != 0)
+        {
+            string value = ds2.Tables[0].Rows[0]["amountleft"].ToString();
+            return value;
+        }
+        else
+        {
+            return "";
+        }
     }
+
 
     public void Default3()
     {

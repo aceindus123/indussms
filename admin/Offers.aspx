@@ -1,19 +1,32 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Offers.aspx.cs" Inherits="admin_Offers" %>
 <%@ Register Src="~/admin/UserControl/Menu.ascx" TagName="header" TagPrefix="head" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>: : Admin : Offers : :</title>
     <link href="css/StyleSheet.css" rel="stylesheet" type="text/css" />
+     <style type="text/css"> 
+    .simple1 
+    { 
+      text-decoration:none;
+    } 
+    .simple1:hover 
+    { 
+     text-decoration:underline;
+    } 
+  </style>  
+
     
 </head>
 <body>
     <form id="form1" runat="server">
+ 
     <div align="center">
         <br />
         <head:header ID="head1" runat="server"/>
-        <br /> <br /> <br /> <br />
+        <br /> 
         <table align="center">
         <tr><td colspan="2"><br /></td></tr>
         <tr><td align="center" id="View" runat="server" colspan="2">
@@ -60,13 +73,17 @@
                                   </asp:TemplateField>
                                   <asp:TemplateField>
                                   <HeaderTemplate>Subject</HeaderTemplate>
-                                  <ItemStyle ForeColor="Gray" BorderColor="#CCCCCC" HorizontalAlign="Center"/>
-                                  <ItemTemplate><asp:Label ID="lblsub" runat="server" Text='<%# Eval("subject") %>' /></ItemTemplate>
+                                  <ItemStyle ForeColor="Gray" BorderColor="#CCCCCC" HorizontalAlign="Center" Width="100px"/>
+                                  <ItemTemplate>
+                                  <div style="overflow-y:auto;overflow-x:auto;word-break:break-all ">
+                                  <asp:Label ID="lblsub" runat="server" Text='<%# Eval("subject") %>' /></div></ItemTemplate>
                                   </asp:TemplateField>
                                   <asp:TemplateField>
                                   <HeaderTemplate>Messages</HeaderTemplate>
                                   <ItemStyle ForeColor="Gray" BorderColor="#CCCCCC" HorizontalAlign="Center"/>
-                                  <ItemTemplate><asp:Label ID="lblmess" runat="server" Text='<%# Eval("message") %>' /></ItemTemplate>
+                                  <ItemTemplate>
+                                  <div style="overflow-y:auto;overflow-x:auto;word-break:break-all ">
+                                  <asp:Label ID="lblmess" runat="server" Text='<%# Eval("message") %>' /></div></ItemTemplate>
                                   </asp:TemplateField>
                                   <asp:TemplateField>
                                   <HeaderTemplate>Date/Time</HeaderTemplate>
@@ -77,7 +94,7 @@
                                   <HeaderTemplate>Status</HeaderTemplate>
                                   <ItemStyle ForeColor="Gray" BorderColor="#CCCCCC" HorizontalAlign="Center"/>
                                   <ItemTemplate>
-                                  <asp:LinkButton ID="linkactive" runat="server" Font-Underline="false" OnClick="Active" Text='<%#Eval("txtstatus") %>'></asp:LinkButton>
+                                  <asp:LinkButton ID="linkactive" runat="server" CssClass="simple1" OnClick="Active" Text='<%#Eval("txtstatus") %>'></asp:LinkButton>
                                   <%--<asp:LinkButton ID="linkdeactive" runat="server" Font-Underline="false" Visible="false" OnClick="Active">Deactive</asp:LinkButton>--%></ItemTemplate>
                                   </asp:TemplateField>
                                   <asp:TemplateField>

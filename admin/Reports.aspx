@@ -6,15 +6,30 @@
 <head runat="server">
     <title>: : Admin : Reports : :</title>
     <link href="css/StyleSheet.css" rel="stylesheet" type="text/css" />
+    <style type="text/css"> 
+    .simple1 
+    { 
+      text-decoration:none;
+    } 
+    .simple1:hover 
+    { 
+     text-decoration:underline;
+     font-size:large;
+     color:Orange;
+    } 
+  </style>  
+
+    
 </head>
 <body>
     <form id="form1" runat="server">
     <div align="center">
         <br />
         <head:header ID="head1" runat="server" />
-        <br /><br /><br /><br /><br />
+        <br /><br />
         <table>
         <tr><td align="center" id="View" runat="server" ><font size="5" color="green"><strong>SMS Reports</strong></font><br /></td></tr>
+        <br />
         <tr><td align="center">
                  <asp:RadioButton ID="rdnormalsms" runat="server" Text="Normal SMS" 
                 AutoPostBack="true"  GroupName="rd1" Checked="false" oncheckedchanged="rdnormalsms_CheckedChanged" 
@@ -119,13 +134,13 @@
         <table id="reports" runat="server" align="center">
             <tr>
                 <td>
-                    <asp:LinkButton ID="btnnormal" runat="server" Font-Underline="false" 
+                    <asp:LinkButton ID="btnnormal" runat="server"  CssClass="simple1" 
                         onclick="btnnormal_Click">Normal SMS</asp:LinkButton>
                         &nbsp;&nbsp;
-                        <asp:LinkButton ID="btnschedule" runat="server" Font-Underline="false" onclick="btnschedule_Click" 
+                        <asp:LinkButton ID="btnschedule" runat="server"  onclick="btnschedule_Click" CssClass="simple1" 
                         >Schedule SMS</asp:LinkButton>
                         &nbsp;&nbsp;
-                        <asp:LinkButton ID="btnvoice" runat="server" Font-Underline="false" onclick="btnvoice_Click"  
+                        <asp:LinkButton ID="btnvoice" runat="server"  onclick="btnvoice_Click" CssClass="simple1"  
                         >Voice SMS</asp:LinkButton> &nbsp; &nbsp;<asp:Button ID="btncancel" runat="server" Text="Cancel" Height="29px" 
                                    Width="73px" onclick="btncancel_Click" />                                                       
                 </td>

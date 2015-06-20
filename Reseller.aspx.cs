@@ -33,7 +33,13 @@ public partial class Reseller : System.Web.UI.Page
 
         if (Session["User"] != null)
         {
-            Response.Redirect("Reseller.aspx");
+            Response.Redirect("SMSMainMenu.aspx");
+
+        }
+        else
+        {
+            Response.Redirect("Default.aspx");
+
         }
        
     }

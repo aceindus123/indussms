@@ -34,23 +34,19 @@ public partial class Notifications : System.Web.UI.Page
     }
     protected void binddata()
     {
-        string q = "select * from notification where status=1";
+        string q = "select * from notification where status=1 order by 1 desc";
         SqlCommand cmd = new SqlCommand(q, con);
         SqlDataAdapter adp = new SqlDataAdapter(cmd);
         con.Open();
-        SqlDataReader _dr = cmd.ExecuteReader();
-        if (_dr.HasRows)
-        {
-            DataList1.DataSource = _dr;
-            DataList1.DataBind();
-            lblmsg.Visible = false;
-
-        }
-        else
-        {
-            DataList1.Visible = false;
-            lblmsg.Visible = true;
-        }
-        con.Close();
+        DataSet ds = new DataSet();
+        adp.Fill(ds);
+        GridView1.DataSource = ds;
+        GridView1.DataBind();
+    }
+    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GridView1.PageIndex = e.NewPageIndex;
+        GridView1.DataBind();
+        binddata();
     }
 }

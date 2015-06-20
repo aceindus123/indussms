@@ -25,14 +25,15 @@ public partial class admin_LoginStatus : System.Web.UI.Page
     protected void BindData()
     {
 
-        string sqlq = "select id,Uname,ipaddress,Datetime,Logoutdate from Loginreport where Status=2 order by Datetime desc";
+        string sqlq = "select id,Uname,ipaddress,Datetime,Logoutdate from Loginreport  order by Datetime desc";
         SqlDataAdapter da = new SqlDataAdapter(sqlq, sqlConnection);
         DataSet ds1 = new DataSet();
         da.Fill(ds1);
         GrdLoginUsers.DataSource = ds1;
         GrdLoginUsers.DataBind();
     }
-    protected void PageIndexChanging(object sender, GridViewPageEventArgs e)
+ 
+    protected void GrdLoginUsers_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         GrdLoginUsers.PageIndex = e.NewPageIndex;
         GrdLoginUsers.DataBind();

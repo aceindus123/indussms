@@ -9,11 +9,25 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-        <div align="left" style="width:100%;float:left;vertical-align:top;background-color:#f4f4f4" >    
-            <div align="center" style="width:90%;margin-left:auto;margin-right:auto;vertical-align:middle;border-radius:5px; padding-top:5px;">
+<br />
+        <div align="left" style="width:100%;float:left;vertical-align:top;" class="container">    
+            <div align="center" style="width:100%;margin-left:auto;margin-right:auto;vertical-align:middle;border-radius:5px;">
 
-                    <p style="text-align:center;vertical-align:middle;font-weight:normal; font-size:22px; color:#006600; text-decoration:none; font-family:vani;">Feed Back Form</p>
+            <table>
+             <tr>
+      <td  style="background: url(images/feed.png); background-repeat:no-repeat; width:995px; height:70px; padding-top:5px;"  align="right" colspan="4">
+            
+
+          <br /><br /> </td>
+     </tr>
+     <tr>
+     <td>
                     <p style="font-family:Arial; font-size:17px;color: #1e5784;" align="center">Your valuable feedback will elevate our team spirit to work even harder for providing well-organized services.</p>
+     
+     </td>
+     </tr>
+            </table>
+                   <%-- <p style="text-align:center;vertical-align:middle;font-weight:normal; font-size:22px; color:#006600; text-decoration:none; font-family:vani;">Feed Back Form</p>--%>
                   
                       &nbsp;
             </div>
@@ -21,7 +35,7 @@
                  <table style="width:100%;vertical-align:middle;border-radius:5px; padding-top:5px;" >
                         <tr>
                             <td align="left" colspan="1" width="27%" valign="middle"> 
-                                <img alt="" src="images/feedback.jpg"/>
+                                <img alt="" src="images/feedback.png"/>
                             </td>
                             <td align="left" valign="middle" width="73%">
                                 <table width="100%" align="left" valign="top" cellspacing="10px">
@@ -101,7 +115,7 @@
                                         Message  </b></td>
                                     <td ><b>:</b></td>
                                     <td >
-                                       <asp:TextBox id="txtcomments" runat="server" Height="150px" Width="300px" TextMode="MultiLine" Font-Size="12"></asp:TextBox>
+                                       <asp:TextBox id="txtcomments" runat="server" Height="100px" Width="300px" TextMode="MultiLine" Font-Size="12"></asp:TextBox>
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="ContactForm" ErrorMessage="Enter your comments" ControlToValidate="txtcomments">*</asp:RequiredFieldValidator>
                                     </td>
                                   </tr>
